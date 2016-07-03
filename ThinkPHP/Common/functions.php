@@ -806,11 +806,8 @@ function send_http_status($code) {
 }
 
 // 过滤表单中的表达式
-function think_filter(&$value){
-    // TODO 其他安全过滤
-
-    // 过滤查询特殊字符
-    if(preg_match('/^(EXP|NEQ|GT|EGT|LT|ELT|OR|LIKE|NOTLIKE|NOTBETWEEN|NOT BETWEEN|BETWEEN|NOTIN|NOT IN|IN)$/i',$value)){
+function filter_exp(&$value){
+    if (in_array(strtolower($value),array('exp','or'))){
         $value .= ' ';
     }
 }

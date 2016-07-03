@@ -102,6 +102,7 @@ function I($name,$default='',$filter=null) {
             return NULL;
     }
     // 全局过滤
+    // array_walk_recursive($input,'filter_exp');
     if(C('VAR_FILTERS')) {
         $_filters    =   explode(',',C('VAR_FILTERS'));
         foreach($_filters as $_filter){
@@ -137,7 +138,6 @@ function I($name,$default='',$filter=null) {
     }else{ // 变量默认值
         $data       =	 isset($default)?$default:NULL;
     }
-    is_array($data) && array_walk_recursive($data,'think_filter');
     return $data;
 }
 
