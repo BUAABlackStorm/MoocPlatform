@@ -8,6 +8,9 @@
 class IndexAction extends Action{
 
     public function index(){
+
+        $user = M('User') -> select();
+        p($user);die;
         $this->display();
     }
 }

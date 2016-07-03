@@ -8,10 +8,10 @@ return array(
     'APP_GROUP_PATH' => 'Modules',
 
     //数据库连接参数
-    'DB_HOST' => '',
-    'DB_USER' => '',
-    'DB_PWD' => '',
-    'DB_NAME' => '',
+    'DB_HOST' => 'w.rdc.sae.sina.com.cn',
+    'DB_USER' => 'xj53z4j52n',
+    'DB_PWD' => 'lyzi5020zkimw3kxzy3ym4203l13y4m210m41yik',
+    'DB_NAME' => 'app_zhonghesite',
     'DB_PREFIX' => '',
 
     //点语法默认解析
