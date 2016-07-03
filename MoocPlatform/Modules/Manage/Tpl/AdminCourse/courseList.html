@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <foreach name="list" item="vo" key="k" >
+        <form name="input" action="http://localhost:8080/MoocPlatform/Index.php/Manage/AdminCourse/courseInfo" method="post">
+            {$vo['CourseID']}{$vo['CourseName']}
+            <input type="hidden" name="CourseID" value={$vo['CourseID']}>
+            <input type="submit" value="Submit">
+        </form>
+    </foreach>
+</head>
+<body>
+
+</body>
+</html>
