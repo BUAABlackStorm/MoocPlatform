@@ -8,11 +8,11 @@ return array(
     'APP_GROUP_PATH' => 'Modules',
 
     //数据库连接参数
-    'DB_HOST' => '115.28.213.41',
-    'DB_USER' => 'bibijia',
-    'DB_PWD' => 'bibijia',
-    'DB_NAME' => 'decoration',
-    'DB_PREFIX' => 'de_',
+    'DB_HOST' => '',
+    'DB_USER' => '',
+    'DB_PWD' => '',
+    'DB_NAME' => '',
+    'DB_PREFIX' => '',
 
     //点语法默认解析
     'TMPL_VAR_IDENTIFY' => 'array',
