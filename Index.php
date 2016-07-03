@@ -2,5 +2,6 @@
     define('APP_NAME' ,'MoocPlatform');           //项目名称
     define('APP_PATH' ,'./MoocPlatform/');        //项目路径
     define('APP_DEBUG', TRUE);             //开启调试模式
-    include './ThinkPHP/Extend/Engine/Sae.php';     //应用ThinkPHP核心文件
+    require './ThinkPHP/Extend/Engine/Sae.php';     //应用ThinkPHP核心文件
+    require './ThinkPHP/ThinkPHP.php';
 ?>
