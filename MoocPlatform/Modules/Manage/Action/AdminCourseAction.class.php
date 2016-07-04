@@ -9,9 +9,12 @@
 class AdminCourseAction extends Action{
 
     public function courseList(){
-        $Model = M('course');
-        $list = $Model->select();
+        $db = M('course');
+        $list = $db
+            ->join('department ON course.CourseDep = department.DepartmentID')
+            ->getField('course.CourseID,course.CourseName,department.DepartmentName');
         $this->assign('list',$list);
+        //dump($list);
         $this->display();
     }
 
@@ -21,7 +24,6 @@ class AdminCourseAction extends Action{
         $courseTeacher = $db
             ->join('courseteacher ON course.CourseID = courseteacher.CourseID')
             ->join('teacher ON teacher.TeaID = courseteacher.TeacherID')
-            ->where('course.CourseID='.$courseID)
             ->select();
         $this->assign('courseTeacher',$courseTeacher);
 
