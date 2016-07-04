@@ -60,7 +60,7 @@ class TeacherAction extends Action
     			$db->add($res);
     		}
 
-    		U(MoocPlatform.'/Teacher/course/',['id'=>I('courseID')]);
+    		U(GROUP_NAME.'/Teacher/course/',['id'=>I('courseID')]);
 		}
     }
 
@@ -73,7 +73,9 @@ class TeacherAction extends Action
 
     	foreach ($id_array as $id)
     	{
-    		$res=$db->find($id);
+    		$res=$db
+    			->where('resource.ResID='.$id)
+    			->find();
     		Http::download($res->ResPath,$res->ResOriginName);
     	}
     }
