@@ -11,10 +11,10 @@
     Visual Admin Template
     http://www.templatemo.com/preview/templatemo_455_visual_admin
     -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/templatemo-style.css" rel="stylesheet">
+      <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
+      <link href="__PUBLIC__/AdminCourse/css/font-awesome.min.css" rel="stylesheet">
+      <link href="__PUBLIC__/AdminCourse/css/bootstrap.min.css" rel="stylesheet">
+      <link href="__PUBLIC__/AdminCourse/css/templatemo-style.css" rel="stylesheet">
 
     
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -33,7 +33,7 @@
           <h1>教务中心</h1>
         </header>
         <div class="profile-photo-container">
-          <img src="images/profile-photo.jpg" alt="Profile Photo" class="img-responsive">  
+          <img src="__PUBLIC__/AdminCourse/images/profile-photo.jpg" alt="Profile Photo" class="img-responsive">
           <div class="profile-photo-overlay"></div>
         </div>      
         <br>   
@@ -87,7 +87,9 @@
                     <h3>课程名称</h3>
                   </div >
                   <div class="col-lg-6 col-md-6 form-group">
-                    <input type="text" class="form-control" id="inputFirstName" placeholder="John">                  
+                      <foreach name="courseinfo" item="vo" key="k" >
+                          <input type="text" class="form-control" id="inputFirstName" placeholder={$vo['CourseName']} disabled="disabled">
+                      </foreach>
                   </div>
                 </div>
                 <div class="row form-group">
@@ -95,7 +97,9 @@
                   <h3>开设院系</h3>                  
                   </div >
                   <div class="col-lg-6 col-md-6 form-group">
-                    <input type="text" class="form-control" id="inputFirstName" placeholder="John">                  
+                      <foreach name="courseinfo" item="vo" key="k" >
+                          <input type="text" class="form-control" id="inputFirstName" placeholder={$vo['DepartmentName']} disabled="disabled">
+                      </foreach>
                   </div>
                 </div>
                 <div class="row form-group">
@@ -103,49 +107,84 @@
                     <h3>任课教师</h3>
                   </div >
                   <div class="col-lg-6 col-md-6 form-group">
-                    <input type="text" class="form-control" id="inputFirstName" placeholder="John">                  
+                          <input type="text" class="form-control" id="inputFirstName" placeholder={$courseTeacher} disabled="disabled">
                   </div>
                 </div>
                 <div class="row form-group">
-                  <div class="col-lg-4 col-md-4 form-group text-right">                  
-                    <h3>上课地点</h3>
-                  </div >
-                  <div class="col-lg-6 col-md-6 form-group">
-                    <input type="text" class="form-control" id="inputFirstName" placeholder="John">                  
-                  </div>
-                </div>
-                <div class="row form-group">
-                  <div class="col-lg-4 col-md-4 form-group text-right">                  
-                    <h3>上课周次</h3>
-                  </div >
-                  <div class="col-lg-1 col-md-1 form-group text-right"><h3>开始:</h3></div>
-                  <div class="col-lg-2 col-md-2 form-group">
-                    <input type="text" class="form-control" id="inputFirstName" placeholder="John">                  
-                  </div>
-                  <div class="col-lg-1 col-md-1 form-group text-right"><h3>结束:</h3></div>
-                  <div class="col-lg-2 col-md-2 form-group">
-                    <input type="text" class="form-control" id="inputFirstName" placeholder="John">                  
-                  </div>
+                    <div class="col-lg-4 col-md-4 form-group text-right">
+                        <h3>课程状态</h3>
+                    </div >
+                    <div class="col-lg-6 col-md-6 form-group">
+                        <foreach name="courseinfo" item="vo" key="k" >
+                            <input type="text" class="form-control" id="inputFirstName" placeholder={$vo['isOpen']} disabled="disabled">
+                        </foreach>
+                    </div>
                 </div>
 
                 <div class="row form-group">
-                  <div class="col-lg-4 col-md-4 form-group text-right">                  
-                    <h3>上课具体时间</h3>
-                  </div >
-                  <div class="col-lg-1 col-md-1 form-group text-right"><h3>星期:</h3></div>
-                  <div class="col-lg-2 col-md-2 form-group">
-                    <input type="text" class="form-control" id="inputFirstName" placeholder="John">                  
-                  </div>
-                  <div class="col-lg-1 col-md-1 form-group text-right"><h3>节数:</h3></div>
-                  <div class="col-lg-2 col-md-2 form-group">
-                    <input type="text" class="form-control" id="inputFirstName" placeholder="John">                  
-                  </div>
+                    <div class="col-lg-12 col-md-12 form-group text-center">
+                        <br>
+                        <h3>设置时间地点</h3>
+                    </div >
                 </div>
-               
+
+                <foreach name="courseSchedule" item="vo" key="k" >
+
                 <div class="row form-group">
-                  <div class="col-lg-12 col-md-12 form-group text-center">    
-                     <button type="submit" class="templatemo-blue-button"><h4>保存上述信息</h4></button>
-                  </div >
+                    <div class="col-lg-4 col-md-4 form-group text-right">
+                        <h3>周次</h3>
+                    </div >
+                    <div class="col-lg-1 col-md-1 form-group text-right"><h3>开始:</h3></div>
+                    <div class="col-lg-2 col-md-2 form-group">
+                        <input type="text" class="form-control" id="inputFirstName" placeholder={$vo['CourseStartWeek']} disabled="disabled">
+                    </div>
+                    <div class="col-lg-1 col-md-1 form-group text-right"><h3>结束:</h3></div>
+                    <div class="col-lg-2 col-md-2 form-group">
+                        <input type="text" class="form-control" id="inputFirstName" placeholder={$vo['CourseEndWeek']} disabled="disabled">
+                    </div>
+                </div>
+
+                    <div class="row form-group">
+                        <div class="col-lg-4 col-md-4 form-group text-right">
+                            <h3>上课星期</h3>
+                        </div >
+                        <div class="col-lg-6 col-md-6 form-group">
+                            <input type="text" class="form-control" id="inputFirstName" placeholder={$vo['CourseDayOfWeek']} disabled="disabled">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-lg-4 col-md-4 form-group text-right">
+                            <h3>上课地点</h3>
+                        </div >
+                        <div class="col-lg-6 col-md-6 form-group">
+                            <input type="text" class="form-control" id="inputFirstName" placeholder={$vo['CoursePlace']} disabled="disabled">
+                        </div>
+                    </div>
+
+                <div class="row form-group">
+
+                    <div class="col-lg-4 col-md-4 form-group text-right">
+                        <h3>节次</h3>
+                    </div >
+                    <div class="col-lg-1 col-md-1 form-group text-right"><h3>开始:</h3></div>
+                    <div class="col-lg-2 col-md-2 form-group">
+                        <input type="text" class="form-control" id="inputFirstName" placeholder={$vo['CourseStartLesson']} disabled="disabled">
+                    </div>
+                    <div class="col-lg-1 col-md-1 form-group text-right"><h3>结束:</h3></div>
+                    <div class="col-lg-2 col-md-2 form-group">
+                        <input type="text" class="form-control" id="inputFirstName" placeholder={$vo['CourseEndLesson']} disabled="disabled">
+                    </div>
+                </div>
+
+
+
+                </foreach>
+
+                <div class="row form-group">
+                    <div class="col-lg-12 col-md-12 form-group text-center">
+                        <button type="submit" class="templatemo-blue-button"><h4>保存上述信息</h4></button>
+                    </div >
                 </div>
                 <div class="row form-group">
                   <div class="col-lg-12 col-md-12 form-group text-center">  
@@ -397,9 +436,8 @@
     </div>
     
     <!-- JS -->
-    <script src="js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
-    <script src="js/jquery-migrate-1.2.1.min.js"></script> <!--  jQuery Migrate Plugin -->
-    <script src="https://www.google.com/jsapi"></script> <!-- Google Chart -->
+    <script src="__PUBLIC__/AdminCourse/js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
+    <script src="__PUBLIC__/AdminCourse/js/jquery-migrate-1.2.1.min.js"></script> <!--  jQuery Migrate Plugin -->
     <script>
       
      

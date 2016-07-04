@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <foreach name="list" item="vo" key="k" >
+    hello@
+    {$courseTeacher}
+    <foreach name="courseTeacher" item="vo" key="k" >
         <form name="input" action="http://localhost:8080/MoocPlatform/Index.php/Manage/AdminCourse/courseInfo" method="post">
-            {$vo['CourseID']}{$vo['CourseName']}
-            <input type="hidden" name="CourseID" value={$vo['CourseID']}>
+            {$vo['TeaName']}
+            <input type="hidden" name="CourseID" value={$vo}>
             <input type="submit" value="Submit">
         </form>
     </foreach>

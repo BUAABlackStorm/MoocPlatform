@@ -8,10 +8,10 @@ return array(
     'APP_GROUP_PATH' => 'Modules',
 
     //数据库连接参数
-    'DB_HOST' => '',
-    'DB_USER' => '',
-    'DB_PWD' => '',
-    'DB_NAME' => '',
+    'DB_HOST' => 'localhost',
+    'DB_USER' => 'root',
+    'DB_PWD' => '19950326',
+    'DB_NAME' => 'moocdb',
     'DB_PREFIX' => '',
 
     //点语法默认解析
