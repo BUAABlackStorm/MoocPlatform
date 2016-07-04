@@ -7,17 +7,18 @@ class TeacherAction extends Action
 		$this->display();
 	}
 
-	public function course($id)
+	public function course($course_id)
 	{
-		$teacher=session('teacher');
-
+		//$teacher=session('teacher');    $teacher->TeaID   
+		$teacher_id=1;
 		$db=M('resource');
 		$resourceList=$db
-					->where('resource.OwnerID='.$teacher->TeaID.' and resource.CourseID='.$id)
+					->where('resource.OwnerID='.$teacher_id.' and resource.CourseID='.$course_id)
 					->select();
-		$this->assign($resourceList,'resourceList');
+		$this->assign('resourceList',$resourceList);
+		$this->assign('course_id',$course_id);
 
-		$this->display();
+		$this->display('index');
 	}
 
     public function upload()
@@ -28,7 +29,7 @@ class TeacherAction extends Action
 		    'maxSize'    =>    3145728,
 		    'savePath'   =>    './MoocPlatform/Modules/MoocPlatform/Uploads/Teacher/',
 		    'saveRule'   =>    'uniqid',
-		    'allowExts'  =>    array('jpg', 'png', 'jpeg','doc','docx','xls','xlsx','ppt','pptx'),
+		    'allowExts'  =>    array('jpg', 'png', 'jpeg','doc','docx','xls','xlsx','ppt','pptx','txt'),
 		    'autoSub'    =>    true,
 		    'subType'	 =>	   'date',
 		    'dateFormat'    =>    'Y-m-d',
@@ -45,38 +46,39 @@ class TeacherAction extends Action
 		}
 		else
 		{
-			$teacher=session('teacher');
+			//$teacher=session('teacher');    $teacher->TeaID
+			$teacher_id=1;
 			$db=M('resource');
 
     		foreach($info as $file)
     		{
     			$res=[
-    					'OwnerID'=>$teacher->TeaID,
-    					'CourseID'=>I('courseID'),
-    					'ResOriginName'=>$file['name'];
-    					'ResActualName'=>$file['savename'];
-    					'ResPath'=>$file['savepath'];
-    				]
+    					'OwnerID'=>$teacher_id,
+    					'CourseID'=>I('param.course_id'),
+    					'ResOriginName'=>$file['name'],
+    					'ResActualName'=>$file['savename'],
+    					'ResPath'=>$file['savepath'],
+    				];
     			$db->add($res);
     		}
 
-    		U(GROUP_NAME.'/Teacher/course/',['id'=>I('courseID')]);
+    		$this->redirect('/Teacher/course/course_id/'.I('param.course_id'));
 		}
     }
 
     public function download()
     {
     	import('ORG.Net.Http');
-
-    	$id_array=I('id_array');
+    	$id_array=I('param.id_array');
     	$db=M('resource');
 
     	foreach ($id_array as $id)
     	{
     		$res=$db
     			->where('resource.ResID='.$id)
-    			->find();
-    		Http::download($res->ResPath,$res->ResOriginName);
+    			->select();
+
+    		Http::download(($res[0]['ResPath']).($res[0]['ResActualName']),urlencode($res[0]['ResOriginName']));
     	}
     }
 }
