@@ -80,8 +80,12 @@
             <div class="col-md-12">
               <h2 class="text-center">所有课程列表</h2>
               <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
-                
-                <div class="panel-heading templatemo-position-relative text-right"><h2><em><a href="index2.html">新增课程》》</a></em></h2>
+
+                <div class="panel-heading templatemo-position-relative text-right"><h2>
+                  <form name="input" action="http://localhost:8080/MoocPlatform/Index.php/Manage/AdminCourse/courseNewInfo" method="post">
+                    <input type="submit" value="新增课程">
+                  </form>
+                </h2>
                   
                 </div>
                 <div class="table-responsive">
@@ -102,7 +106,6 @@
                     <td>{$vo['DepartmentName']}</td>
                     <form name="input" action="http://localhost:8080/MoocPlatform/Index.php/Manage/AdminCourse/courseInfo" method="post">
                       <input type="hidden" name="CourseID" value={$vo['CourseID']}>
-                      <input type="submit" value="Submit">
                      <td><input type="submit" value="Edit"/></td>
                     </form>
                   </tr>
