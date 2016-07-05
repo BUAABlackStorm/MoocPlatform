@@ -1,6 +1,6 @@
 <?php
 
-class TeacherAction extends Action
+class TeacherAction extends VerifyLoginAction
 {
 	public function index()
 	{
