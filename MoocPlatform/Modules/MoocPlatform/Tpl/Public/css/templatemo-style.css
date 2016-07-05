@@ -15,7 +15,7 @@ TABLE OF CONTENT
 ----------------------------------------------*/
 /* 1. Universal Styles
 ----------------------------------------------*/
-* {	font-family: 'Open Sans', sans-serif; }
+* {	font-family: 'Open Sans', sans-serif,"微软雅黑"; }
 body {	font-size: 13px; }
 body, .templatemo-left-nav { background: #1f2124; }
 h1, h2, h3 { margin: 0; }
@@ -34,6 +34,15 @@ nav li {
 	font-size: 1.1em;
 	list-style: none;	
 	text-transform: uppercase;
+}
+.avatar {
+	display: inline-block;
+    overflow: hidden;
+    line-height: 1;
+    vertical-align: middle;
+    border-radius: 3px;
+    height:20px;
+    width:20px;
 }
 .templatemo-inline-block {
 	display: inline-block;
@@ -68,6 +77,7 @@ nav li {
 .blue-bg .fa-times:hover { background-color: #2C639C; }
 .light-gray-bg { background-color: #efefef; }
 .padding-right-25 {	padding-right: 25px; }
+.right{float:right !important;}
 .margin-bottom-0 {	margin-bottom: 0; }
 .margin-bottom-5 {	margin-bottom: 5px; }
 .margin-bottom-10 {	margin-bottom: 10px; }
@@ -76,10 +86,92 @@ nav li {
 .margin-right-15 { margin-right: 15px; }
 .margin-10 { margin: 10px; }
 .width-100 { width: 100%; }
+.wrap-table {     
+	margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-top: 0;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px; 
+}
+.wrap-table-head {
+	position: relative;
+    padding: 10px;
+    margin-bottom: -1px;
+    line-height: 20px;
+    color: #68777d;
+    background-color: #f2f9fc;
+    border: 1px solid #c9e6f2;
+    border-radius: 3px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
 .no-border { border: none; }
 .border-radius-10 { border-radius: 10px; }
 footer { padding: 15px; }
-
+.user-mention>a {text-decoration:none;}
+table.files td{
+	padding:6px 3px;
+	line-height:20px;
+	border-top:1px solid #eee;
+}
+table.files td.icon {
+	width: 17px;
+    padding-right: 2px;
+    padding-left: 10px;
+    color: #767676;
+}
+table.files td.name {
+	width:833px;
+}
+table.files td.age {
+	width: 125px;
+    padding-right: 10px;
+    color: #888;
+    text-align: right;
+    white-space: nowrap;
+}
+.btn {
+    position: relative;
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #eee;
+    background-image: -webkit-linear-gradient(#fcfcfc, #eee);
+    background-image: linear-gradient(#fcfcfc, #eee);
+    border: 1px solid #d5d5d5;
+    border-radius: 3px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.btn-group {
+	display: inline-block;
+    vertical-align: middle;
+}
+.btn-group-form {
+	float: left;
+}
+.btn-sm {
+	padding:2px 10px;
+}
+.file-navigation.in-mid-page {
+    margin-top: -10px;
+}
+.file-navigation.in-mid-page>span{
+	color:#000;
+	font-size:20px;
+	font-weight:bold;
+}
 /* 2. Left Column
 -----------------------------*/
 .templatemo-sidebar { width: 211px; }
@@ -191,7 +283,9 @@ footer { padding: 15px; }
 	transition: all 0.3s ease;
 }
 .templatemo-left-nav .fa { margin-right: 15px; }
+.file-select {
 
+}
 /* 3. Right Column
 ------------------------------*/
 .templatemo-top-nav-container {
@@ -246,6 +340,18 @@ footer { padding: 15px; }
 	position: relative;
 	margin: 10px;
  	box-shadow: 0px 0px 1px 1px rgba(161, 159, 159, 0.1);
+}
+.templatemo-content-widget-s {
+	border-radius: 10px;
+	padding: 15px 30px 30px 30px;	
+	position: relative;
+	margin: 10px;
+	font-weight: bold;
+ 	box-shadow: 0px 0px 1px 1px rgba(161, 159, 159, 0.1);
+ 	height:50%;
+}
+.templatemo-content-widget-s.white-bg.col-2>div{
+	font-size:20px;
 }
 .templatemo-content-widget.no-padding {	padding: 0; }
 .fa-times {
@@ -398,7 +504,7 @@ footer { padding: 15px; }
 
 /* Style checkboxes and radio buttons
 http://webdesign.tutsplus.com/tutorials/quick-tip-easy-css3-checkboxes-and-radio-buttons--webdesign-8953 */
-input[type="checkbox"] {  display:none; }
+/*input[type="checkbox"] {  display:none; }
 input[type="checkbox"] + label span {
     display:inline-block;
     width:26px;
@@ -410,7 +516,7 @@ input[type="checkbox"] + label span {
 }
 input[type="checkbox"]:checked + label span {
     background:url(../images/checkbox-radio-sheet.png) -26px top no-repeat;
-}
+}*/
 input[type="radio"] { display:none; }
 input[type="radio"] + label span {
     display:inline-block;
@@ -561,7 +667,48 @@ input[type="radio"]:checked + label span {
 	height: 100px;
 	overflow-y: scroll;	
 }
-
+/* Add. Dialog Related
+.dialog-header {
+	color: #fff;
+    background: #4190e7
+}
+.dialog-downloader {
+	width: 633px;
+    top: auto;
+    bottom: 0px;
+    left: auto;
+    right: 30px;
+    display: block;
+    visibility: visible;
+    z-index: 53;
+}
+.dialog-header-title {
+    display: block;
+    padding-top: 5px;
+    line-height: 16px;
+    margin-right: 50px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+ .dialog-body {
+    background: #fff;
+    line-height: 24px;
+}
+.select-text {
+	color: #fff;
+    font-style: normal;
+    cursor: text;
+    text-indent: 1em;
+    font-size: 14px;
+    line-height: 13px;
+}
+.downloader-list {
+    position: relative;
+    overflow: hidden;
+    overflow-y: auto;
+    height: 340px;
+}*/
 /* 8. Media Queries
 ------------------------------*/
 @media screen and (max-width: 1199px) and (min-width: 991px) {
