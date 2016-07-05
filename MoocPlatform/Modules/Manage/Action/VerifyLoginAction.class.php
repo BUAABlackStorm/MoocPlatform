@@ -9,7 +9,7 @@
 Class VerifyLoginAction extends Action{
 
     public function _initialize(){
-        if(session("?SenID")){
+        if(session("?senate")){
             $this->redirect('/LoginAndRegister/Login');
         }
     }
