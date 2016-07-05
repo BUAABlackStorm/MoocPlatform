@@ -4,6 +4,7 @@ class TeacherAction extends VerifyLoginAction
 {
 	public function index()
 	{
+		
 		$this->display();
 	}
 
