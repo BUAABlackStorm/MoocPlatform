@@ -49,8 +49,8 @@
         </div>
         <nav class="templatemo-left-nav">          
           <ul>
-            <li><a href="index.html" class="active"><i class="fa fa-home fa-fw"></i>课程信息管理</a></li>
-            <li><a href="preferences.html"><i class="fa fa-map-marker fa-fw"></i>学期信息管理</a></li>
+            <li><a href="http://localhost:8080/MoocPlatform/index.php/Manage/AdminCourse/courseList" class="active"><i class="fa fa-home fa-fw"></i>课程信息管理</a></li>
+            <li><a href="http://localhost:8080/MoocPlatform/index.php/Manage/AdminTerm/getTermList"><i class="fa fa-map-marker fa-fw"></i>学期信息管理</a></li>
             <li><a href="data-visualization.html"><i class="fa fa-bar-chart fa-fw"></i>教师信息管理</a></li>
             <li><a href="manage-users.html"><i class="fa fa-database fa-fw"></i>学生信息管理</a></li>
             <li><a href="login.html"><i class="fa fa-eject fa-fw"></i>登出</a></li>
@@ -63,8 +63,8 @@
           <div class="row">
             <nav class="templatemo-top-nav col-lg-12 col-md-12">
               <ul class="text-uppercase">
-                <li><a href="" class="active">教务中心</a></li>
-                <li><a href="">信息管理</a></li>
+                <li><a href="http://localhost:8080/MoocPlatform/Index.php/Manage/AdminCourse/courseList" class="active">课程列表</a></li>
+                <li><a href="http://localhost:8080/MoocPlatform/Index.php/Manage/AdminCourse/courseNewInfo">新建课程</a></li>
                 <li><a href="">帮助中心</a></li>
                 <li><a href="login.html">登出</a></li>
               </ul>  
@@ -79,23 +79,15 @@
             
             <div class="col-md-12">
               <h2 class="text-center">所有课程列表</h2>
-              <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
-
-                <div class="panel-heading templatemo-position-relative text-right"><h2>
-                  <form name="input" action="http://localhost:8080/MoocPlatform/Index.php/Manage/AdminCourse/courseNewInfo" method="post">
-                    <input type="submit" value="新增课程">
-                  </form>
-                </h2>
-                  
-                </div>
-                <div class="table-responsive">
-                  <table class="table table-striped table-bordered">
+                <br>
+                  <div class="panel panel-default table-responsive">
+                    <table class="table table-striped table-bordered templatemo-user-table">
                     <thead>
                   <tr>
                     <td>课程编号<span class="caret"></span></a></td>
                     <td>课程名称<span class="caret"></span></a></td>
                     <td>开设院系<span class="caret"></span></a></td>
-                    <td>Edit</td>
+                    <td></td>
                   </tr>
                 </thead>
                 <tbody>
@@ -106,7 +98,7 @@
                     <td>{$vo['DepartmentName']}</td>
                     <form name="input" action="http://localhost:8080/MoocPlatform/Index.php/Manage/AdminCourse/courseInfo" method="post">
                       <input type="hidden" name="CourseID" value={$vo['CourseID']}>
-                     <td><input type="submit" value="Edit"/></td>
+                      <td style="text-algin:center"><input type="submit" value="编辑" class="templatemo-edit-btn text-center" /></td>
                     </form>
                   </tr>
                 </foreach>
