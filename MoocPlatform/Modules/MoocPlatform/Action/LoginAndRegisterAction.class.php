@@ -58,7 +58,7 @@ Class LoginAndRegisterAction extends Action{
             $senate = M('senate')->where(array('SenID' => I('SenID')))->find();
             if($senate['Password'] == md5(I('Password')) ){
                 session('senate',$senate);
-                $url = '/Manage/Index';
+                $url = '/Manage/AdminCourse/courseList';
                 $this->success("登录成功",U($url),1);
             }else{
                 $this->error("登录失败，账号或密码错误");
@@ -177,7 +177,7 @@ Class LoginAndRegisterAction extends Action{
 
     public function Logout(){
         session(null);
-        $this->redirect('/LoginAndRegister/Login');
+        $this->redirect('/LoginAndRegister/LoginView');
     }
 
 }

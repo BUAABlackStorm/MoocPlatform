@@ -60,13 +60,13 @@ class TeacherAction extends VerifyLoginAction
 
     		foreach($info as $file)
     		{
-    			$res=[
+    			$res=array(
     					'OwnerID'=>$teacher['TeaID'],
     					'CourseID'=>I('param.course_id'),
     					'ResOriginName'=>$file['name'],
     					'ResActualName'=>$file['savename'],
     					'ResPath'=>$file['savepath'],
-    				];
+				);
     			$db->add($res);
     		}
 
