@@ -10,7 +10,7 @@ Class LoginAndRegisterAction extends Action{
 
     //进入登录界面
     public function LoginView(){
-        $this->display();
+        $this->display('login');
     }
 
     //进入注册界面
@@ -18,7 +18,11 @@ Class LoginAndRegisterAction extends Action{
 
         $question = M('question')->select();
         $this->question = $question;
-        $this->display();
+
+        $department = M('department')->select();
+        $this->department = $department;
+
+        $this->display('register');
     }
 
 
@@ -30,7 +34,7 @@ Class LoginAndRegisterAction extends Action{
         //若类型为1则是学生登录
         if($type == 1 ){
             $student = M('student')->where(array('StuID' => I('StuID')))->find();
-            if($student['Password'] == I('Password')){
+            if($student['Password'] == md5(I('Password')) ){
                 session('StuID',I('StuID'));
                 $url = '';//登录成功后的跳转地址
                 $this->success("登录成功",U(GROUP_NAME.$url),1);
@@ -41,7 +45,7 @@ Class LoginAndRegisterAction extends Action{
         //类型为2则是老师登录
         else if($type == 2){
             $teacher = M('teacher')->where(array('TeaID' => I('TeaID')))->find();
-            if($teacher['Password'] == I('Password')){
+            if($teacher['Password'] == md5(I('Password')) ){
                 session('TeaID',I('TeaID'));
                 $url='';//登录成功后的跳转地址
                 $this->success("登录成功",U(GROUP_NAME.$url),1);
@@ -52,7 +56,7 @@ Class LoginAndRegisterAction extends Action{
         //类型为3则是教务登录
         else if($type == 3){
             $senate = M('senate')->where(array('SenID' => I('SenID')))->find();
-            if($senate['Password'] == I('Password')){
+            if($senate['Password'] == md5(I('Password')) ){
                 session('SenID',I('SenID'));
                 $url = '/Manage/Index';
                 $this->success("登录成功",U($url),1);
@@ -65,25 +69,26 @@ Class LoginAndRegisterAction extends Action{
     //注册
     public function Register(){
 
-        $type = I('userType');
+        $type = I('type');
         $successUrl = '/LoginAndRegister/LoginView'; //注册成功后的跳转地址
 
         //学生注册
         if($type == 1){
 
             $student = array(
-                'StuID' => I('userID'),
+                'StuID' => I('userId'),
                 'StuName' => I('userName'),
-                'Password' => md5(I('password')),
+                'Password' => md5(I('password1')),
                 'RealName' => I('realName'),
-                'Email' => I('userEmail'),
-                'Sex' => I('sexRadioOptions'),
+                'Email' => I('useremail'),
+                'Sex' => I('sex'),
                 'Department' => I('userDepartment'),
                 'Class' => I('userClass'),
-                'question' => I('QuestionID'),
-                'answer' => I('Answer'),
-                'grade' => I('Grade'),
+                'QuestionID' => I('question'),
+                'Answer' => I('Answer'),
+                'Grade' => I('grade'),
             );
+
 
             if( M('student')->add($student) ){
                 $this->success('注册成功',U(GROUP_NAME.$successUrl),2);
@@ -96,14 +101,14 @@ Class LoginAndRegisterAction extends Action{
         else if($type == 2){
 
             $teacher = array(
-                'TeaID' => I('TeaID'),
-                'TeaName' => I('TeaName'),
-                'Password' => md5(I('Password')),
-                'Sex' => I('Sex'),
-                'Email' => I('Email'),
-                'Department' => I('Department'),
-                'QuestionID' => I('QuestionID'),
-                'Answer' => I('Answer'),
+                'TeaID' => I('teaid'),
+                'TeaName' => I('teaname'),
+                'Password' => md5(I('password')),
+                'Sex' => I('sex'),
+                'Email' => I('email'),
+                'Department' => I('department'),
+                'QuestionID' => I('questionid'),
+                'Answer' => I('answer'),
             );
 
             if( M('teacher') -> add($teacher) ){
@@ -112,6 +117,11 @@ Class LoginAndRegisterAction extends Action{
                 $this->error("注册失败，请重试");
             }
         }
+    }
+
+
+    public function changePasswordView(){
+        $this->display('changePassword');
     }
 
     //修改密码
@@ -145,7 +155,7 @@ Class LoginAndRegisterAction extends Action{
             $teacher = M('teacher')->where(array('TeaID' => I('TeaID')))->find();
             if($teacher['QuestionID'] == I('QuestionID') && $teacher['Answer'] == I('Answer') ){
 
-                $student = array(
+                $teacher = array(
                     'TeaID' => I('TeaID'),
                     'Password' => md5(I('Password')),
                 );
@@ -159,6 +169,13 @@ Class LoginAndRegisterAction extends Action{
                 $this->error("所选问题或者问题答案不对,请重试");
             }
         }
+    }
+
+    public function Logout(){
+        session('StuID',null);
+        session('TeaID',null);
+        session('SenID',null);
+        $this->redirect('/LoginAndRegister/Login');
     }
 
 }
