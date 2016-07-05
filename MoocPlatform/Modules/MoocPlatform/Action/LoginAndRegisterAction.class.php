@@ -35,7 +35,7 @@ Class LoginAndRegisterAction extends Action{
         if($type == 1 ){
             $student = M('student')->where(array('StuID' => I('StuID')))->find();
             if($student['Password'] == md5(I('Password')) ){
-                session('StuID',I('StuID'));
+                session('student',$student);
                 $url = '';//登录成功后的跳转地址
                 $this->success("登录成功",U(GROUP_NAME.$url),1);
             }else{
@@ -46,8 +46,8 @@ Class LoginAndRegisterAction extends Action{
         else if($type == 2){
             $teacher = M('teacher')->where(array('TeaID' => I('TeaID')))->find();
             if($teacher['Password'] == md5(I('Password')) ){
-                session('TeaID',I('TeaID'));
-                $url='';//登录成功后的跳转地址
+                session('teacher',$teacher);
+                $url='/Teacher'; //登录成功后的跳转地址
                 $this->success("登录成功",U(GROUP_NAME.$url),1);
             }else{
                 $this->error("登录失败，账号或者密码错误");
@@ -57,7 +57,7 @@ Class LoginAndRegisterAction extends Action{
         else if($type == 3){
             $senate = M('senate')->where(array('SenID' => I('SenID')))->find();
             if($senate['Password'] == md5(I('Password')) ){
-                session('SenID',I('SenID'));
+                session('senate',$senate);
                 $url = '/Manage/Index';
                 $this->success("登录成功",U($url),1);
             }else{
@@ -176,9 +176,7 @@ Class LoginAndRegisterAction extends Action{
     }
 
     public function Logout(){
-        session('StuID',null);
-        session('TeaID',null);
-        session('SenID',null);
+        session(null);
         $this->redirect('/LoginAndRegister/Login');
     }
 

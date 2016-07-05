@@ -5,10 +5,9 @@
  * Date: 2016/7/2
  * Time: 16:18
  */
-class IndexAction extends Action{
+class IndexAction extends VerifyLoginAction{
 
     public function index(){
-
         $this->display();
     }
 }
