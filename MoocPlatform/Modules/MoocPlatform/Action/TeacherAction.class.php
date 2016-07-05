@@ -42,7 +42,8 @@ class TeacherAction extends Action
 
 		if(!$info)
 		{
-    		$this->error($upload->getError());
+    		//$this->error($upload->getError());
+    		$this->redirect('/Teacher/course/course_id/'.I('param.course_id'));
 		}
 		else
 		{
@@ -80,6 +81,32 @@ class TeacherAction extends Action
 
     		Http::download(($res[0]['ResPath']).($res[0]['ResActualName']),urlencode($res[0]['ResOriginName']));
     	}
+    }
+
+    public function delete()
+    {
+    	$id_array=I('param.id_array');
+    	$course_id=I('param.course_id');
+
+    	$db=M('resource');
+
+    	foreach ($id_array as $id)
+    	{
+    		$res=$db->where('resource.ResID='.$id);
+    		$res_tmp=$res->select();
+    		//删除服务器上的文件
+    		unlink(($res[0]['ResPath']).($res[0]['ResActualName']));
+
+    		//删除数据库表项
+    		$res->delete();
+    	}
+
+    	$this->redirect('/Teacher/course/course_id/'.I('param.course_id'));
+    }
+
+    public function addHomework()
+    {
+    	
     }
 }
 
