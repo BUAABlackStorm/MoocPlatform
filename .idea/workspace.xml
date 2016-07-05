@@ -2,57 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab83916d-6171-4df5-b08d-4702ebeb7277" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/css/bootstrap-datetimepicker.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/css/bootstrap.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/css/font-awesome.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/css/templatemo-style.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/fonts/FontAwesome.otf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/fonts/fontawesome-webfont.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/fonts/fontawesome-webfont.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/fonts/fontawesome-webfont.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/fonts/fontawesome-webfont.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/fonts/fontawesome-webfont.woff2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/images/bicycle.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/images/checkbox-radio-sheet.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/images/person.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/images/profile-photo.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/images/sunset-big.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/images/sunset.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/data/jquery.vmap.sampledata.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/jquery.vmap.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/jquery.vmap.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/jquery.vmap.packed.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/jqvmap.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/continents/jquery.vmap.africa.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/continents/jquery.vmap.asia.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/continents/jquery.vmap.australia.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/continents/jquery.vmap.europe.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/continents/jquery.vmap.north-america.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/continents/jquery.vmap.south-america.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/continents/readme.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/jquery.vmap.algeria.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/jquery.vmap.brazil.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/jquery.vmap.europe.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/jquery.vmap.france.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/jquery.vmap.germany.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/jquery.vmap.russia.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/jquery.vmap.usa.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/jquery.vmap.world.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/js/bootstrap-datetimepicker.fr.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/js/bootstrap-datetimepicker.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/js/bootstrap-datetimepicker.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/js/bootstrap-filestyle.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/js/jquery-1.11.2.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/js/jquery-migrate-1.2.1.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/js/templatemo-script.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Conf/config.php" afterPath="$PROJECT_DIR$/MoocPlatform/Conf/config.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Conf/config.php" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Conf/config.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseInfo.html" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseInfo.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseList.html" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseList.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseList_1.html" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseList_1.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Action/LoginAndRegisterAction.class.php" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Action/LoginAndRegisterAction.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Conf/config.php" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Conf/config.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Action/TeacherAction.class.php" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Action/TeacherAction.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/LoginAndRegister/register.html" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/LoginAndRegister/register.html" />
     </list>
     <ignored path="course.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -68,50 +21,50 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="register.html" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/LoginAndRegister/register.html">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="-13.090909">
+                    <caret line="278" column="121" selection-start-line="278" selection-start-column="103" selection-end-line="278" selection-end-column="121" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="changePassword.html" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/LoginAndRegister/changePassword.html">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="-0.024793388">
+                    <caret line="74" column="65" selection-start-line="74" selection-start-column="65" selection-end-line="74" selection-end-column="65" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="course" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="register.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/LoginAndRegister/register.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.72727275">
-              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="login.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/LoginAndRegister/login.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.121212">
-              <caret line="113" column="56" selection-start-line="113" selection-start-column="56" selection-end-line="113" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LoginAndRegisterAction.class.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="LoginAndRegisterAction.class.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Action/LoginAndRegisterAction.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.5757575">
-              <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
+            <state vertical-scroll-proportion="-0.8306011">
+              <caret line="96" column="13" selection-start-line="96" selection-start-column="13" selection-end-line="96" selection-end-column="13" />
               <folding>
                 <element signature="e#6#85#0#PHP" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="courseInfo.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseInfo.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.7454545">
-              <caret line="49" column="42" selection-start-line="49" selection-start-column="42" selection-end-line="49" selection-end-column="42" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -143,12 +96,14 @@
         <option value="$PROJECT_DIR$/MoocPlatform/Conf/config.php" />
         <option value="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Conf/config.php" />
         <option value="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseList_1.html" />
-        <option value="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseInfo.html" />
         <option value="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseList.html" />
         <option value="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Conf/config.php" />
-        <option value="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/LoginAndRegister/register.html" />
         <option value="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/LoginAndRegister/login.html" />
+        <option value="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseInfo.html" />
+        <option value="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Action/TeacherAction.class.php" />
+        <option value="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/LoginAndRegister/register.html" />
         <option value="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Action/LoginAndRegisterAction.class.php" />
+        <option value="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/LoginAndRegister/changePassword.html" />
       </list>
     </option>
   </component>
@@ -190,7 +145,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -203,20 +157,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="course" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MoocPlatform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="course" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MoocPlatform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="MoocPlatform" />
@@ -319,11 +259,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Manage" />
+              <option name="myItemId" value="MoocPlatform" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Tpl" />
+              <option name="myItemId" value="Action" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -348,14 +288,6 @@
               <option name="myItemId" value="Manage" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tpl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AdminCourse" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -368,14 +300,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="MoocPlatform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Manage" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -399,6 +323,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -477,6 +402,40 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/LoginAndRegister/register.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/LoginAndRegister/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="113" column="56" selection-start-line="113" selection-start-column="56" selection-end-line="113" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Action/LoginAndRegisterAction.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
+          <folding>
+            <element signature="e#6#85#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseInfo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/LoginAndRegister/register.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -652,34 +611,50 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/LoginAndRegister/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.121212">
+        <state vertical-scroll-proportion="0.0">
           <caret line="113" column="56" selection-start-line="113" selection-start-column="56" selection-end-line="113" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Action/TeacherAction.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-23.272728">
+          <caret line="56" column="55" selection-start-line="56" selection-start-column="55" selection-end-line="56" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseInfo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.09471767">
+          <caret line="37" column="14" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/LoginAndRegister/register.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.72727275">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+        <state vertical-scroll-proportion="-13.090909">
+          <caret line="278" column="121" selection-start-line="278" selection-start-column="103" selection-end-line="278" selection-end-column="121" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Action/LoginAndRegisterAction.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.5757575">
-          <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
+        <state vertical-scroll-proportion="-0.8306011">
+          <caret line="96" column="13" selection-start-line="96" selection-start-column="13" selection-end-line="96" selection-end-column="13" />
           <folding>
             <element signature="e#6#85#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseInfo.html">
+    <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/LoginAndRegister/changePassword.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.7454545">
-          <caret line="49" column="42" selection-start-line="49" selection-start-column="42" selection-end-line="49" selection-end-column="42" />
+        <state vertical-scroll-proportion="-0.024793388">
+          <caret line="74" column="65" selection-start-line="74" selection-start-column="65" selection-end-line="74" selection-end-column="65" />
           <folding />
         </state>
       </provider>

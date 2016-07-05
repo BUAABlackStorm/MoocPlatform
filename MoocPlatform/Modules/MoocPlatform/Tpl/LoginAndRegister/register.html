@@ -98,41 +98,41 @@
                       <div class="form-group">
                         <label for="userid" class="col-md-3 control-label"><em style="color:#F00">*</em>学号</label>
                         <div class="col-md-6">
-                          <input type="text" class="form-control" name="userId" id="userid" required>
+                          <input type="text" class="form-control" name="userId" id="userid" autocomplete="off" required>
                         </div>
                       </div>
 
                       <div class="form-group">
                         <label for="username" class="col-md-3 control-label"><em style="color:#F00">*</em>用户名</label>
                         <div class="col-md-6">
-                          <input type="text" class="form-control" name="userName" id="username" required>
+                          <input type="text" class="form-control" name="userName" id="username" autocomplete="off" required>
                         </div>
                       </div>
 
                       <div class="form-group">
                         <label for="password" class="col-md-3 control-label"><em style="color:#F00">*</em>密码</label>
                         <div class="col-md-6">
-                          <input type="password" class="form-control" id="password" name="password1" required>
+                          <input type="password" class="form-control" id="password" name="password1" autocomplete="off" required>
                         </div>
                       </div>
 
                       <div class="form-group">               
                         <label for="chk_pwd" class="col-md-3 control-label"><em style="color:#F00">*</em>确认密码</label>
                         <div class="col-md-6">
-                          <input type="password" class="form-control" id="chk_pwd" name="password2" required>
+                          <input type="password" class="form-control" id="chk_pwd" name="password2" autocomplete="off" required>
                         </div>
                       </div>
                       
                       <div class="form-group">
                         <label for="realname" class="col-md-3 control-label">真实姓名</label>
                         <div class="col-md-6">
-                         <input type="text" class="form-control" name="realName" id="realname">                          
+                         <input type="text" class="form-control" name="realName" id="realname" autocomplete="off">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="useremail" class="col-md-3 control-label">Email</label>
                         <div class="col-md-6">
-                          <input type="email" class="form-control" name="useremail" id="userEmail">
+                          <input type="email" class="form-control" name="useremail" id="userEmail" autocomplete="off">
                         </div>
                       </div>
                       
@@ -172,7 +172,7 @@
                       <div class="form-group">
                         <label for="userclass" class="col-md-3 control-label">班级</label>
                         <div class="col-md-6">
-                          <input type="text" class="form-control" name="userClass" id="userclass">                          
+                          <input type="text" class="form-control" name="userClass" id="userclass" autocomplete="off">
                         </div>
                       </div>
 
@@ -190,7 +190,7 @@
                       <div class="form-group">
                         <label class="col-md-3 control-label"><em style="color:#F00">*</em>Answer</label>
                         <div class="col-md-6">
-                          <input type="text" class="form-control" name="answer" placeholder="请输入密保回答" required>
+                          <input type="text" class="form-control" name="Answer" placeholder="请输入密保回答" autocomplete="off" required>
                         </div>
                       </div>
                       <div class="row">
@@ -209,35 +209,35 @@
                       <div class="form-group">
                         <label for="teaid" class="col-md-3 control-label"><em style="color:#F00">*</em>教工号</label>
                         <div class="col-md-6">
-                          <input type="text" class="form-control" name="teaid" required>
+                          <input type="text" class="form-control" name="teaid" autocomplete="off" required>
                         </div>
                       </div>
 
                       <div class="form-group">
                         <label for="teaname" class="col-md-3 control-label"><em style="color:#F00">*</em>姓名</label>
                         <div class="col-md-6">
-                          <input type="text" class="form-control" name="teaname" required>
+                          <input type="text" class="form-control" name="teaname" autocomplete="off" required>
                         </div>
                       </div>
 
                       <div class="form-group">
                         <label for="password" class="col-md-3 control-label"><em style="color:#F00">*</em>密码</label>
                         <div class="col-md-6">
-                          <input type="password" class="form-control"  name="password" required>
+                          <input type="password" class="form-control"  name="password" autocomplete="off" required>
                         </div>
                       </div>
 
                       <div class="form-group">               
                         <label for="chk_pwd" class="col-md-3 control-label"><em style="color:#F00">*</em>确认密码</label>
                         <div class="col-md-6">
-                          <input type="password" class="form-control"  name="chk_pwd" required>
+                          <input type="password" class="form-control"  name="chk_pwd" autocomplete="off" required>
                         </div>
                       </div>
                     
                       <div class="form-group">
                         <label for="email" class="col-md-3 control-label">Email</label>
                         <div class="col-md-6">
-                          <input type="email" class="form-control" name="email" >
+                          <input type="email" class="form-control" name="email" autocomplete="off"/>
                         </div>
                       </div>
                       
@@ -265,7 +265,7 @@
                       <div class="form-group">
                         <label class="col-md-3 control-label"><em style="color:#F00">*</em>Question</label>
                         <div class="col-md-6">
-                          <select class="form-control" name="questionid" required>
+                          <select class="form-control" name="questionid"  required>
                             <foreach name="question" item="v">
                               <option value="{$v.QuestionID}">{$v.Question}</option>
                             </foreach>
@@ -276,7 +276,7 @@
                       <div class="form-group">
                         <label class="col-md-3 control-label"><em style="color:#F00">*</em>Answer</label>
                         <div class="col-md-6">
-                          <input type="text" class="form-control" name="answer"  placeholder="请输入密保回答" required>
+                          <input type="text" class="form-control" name="Answer"  placeholder="请输入密保回答" autocomplete="off" required>
                         </div>
                       </div>
                       <div class="row">

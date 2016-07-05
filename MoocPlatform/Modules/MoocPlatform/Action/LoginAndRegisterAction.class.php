@@ -108,8 +108,9 @@ Class LoginAndRegisterAction extends Action{
                 'Email' => I('email'),
                 'Department' => I('department'),
                 'QuestionID' => I('questionid'),
-                'Answer' => I('answer'),
+                'Answer' => I('Answer'),
             );
+
 
             if( M('teacher') -> add($teacher) ){
                 $this->success('注册成功',U(GROUP_NAME.$successUrl),2);
@@ -121,6 +122,9 @@ Class LoginAndRegisterAction extends Action{
 
 
     public function changePasswordView(){
+        $question = M('question')->select();
+        $this->question = $question;
+
         $this->display('changePassword');
     }
 
