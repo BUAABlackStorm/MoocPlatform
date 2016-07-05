@@ -25,20 +25,23 @@
     <!-- Left column -->
     <div class="templatemo-flex-row">
       <div class="templatemo-sidebar">
-        <header class="templatemo-site-header">
-          <div class="square"></div>
-          <h1>教师用户</h1>
+         <header class="templatemo-site-header">
+          <div align="center"><img src="__PUBLIC__/images/person.jpg"  class="img-circle" height="50" width="50">
+          <h2>教师用户</h2>
+          </div>
         </header>
-        <div class="profile-photo-container">
-          <img src="__PUBLIC__/images/person.jpg" alt="Profile Photo" class="img-responsive">  
-        </div>      
-        <div class="profile-name">
-        <span>赵昊</span>
+          
+        <div class="profile-name" align="center">
+        <span>{:session('teacher')['TeaName']}</span>
+        <br>
         </div>
-        <div class="profile-name-l">
-        <span>13211000</span>
-        </div><!--$Teacher Name-->
-        <!-- Search box -->
+
+        <div class="profile-name" align="center">
+        <span>{:session('teacher')['TeaID']}</span>
+        <br>
+        </div>
+        
+
         <div class="mobile-menu-icon">
             <i class="fa fa-bars"></i>
         </div>
@@ -73,27 +76,32 @@
                   <a data-toggle="modal" data-target="#Assignment" class="btn btn-sm">发布作业</a>
                    <a data-toggle="modal" data-target="#myModal" class="btn btn-sm">下载文件</a>
                    <a data-toggle="modal" data-target="#deleteModal"class="btn btn-sm">删除文件</a>
-                   <select name="category" class="form right" onchange="changeCate()">
-                  <option value="1">课件</option>
-                  <option value="2">文档</option>
-                  <option value='3'>视频</option>
-                </select>
                 </span>
               </div>
               <div class="wrap-table-head">
               <span class="author-section">
                 <img class="avatar" src="__PUBLIC__/images/neko.jpg">
                 <a class="user-mention">{$course[0]['CourseName']}</a>
-                <a class="right">发布时间</a>
+                <select name="category" class="form right" onchange="changeCate()">
+                  <option value="1">课件</option>
+                  <option value="2">文档</option>
+                  <option value="3">视频</option>
+                </select>
               </span>
               </div>
               <div class="wrap-table">
-              <table class="files">
+              <table class="table table-hover">
                 <tbody>
+                  <tr>
+                    <th>文件名</th>
+                    <th>上传时间</th>
+                    <th>文件大小</th>
+                  </tr>
                   <foreach name="resourceList" item="res">
                   <tr>
-                  <td class="icon"><!--svg--></td>
-                  <td class="name"><a>{$res['ResOriginName']}</a></td>
+                  <td><a>{$res['ResOriginName']}</a></td>
+                  <td><a>{$res['ReleaseTime']}</a></td>
+                  <td><a>{$res['FileSize']/1000}kb</a></td>
                   </tr>
                 </foreach>
                 </tbody>
@@ -111,9 +119,9 @@
                 <div id="queue"></div>
                 <input id="file-select" name="file[]" type="file" multiple="true">
                 <select name="category" class="form">
-                  <option value="1">课件</option>
-                  <option value="2">文档</option>
-                  <option value="3">视频</option>
+                  <option value="课件">课件</option>
+                  <option value="文档">文档</option>
+                  <option value="视频">视频</option>
                 </select>
                 <input type="hidden" name="course_id" value="{$course[0]['CourseID']}">
                 <input class="btn btn-sm right" type="submit" name="submit" value="上传文件"></input>
@@ -188,6 +196,7 @@
         <input type="hidden" name="course_id" value="{$course[0]['CourseID']}">
         <input id="delete" type="submit" class="btn btn-default" value="删除" >
       </div>
+      </form>
     </div>
   </div>
 </div>
@@ -199,34 +208,34 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="myModalLabel">发布作业</h4>
       </div>
+
       <form action="__URL__/addHomework" method="post">
         <div class="modal-body">
           <div class="form-group">
-            <input type="text" required="required" class="form-control" name="homework_name" placeholder="作业标题">
-            开始时间:<input required="required"  type="datetime-local" class="form-control" name="start_time">
-            结束时间:<input required="required"  type="datetime-local" class="form-control" name="end_time">
-            <input type="checkbox" name="isGroup" id="isGroup">是否是团队项目
+            <input type="text" required="required" class="form-control" name="homework_name" placeholder="作业标题"/>
+            开始时间:<input required="required"  type="date" class="form-control" name="start_time"/>
+            结束时间:<input required="required"  type="date" class="form-control" name="end_time"/>
+            <input type="checkbox" name="isGroup" id="isGroup"/>是否是团队项目
             <textarea required="required"  class="form-control" name="require" placeholder="作业要求" rows="6"></textarea>
           </div>
         </div>
         <div class="modal-footer">
-          <input type="hidden" name="course_id" value="{$course_id}">
+          <input type="hidden" name="course_id" value="{$course[0]['CourseID']}"/>
           <input type="submit" class="btn btn-info" value="发布" />
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="关闭" >
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="关闭" />
         </div>
       </form>
+
+    </div>
+    </div>
     </div>
 
  <script>
- // $('document').ready(function(){
- //    alert(1);
- // });
-
     var category = $('select[name = "category"]');
     function changeCate(){
-        alert(category.val());
-        var resUrl = '';
-        $.ajax={
+        
+        var resUrl = '__URL__/ajaxCourse/course_id/{$course[0]['CourseID']}';
+        $.ajax({
             type:'POST',
             url:resUrl,
             data:{
@@ -236,7 +245,11 @@
               load(data);
             },
             dataType:"json"
-        }
+        });
+    }
+
+    function load(data){
+      alert(data[0]['ResActualName']);
     }
 
 
