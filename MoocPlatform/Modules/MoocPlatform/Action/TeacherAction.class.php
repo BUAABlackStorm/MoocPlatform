@@ -9,9 +9,8 @@ class TeacherAction extends Action
 
 	public function course($course_id)
 	{
-		//$teacher=session('teacher');    $teacher->TeaID   
-		$teacher_id=1;
-		$db=M('resource');
+		$teacher_id = 1;
+		$db = M('resource');
 		$resourceList=$db
 					->where('resource.OwnerID='.$teacher_id.' and resource.CourseID='.$course_id)
 					->select();
@@ -70,8 +69,8 @@ class TeacherAction extends Action
     public function download()
     {
     	import('ORG.Net.Http');
-    	$id_array=I('param.id_array');
-    	$db=M('resource');
+    	$id_array = I('param.id_array');
+    	$db = M('resource');
 
     	foreach ($id_array as $id)
     	{
