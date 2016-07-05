@@ -180,6 +180,10 @@ Class LoginAndRegisterAction extends Action{
         $this->redirect('/LoginAndRegister/LoginView');
     }
 
+    public function test(){
+        p(I('test'));
+    }
+
 }
 
 
