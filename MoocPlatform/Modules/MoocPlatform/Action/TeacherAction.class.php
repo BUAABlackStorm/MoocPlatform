@@ -85,8 +85,8 @@ class TeacherAction extends VerifyLoginAction
 
     public function delete()
     {
-    	$id_array=I('param.id_array');
-    	$course_id=I('param.course_id');
+    	$id_array = I('param.id_array');
+    	$course_id = I('param.course_id');
 
     	$db=M('resource');
 
