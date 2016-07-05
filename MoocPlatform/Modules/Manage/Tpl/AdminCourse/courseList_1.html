@@ -6,6 +6,7 @@
     {$courseTeacher}
     <foreach name="courseTeacher" item="vo" key="k" >
         <form name="input" action="http://localhost:8080/MoocPlatform/Index.php/Manage/AdminCourse/courseInfo" method="post">
+
             {$vo['TeaName']}
             <input type="hidden" name="CourseID" value={$vo}>
             <input type="submit" value="Submit">
