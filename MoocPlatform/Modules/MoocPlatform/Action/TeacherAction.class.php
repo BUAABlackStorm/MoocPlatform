@@ -4,16 +4,24 @@ class TeacherAction extends VerifyLoginAction
 {
 	public function index()
 	{
-		
+		$teacher=session('teacher');
+		$db=M('courseteacher');
+
+		$course_teacher=$db
+						->where('courseteacher.TeacherID='.$teacher['TeaID'])
+						->join('course ON course.CourseID=courseteacher.CourseID')
+						->select();
+		$this->assign('course_teacher',$course_teacher);
+						
 		$this->display();
 	}
 
 	public function course($course_id)
 	{
-		$teacher_id = 1;
+		$teacher=session('teacher');
 		$db = M('resource');
 		$resourceList=$db
-					->where('resource.OwnerID='.$teacher_id.' and resource.CourseID='.$course_id)
+					->where('resource.OwnerID='.$teacher['TeaID'].' and resource.CourseID='.$course_id)
 					->select();
 		$this->assign('resourceList',$resourceList);
 		$this->assign('course_id',$course_id);
@@ -47,14 +55,13 @@ class TeacherAction extends VerifyLoginAction
 		}
 		else
 		{
-			//$teacher=session('teacher');    $teacher->TeaID
-			$teacher_id=1;
+			$teacher=session('teacher');
 			$db=M('resource');
 
     		foreach($info as $file)
     		{
     			$res=[
-    					'OwnerID'=>$teacher_id,
+    					'OwnerID'=>$teacher['TeaID'],
     					'CourseID'=>I('param.course_id'),
     					'ResOriginName'=>$file['name'],
     					'ResActualName'=>$file['savename'],

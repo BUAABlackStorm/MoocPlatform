@@ -2,8 +2,71 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab83916d-6171-4df5-b08d-4702ebeb7277" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/fonts/FontAwesome.otf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/fonts/fontawesome-webfont.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/fonts/fontawesome-webfont.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/fonts/fontawesome-webfont.woff2" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/images/bicycle.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/images/checkbox-radio-sheet.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/images/person.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/images/profile-photo.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/images/sunset-big.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/images/sunset.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/Public/images/fdj.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/Public/images/neko.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Action/AdminTermAction.class.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/css/bootstrap-datetimepicker.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/css/bootstrap.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/css/font-awesome.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/css/templatemo-style.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/fonts/fontawesome-webfont.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/fonts/fontawesome-webfont.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/data/jquery.vmap.sampledata.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/jquery.vmap.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/jquery.vmap.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/jquery.vmap.packed.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/jqvmap.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/continents/jquery.vmap.africa.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/continents/jquery.vmap.asia.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/continents/jquery.vmap.australia.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/continents/jquery.vmap.europe.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/continents/jquery.vmap.north-america.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/continents/jquery.vmap.south-america.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/continents/readme.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/jquery.vmap.algeria.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/jquery.vmap.brazil.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/jquery.vmap.europe.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/jquery.vmap.france.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/jquery.vmap.germany.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/jquery.vmap.russia.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/jquery.vmap.usa.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/jqvmap/maps/jquery.vmap.world.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/js/bootstrap-datetimepicker.fr.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/js/bootstrap-datetimepicker.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/js/bootstrap-datetimepicker.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/js/bootstrap-filestyle.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/js/jquery-1.11.2.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/js/jquery-migrate-1.2.1.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/js/templatemo-script.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminTerm/getTermList.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminTerm/preferences.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/Public/js/bootstrap-datetimepicker.fr.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/Public/js/bootstrap-datetimepicker.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/Public/js/bootstrap-datetimepicker.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Action/AdminCourseAction.class.php" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Action/AdminCourseAction.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Action/VerifyLoginAction.class.php" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Action/VerifyLoginAction.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Conf/config.php" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Conf/config.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseInfo.html" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseInfo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseList.html" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseList.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseList_1.html" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseList_1.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseNewInfo.html" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/Manage/Tpl/AdminCourse/courseNewInfo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Action/TeacherAction.class.php" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Action/TeacherAction.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/Public/css/templatemo-style.css" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/Public/css/templatemo-style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/Public/jqvmap/maps/jquery.vmap.europe.js" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/Public/jqvmap/maps/jquery.vmap.europe.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/Public/js/templatemo-script.js" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/Public/js/templatemo-script.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/Teacher/index.html" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/Teacher/index.html" />
     </list>
     <ignored path="course.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,36 +88,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="config.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MoocPlatform/Conf/config.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.4545455">
-              <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="VerifyLoginAction.class.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Action/VerifyLoginAction.class.php">
+        <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/Manage/Action/VerifyLoginAction.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.69945353">
-              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-              <folding>
-                <element signature="e#6#85#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LoginAndRegisterAction.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Action/LoginAndRegisterAction.class.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.363636">
-              <caret line="40" column="18" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
-              <folding>
-                <element signature="e#6#85#0#PHP" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.21857923">
+              <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -424,7 +463,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2655068" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -698,14 +737,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/Manage/Action/VerifyLoginAction.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26229507">
-          <caret line="11" column="27" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Action/TeacherAction.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.21857923">
@@ -716,19 +747,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Action/LoginAndRegisterAction.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.363636">
+        <state vertical-scroll-proportion="0.6229508">
           <caret line="40" column="18" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
           <folding>
             <element signature="e#6#85#0#PHP" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MoocPlatform/Conf/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.4545455">
-          <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -739,6 +762,22 @@
           <folding>
             <element signature="e#6#85#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MoocPlatform/Conf/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38797814">
+          <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MoocPlatform/Modules/Manage/Action/VerifyLoginAction.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21857923">
+          <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
