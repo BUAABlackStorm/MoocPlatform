@@ -32,6 +32,8 @@ class TeacherAction extends VerifyLoginAction
 		$this->assign('course',$course);
 
 		$this->display('course');
+
+		//$this->ajaxReturn($data);
 	}
 
     public function upload()
@@ -71,6 +73,7 @@ class TeacherAction extends VerifyLoginAction
     					'ResOriginName'=>$file['name'],
     					'ResActualName'=>$file['savename'],
     					'ResPath'=>$file['savepath'],
+    					'FileSize'=>$file['size']
 				);
     			$db->add($res);
     		}
@@ -116,7 +119,16 @@ class TeacherAction extends VerifyLoginAction
 
     public function addHomework()
     {
-    	
+    	dump(I('param.start_time'));
+    	// $teacher=session('teacher');
+    	// $db=M("homework");
+
+    	// $homework=array(
+    	// 			'CourseID'=>I('param.course_id'),
+    	// 			'TeaID'=>$teacher['TeaID'],
+    	// 			'HwName'=>I('param.homework_name'),
+    	// 			'StartDate'=>I('param.')
+    	// 	)
     }
 }
 

@@ -70,8 +70,14 @@
               <div class="file-navigation in-mid-page">
                 <span>课程资源分类</span>
                 <span class="btn-group right">
+                  <a data-toggle="modal" data-target="#Assignment" class="btn btn-sm">发布作业</a>
                    <a data-toggle="modal" data-target="#myModal" class="btn btn-sm">下载文件</a>
                    <a data-toggle="modal" data-target="#deleteModal"class="btn btn-sm">删除文件</a>
+                   <select name="category" class="form right" onchange="changeCate()">
+                  <option value="1">课件</option>
+                  <option value="2">文档</option>
+                  <option value='3'>视频</option>
+                </select>
                 </span>
               </div>
               <div class="wrap-table-head">
@@ -104,6 +110,11 @@
             <form accept-charset="utf-8" enctype="multipart/form-data" method="post" class="btn-group-form" action="__URL__/upload">
                 <div id="queue"></div>
                 <input id="file-select" name="file[]" type="file" multiple="true">
+                <select name="category" class="form">
+                  <option value="1">课件</option>
+                  <option value="2">文档</option>
+                  <option value="3">视频</option>
+                </select>
                 <input type="hidden" name="course_id" value="{$course[0]['CourseID']}">
                 <input class="btn btn-sm right" type="submit" name="submit" value="上传文件"></input>
             </form>
@@ -117,19 +128,6 @@
                   });
                 });
               </script> -->
-            </div>
-            <div class="templatemo-content-widget-s white-bg col-8">
-            <div>选择分类</div>
-            <!--<form accept-charset="utf-8" enctype="multipart/form-data" method="post" class="btn-group-form" action="">-->
-            <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            文档<span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="class1.html">课件</a></li>
-              <li><a href="class2.html">视频</a></li>
-            </ul>
-            </div>
             </div>
           </div>
       </div>
@@ -193,5 +191,55 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="Assignment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">发布作业</h4>
+      </div>
+      <form action="__URL__/addHomework" method="post">
+        <div class="modal-body">
+          <div class="form-group">
+            <input type="text" required="required" class="form-control" name="homework_name" placeholder="作业标题">
+            开始时间:<input required="required"  type="datetime-local" class="form-control" name="start_time">
+            结束时间:<input required="required"  type="datetime-local" class="form-control" name="end_time">
+            <input type="checkbox" name="isGroup" id="isGroup">是否是团队项目
+            <textarea required="required"  class="form-control" name="require" placeholder="作业要求" rows="6"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="hidden" name="course_id" value="{$course_id}">
+          <input type="submit" class="btn btn-info" value="发布" />
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="关闭" >
+        </div>
+      </form>
+    </div>
+
+ <script>
+ // $('document').ready(function(){
+ //    alert(1);
+ // });
+
+    var category = $('select[name = "category"]');
+    function changeCate(){
+        alert(category.val());
+        var resUrl = '';
+        $.ajax={
+            type:'POST',
+            url:resUrl,
+            data:{
+              category:category.val(),
+            },
+            success:function(data){
+              load(data);
+            },
+            dataType:"json"
+        }
+    }
+
+
+  </script>
   </body>
 </html>
