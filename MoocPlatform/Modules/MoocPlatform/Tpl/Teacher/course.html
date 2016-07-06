@@ -47,11 +47,11 @@
         </div>
         <nav class="templatemo-left-nav">          
           <ul>
-            <li><a href="" class="active"><i class="fa fa-home fa-fw"></i>课程资源</a></li>
+            <li><a href="__URL__/course/course_id/{$course[0]['CourseID']}" class="active"><i class="fa fa-home fa-fw"></i>课程资源</a></li>
             <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>作业批改</a></li>
             <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>在线聊天</a></li>
             <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>个人信息</a></li>
-            <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>登陆注销</a></li>
+            <li><a href=""><i class="fa fa-bar-chart fa-fw"></i>登陆注销</a></li>
           </ul>  
         </nav>
       </div>
@@ -77,33 +77,37 @@
                    <a data-toggle="modal" data-target="#myModal" class="btn btn-sm">下载文件</a>
                    <a data-toggle="modal" data-target="#deleteModal"class="btn btn-sm">删除文件</a>
                 </span>
-              </div>
-              <div class="wrap-table-head">
-              <span class="author-section">
-                <img class="avatar" src="__PUBLIC__/images/neko.jpg">
-                <a class="user-mention">{$course[0]['CourseName']}</a>
-                <select name="category" class="form right" onchange="changeCate()">
+                  <select name="category" class="form right" onchange="changeCate()">
+                  <option value="0">请选择分类</option>
                   <option value="1">课件</option>
                   <option value="2">文档</option>
                   <option value="3">视频</option>
                 </select>
+              </div>
+              <div class="wrap-table-head">
+              <span class="col-md-6">
+              <a class="user-mention">文件名称</a>
+              </span>
+              <span class="col-md-4"><a>上传时间</a></span>
+              <span class="col-md-2"><a>文件大小</a></span>
+             
               </span>
               </div>
               <div class="wrap-table">
               <table class="table table-hover">
-                <tbody>
-                  <tr>
+                <tbody id="appendant">
+                  <!-- <tr>
                     <th>文件名</th>
                     <th>上传时间</th>
                     <th>文件大小</th>
-                  </tr>
-                  <foreach name="resourceList" item="res">
+                  </tr> -->
+                  <!-- <foreach name="resourceList" item="res">
                   <tr>
                   <td><a>{$res['ResOriginName']}</a></td>
                   <td><a>{$res['ReleaseTime']}</a></td>
                   <td><a>{$res['FileSize']/1000}kb</a></td>
                   </tr>
-                </foreach>
+                </foreach> -->
                 </tbody>
               </table>
               </div>            
@@ -152,13 +156,13 @@
       <div class="modal-body">
               <div class="wrap-table">
               <table class="files" id="files">
-                <tbody>
-                 <foreach name="resourceList" item="res">
+                <tbody id="deleteappend">
+                <!--  <foreach name="resourceList" item="res">
                     <tr>
                     <td><input type="checkbox" name="id_array[]" value="{$res['ResID']}"></td>
                     <td class="name"><a>{$res['ResOriginName']}</a></td>
                     </tr>
-                  </foreach>
+                  </foreach> -->
                   </tbody>
               </table>
               </div>            
@@ -181,13 +185,13 @@
       <div class="modal-body">
               <div class="wrap-table">
               <table class="files" id="deletes">
-                <tbody>
-               <foreach name="resourceList" item="res">
+                <tbody id="addappend">
+              <!--  <foreach name="resourceList" item="res">
                     <tr>
                     <td><input type="checkbox" name="id_array[]" value="{$res['ResID']}"></td>
                     <td class="name"><a>{$res['ResOriginName']}</a></td>
                     </tr>
-                  </foreach>
+                  </foreach> -->
                 </tbody>
               </table>
               </div>            
@@ -231,6 +235,9 @@
     </div>
 
  <script>
+    var p1=0;
+    var p2=0;
+    var p3=0;
     var category = $('select[name = "category"]');
     function changeCate(){
         
@@ -243,16 +250,40 @@
             },
             success:function(data){
               load(data);
+              add(data);
             },
             dataType:"json"
         });
+
     }
 
+    // function load(data){
+    //   alert(data[0]['ResActualName']);
+    // }
+    
     function load(data){
-      alert(data[0]['ResActualName']);
-    }
-
-
+        $("#appendant").empty();
+      for(var i=0,l=data.length;i<l;i++){  
+        p1=0;p2=0;p3=0;
+      for(var key in data[i]){  
+      if(key=="ResOriginName") {p1=i;}
+      if(key=="ReleaseTime"){p2=i;}
+      if(key=="FileSize"){p3=i;}
+     }
+       $("#appendant").append("<tr><td class='col-md-6'>"+data[p1]["ResOriginName"]+"</td><td class='col-md-4'>"+data[p2]["ReleaseTime"]+"</td><td class='col-md-2'>"+data[p3]["FileSize"]/1000+"KB</td></tr>");
+    }}
+    function add(data){
+      $("#deleteappend").empty();
+      for(var i=0,l=data.length;i<l;i++){  
+        p1=0;p2=0;p3=0;
+      for(var key in data[i]){  
+      if(key=="ResOriginName") {p1=i;}
+      if(key=="ReleaseTime"){p2=i;}
+      if(key=="FileSize"){p3=i;}
+     }
+       $("#deleteappend").append("<tr><td><input type='checkbox' name='id_array[]' value='{$res['ResID']}'></td><td><a>"+data[p1]["ResOriginName"]+"</a></td>"+"<td>"+data[p2]["ReleaseTime"]+"</td></tr>");
+       $("#addappend").append("<tr><td><input type='checkbox' name='id_array[]' value='{$res['ResID']}'></td><td><a>"+data[p1]["ResOriginName"]+"</a></td>"+"<td>"+data[p2]["ReleaseTime"]+"</td></tr>");
+    }}
   </script>
   </body>
 </html>
