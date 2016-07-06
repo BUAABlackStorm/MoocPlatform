@@ -12,7 +12,7 @@ class AdminCourseAction extends Action{
         $db = M('course');
         $list = $db
             ->join('department ON course.CourseDep = department.DepartmentID')
-            ->getField('course.CourseID,course.CourseName,department.DepartmentName');
+            ->getField('course.CourseID,course.CourseName,department.DepartmentName,course.isOpen');
         $this->assign('list',$list);
         //dump($list);
         $this->display('AdminCourse/courseList');

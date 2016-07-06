@@ -42,7 +42,7 @@ class AdminTermAction extends Action{
         $termweeknum = $_POST['times'];
         $termname = $_POST['termname'];
 
-        dump($termBegin);
+        //dump($termBegin);
 
         if($termBegin == null || $termEnd == null ||$termweeknum == null || $termname == null)
             $this->error('信息不能为空','AdminTerm/newTerm');
