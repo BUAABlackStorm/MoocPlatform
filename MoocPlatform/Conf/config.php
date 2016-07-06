@@ -14,6 +14,8 @@ return array(
     'DB_NAME' => 'moocdb',
     'DB_PREFIX' => '',
 
+
+
     //点语法默认解析
     'TMPL_VAR_IDENTIFY' => 'array',
 

@@ -10,7 +10,7 @@ class TeacherAction extends VerifyLoginAction
 		$course_teacher=$db
 						->where('courseteacher.TeacherID='.$teacher['TeaID'])
 						->join('course ON course.CourseID=courseteacher.CourseID')
-						->select();
+						->select();//dump($course_teacher);
 		$this->assign('course_teacher',$course_teacher);
 						
 		$this->display();
@@ -19,14 +19,19 @@ class TeacherAction extends VerifyLoginAction
 	public function course($course_id)
 	{
 		$teacher=session('teacher');
-		$db = M('resource');
-		$resourceList=$db
+		$db1 = M('resource');
+		$resourceList=$db1
 					->where('resource.OwnerID='.$teacher['TeaID'].' and resource.CourseID='.$course_id)
 					->select();
 		$this->assign('resourceList',$resourceList);
-		$this->assign('course_id',$course_id);
 
-		$this->display('index');
+		$db2=M('course');
+		$course=$db2
+				->where('course.CourseID='.$course_id)
+				->select();
+		$this->assign('course',$course);
+
+		$this->display('course');
 	}
 
     public function upload()
@@ -60,13 +65,13 @@ class TeacherAction extends VerifyLoginAction
 
     		foreach($info as $file)
     		{
-    			$res=[
+    			$res=array(
     					'OwnerID'=>$teacher['TeaID'],
     					'CourseID'=>I('param.course_id'),
     					'ResOriginName'=>$file['name'],
     					'ResActualName'=>$file['savename'],
     					'ResPath'=>$file['savepath'],
-    				];
+				);
     			$db->add($res);
     		}
 
@@ -93,19 +98,17 @@ class TeacherAction extends VerifyLoginAction
     public function delete()
     {
     	$id_array = I('param.id_array');
-    	$course_id = I('param.course_id');
 
     	$db=M('resource');
 
     	foreach ($id_array as $id)
     	{
-    		$res=$db->where('resource.ResID='.$id);
-    		$res_tmp=$res->select();
+    		$res=$db->where('resource.ResID='.$id)->select();
     		//删除服务器上的文件
     		unlink(($res[0]['ResPath']).($res[0]['ResActualName']));
 
     		//删除数据库表项
-    		$res->delete();
+    		$db->where('resource.ResID='.$id)->delete();
     	}
 
     	$this->redirect('/Teacher/course/course_id/'.I('param.course_id'));

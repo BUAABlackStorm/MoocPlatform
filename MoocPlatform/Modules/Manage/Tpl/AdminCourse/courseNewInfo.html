@@ -49,11 +49,11 @@
         </div>
         <nav class="templatemo-left-nav">
             <ul>
-                <li><a href="http://localhost:8080/MoocPlatform/index.php/Manage/AdminCourse/courseList" class="active"><i class="fa fa-home fa-fw"></i>课程信息管理</a></li>
-                <li><a href="http://localhost:8080/MoocPlatform/index.php/Manage/AdminTerm/getTermList"><i class="fa fa-map-marker fa-fw"></i>学期信息管理</a></li>
+                <li><a href="{:U(GROUP_NAME.'/AdminCourse/courseList')}" class="active"><i class="fa fa-home fa-fw"></i>课程信息管理</a></li>
+                <li><a href="{:U(GROUP_NAME.'/AdminTerm/getTermList')}"><i class="fa fa-map-marker fa-fw"></i>学期信息管理</a></li>
                 <li><a href="data-visualization.html"><i class="fa fa-bar-chart fa-fw"></i>教师信息管理</a></li>
                 <li><a href="manage-users.html"><i class="fa fa-database fa-fw"></i>学生信息管理</a></li>
-                <li><a href="login.html"><i class="fa fa-eject fa-fw"></i>登出</a></li>
+                <li><a href="{:U('MoocPlatform/LoginAndRegister/Logout')}"><i class="fa fa-eject fa-fw"></i>登出</a></li>
             </ul>
         </nav>
     </div>
@@ -63,10 +63,10 @@
             <div class="row">
                 <nav class="templatemo-top-nav col-lg-12 col-md-12">
                     <ul class="text-uppercase">
-                        <li><a href="http://localhost:8080/MoocPlatform/index.php/Manage/AdminCourse/courseList" >课程列表</a></li>
-                        <li><a href="http://localhost:8080/MoocPlatform/Index.php/Manage/AdminCourse/courseNewInfo" class="active">新建课程</a></li>
+                        <li><a href="{:U(GROUP_NAME.'/AdminCourse/courseList')}" >课程列表</a></li>
+                        <li><a href="{:U(GROUP_NAME.'/AdminCourse/courseNewInfo')}" class="active">新建课程</a></li>
                         <li><a href="">帮助中心</a></li>
-                        <li><a href="login.html">登出</a></li>
+                        <li><a href="{:U('MoocPlatform/LoginAndRegister/Logout')}">登出</a></li>
                     </ul>
                 </nav>
             </div>
@@ -90,7 +90,7 @@
                         </div >
                     </div>
 
-                    <form name="input" action="http://localhost:8080/MoocPlatform/Index.php/Manage/AdminCourse/addCourse" method="post">
+                    <form name="input" action="{:U(GROUP_NAME.'/AdminCourse/addCourse')}" method="post">
                         <div class="row form-group">
                             <div class="col-lg-4 col-md-4 form-group text-right">
                                 <h3>课程名称</h3>

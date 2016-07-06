@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <title>教师页面</title>
+    <meta name="description" content="">
+    <meta name="author" content="templatemo">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/templatemo-style.css" rel="stylesheet">
+  </head>
+  <body>  
+    <!-- Left column -->
+    <div class="templatemo-flex-row">
+      <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+          <div class="square"></div>
+          <h1>教师用户</h1>
+        </header>
+        <div class="profile-photo-container">
+          <img src="images/person.jpg" alt="Profile Photo" class="img-responsive">  
+        </div>      
+        <div class="profile-name">
+        <span>赵昊</span>
+        </div>
+        <div class="profile-name-l">
+        <span>13211000</span>
+        </div><!--$Teacher Name-->
+        <!-- Search box -->
+        <div class="mobile-menu-icon">
+            <i class="fa fa-bars"></i>
+        </div>
+        <nav class="templatemo-left-nav">          
+          <ul>
+            <li><a href="" class="active"><i class="fa fa-home fa-fw"></i>课程资源分类</a></li>
+            <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>作业批改</a></li>
+            <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>在线聊天</a></li>
+            <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>个人信息</a></li>
+            <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>登陆注销</a></li>
+          </ul>  
+        </nav>
+      </div>
+      <div class="templatemo-content col-1 light-gray-bg">
+        <div class="templatemo-top-nav-container">
+          <div class="row">
+            <nav class="templatemo-top-nav col-lg-12 col-md-12">
+              <ul class="text-uppercase">
+                <li><a href="index.html" class="active">课程选择</a></li>
+                <li><input type="text" class="form-control"></li>
+              </ul>  
+            </nav> 
+          </div>
+        </div>
+        <div class="templatemo-content-container">
+          <div class="templatemo-flex-row flex-content-row">
+            <div class="templatemo-content-widget white-bg col-8">
+              <!--<i class="fa fa-times"></i>-->
+              <div class="file-navigation in-mid-page">
+                <span>课程资源分类</span>
+                <span class="btn-group right">
+                   <a data-toggle="modal" data-target="#myModal" class="btn btn-sm">下载文件</a>
+                   <a data-toggle="modal" data-target="#deleteModal"class="btn btn-sm">删除文件</a>
+                </span>
+              </div>
+              <div class="wrap-table-head">
+              <span class="author-section">
+                <img class="avatar" src="images/neko.jpg">
+                <a class="user-mention">数据结构</a>
+                <a class="right">发布时间</a>
+              </span>
+              </div>
+              <div class="wrap-table">
+              <table class="files">
+                <tbody>
+                <tr>
+                <td class="icon"><!--svg--></td>
+                <td class="name"><a>三枪拍案惊奇.jpg</a></td>
+                <td class="right">2016/09/28</td>
+                </tr>
+                </tbody>
+              </table>
+              </div>            
+            </div>
+            <div class="templatemo-content-widget-s white-bg col-2">
+            <div>上传文件</div>
+            <form accept-charset="utf-8" enctype="multipart/form-data" method="post" class="btn-group-form" action="">
+            <input class="file-select" type="file" name="file" id="file" multiple="multiple"> 
+            <input class="btn btn-sm right" type="submit" name="submit" value="上传文件"></input>
+            <input class="btn btn-sm right" type="submit" name="submit" value="发布文件"></input>
+            </form>
+            </div>
+            <div class="templatemo-content-widget-s white-bg col-8">
+            <div>选择分类</div>
+            <!--<form accept-charset="utf-8" enctype="multipart/form-data" method="post" class="btn-group-form" action="">-->
+            <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            视频<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="classification.html">课件</a></li>
+              <li><a href="class2.html">文档</a></li>
+            </ul>
+            </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <!--Modals-->
+   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">下载文件</h4>
+      </div>
+      <div class="modal-body">
+              <div class="wrap-table">
+              <table class="files" id="files">
+                <tbody>
+                <tr>
+                <td><input type="checkbox" name="checkbox[]" value=""></td>
+                <td class="name"><a>三枪拍案惊奇.jpg</a></td>
+                </tr>
+                </tbody>
+              </table>
+              </div>            
+            </div>
+      <div class="modal-footer">
+        <input type="submit" id="download" class="btn btn-default" value="下载" >
+      </div>
+    </div>
+  </div>
+</div>
+ <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">删除文件</h4>
+      </div>
+      <div class="modal-body">
+              <div class="wrap-table">
+              <table class="files" id="deletes">
+                <tbody>
+                <tr>
+                <td><input type="checkbox" name="checkbox[]" value=""></td>
+                <td class="name"><a>三枪拍案惊奇.jpg</a></td>
+                </tr>
+                </tbody>
+              </table>
+              </div>            
+            </div>
+      <div class="modal-footer">
+        <input id="delete" type="submit" class="btn btn-default" value="删除" >
+      </div>
+    </div>
+  </div>
+</div>
+    <!-- JS -->
+    
+    <script src="js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
+    <script src="js/jquery-migrate-1.2.1.min.js"></script> <!--  jQuery Migrate Plugin -->
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/templatemo-script.js"></script>      <!-- Templatemo Script -->
+
+  </body>
+</html>

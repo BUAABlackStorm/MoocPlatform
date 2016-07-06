@@ -8,6 +8,9 @@
 class IndexAction extends VerifyLoginAction{
 
     public function index(){
+
+        $user = M('User')->select();
+        p($user);
         $this->display();
     }
 }
