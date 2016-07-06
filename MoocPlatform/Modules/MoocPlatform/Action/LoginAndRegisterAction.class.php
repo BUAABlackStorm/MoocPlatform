@@ -37,7 +37,7 @@ Class LoginAndRegisterAction extends Action{
             if($student['Password'] == md5(I('Password')) ){
                 session(null);
                 session('student',$student);
-                $url = '';//登录成功后的跳转地址
+                $url = '/Student/courseinfo';//登录成功后的跳转地址
                 $this->success("登录成功",U(GROUP_NAME.$url),1);
             }else{
                 $this->error("登录失败，账号或者密码错误");

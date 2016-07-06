@@ -72,14 +72,16 @@ class TeacherAction extends VerifyLoginAction
 		}
 		else
 		{
-			$teacher=session('teacher');
-			$db1=M('resource');
-			$db2=M('resoucekind');
+			$teacher = session('teacher');
+			$db1 = M('resource');
+			$db2 = M('resoucekind');
 
 			$res_kind=$db2
 						->where('resoucekind.ResType='.'"'.I('param.category').'"')
 						->select();
-			$res_kind_id=$res_kind[0]['ResKindID'];
+			$res_kind_id = $res_kind[0]['ResKindID'];
+
+
 
     		foreach($info as $file)
     		{
@@ -94,6 +96,7 @@ class TeacherAction extends VerifyLoginAction
 				);
     			$db1->add($res);
     		}
+
 
     		$this->redirect('/Teacher/course/course_id/'.I('param.course_id'));
 		}

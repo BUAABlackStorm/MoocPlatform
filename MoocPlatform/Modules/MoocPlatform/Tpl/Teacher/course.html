@@ -1,288 +1,313 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>教师页面</title>
 
     <script src="__PUBLIC__/js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
     <script src="__PUBLIC__/js/jquery-migrate-1.2.1.min.js"></script> <!--  jQuery Migrate Plugin -->
-    <script src="__PUBLIC__/js/jquery.uploadify.min.js" ></script>
-    
+    <script src="__PUBLIC__/js/jquery.uploadify.min.js"></script>
+
     <script src="__PUBLIC__/js/bootstrap.min.js"></script>
-    <script src="__PUBLIC__/js/templatemo-script.js"></script>   
-    
-      <!-- Templatemo Script -->
+    <script src="__PUBLIC__/js/templatemo-script.js"></script>
+
+    <!-- Templatemo Script -->
     <meta name="description" content="">
     <meta name="author" content="templatemo">
     <link href="__PUBLIC__/css/font-awesome.min.css" rel="stylesheet">
     <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
     <link href="__PUBLIC__/css/templatemo-style.css" rel="stylesheet">
     <link href="__PUBLIC__/css/uploadify.css" rel="stylesheet">
-  </head>
-  <body>  
-    <!-- Left column -->
-    <div class="templatemo-flex-row">
-      <div class="templatemo-sidebar">
-         <header class="templatemo-site-header">
-          <div align="center"><img src="__PUBLIC__/images/person.jpg"  class="img-circle" height="50" width="50">
-          <h2>教师用户</h2>
-          </div>
+</head>
+<body>
+<!-- Left column -->
+<div class="templatemo-flex-row">
+    <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+            <div align="center"><img src="__PUBLIC__/images/person.jpg" class="img-circle" height="50" width="50">
+
+                <h2>教师用户</h2>
+            </div>
         </header>
-          
+
         <div class="profile-name" align="center">
-        <span>{:session('teacher')['TeaName']}</span>
-        <br>
+            <span>{:session('teacher')['TeaName']}</span>
+            <br>
         </div>
 
         <div class="profile-name" align="center">
-        <span>{:session('teacher')['TeaID']}</span>
-        <br>
+            <span>{:session('teacher')['TeaID']}</span>
+            <br>
         </div>
-        
+
 
         <div class="mobile-menu-icon">
             <i class="fa fa-bars"></i>
         </div>
-        <nav class="templatemo-left-nav">          
-          <ul>
-            <li><a href="__URL__/course/course_id/{$course[0]['CourseID']}" class="active"><i class="fa fa-home fa-fw"></i>课程资源</a></li>
-            <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>作业批改</a></li>
-            <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>在线聊天</a></li>
-            <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>个人信息</a></li>
-            <li><a href=""><i class="fa fa-bar-chart fa-fw"></i>登陆注销</a></li>
-          </ul>  
+        <nav class="templatemo-left-nav">
+            <ul>
+                <li><a href="__URL__/course/course_id/{$course[0]['CourseID']}" class="active"><i
+                        class="fa fa-home fa-fw"></i>课程资源</a></li>
+                <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>作业批改</a></li>
+                <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>在线聊天</a></li>
+                <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>个人信息</a></li>
+                <li><a href="{:U(GROUP_NAME.'/LoginAndRegister/Logout')}"><i class="fa fa-bar-chart fa-fw"></i>登陆注销</a></li>
+            </ul>
         </nav>
-      </div>
-      <div class="templatemo-content col-1 light-gray-bg">
+    </div>
+    <div class="templatemo-content col-1 light-gray-bg">
         <div class="templatemo-top-nav-container">
-          <div class="row">
-            <nav class="templatemo-top-nav col-lg-12 col-md-12">
-              <ul class="text-uppercase">
-                <li><a href="index.html" class="active">课程选择</a></li>
-              </ul>  
-            </nav> 
-          </div>
+            <div class="row">
+                <nav class="templatemo-top-nav col-lg-12 col-md-12">
+                    <ul class="text-uppercase">
+                        <li><a href="index.html" class="active">课程选择</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
         <div class="templatemo-content-container">
-          <div class="templatemo-flex-row flex-content-row">
-            <div class="templatemo-content-widget white-bg col-2">
-              <!--<i class="fa fa-times"></i>-->
-              <div class="file-navigation in-mid-page">
-                <span>课程资源分类</span>
+            <div class="templatemo-flex-row flex-content-row">
+                <div class="templatemo-content-widget white-bg col-2">
+                    <!--<i class="fa fa-times"></i>-->
+                    <div class="file-navigation in-mid-page">
+                        <span>课程资源分类</span>
                 <span class="btn-group right">
                   <a data-toggle="modal" data-target="#Assignment" class="btn btn-sm">发布作业</a>
                    <a data-toggle="modal" data-target="#myModal" class="btn btn-sm">下载文件</a>
-                   <a data-toggle="modal" data-target="#deleteModal"class="btn btn-sm">删除文件</a>
+                   <a data-toggle="modal" data-target="#deleteModal" class="btn btn-sm">删除文件</a>
                 </span>
-                  <select name="category" class="form right" onchange="changeCate()">
-                  <option value="0">请选择分类</option>
-                  <option value="1">课件</option>
-                  <option value="2">文档</option>
-                  <option value="3">视频</option>
-                </select>
-              </div>
-              <div class="wrap-table-head">
+                        <select name="category" class="form right" onchange="changeCate()">
+                            <option value="0">请选择分类</option>
+                            <option value="1">课件</option>
+                            <option value="2">文档</option>
+                            <option value="3">视频</option>
+                        </select>
+                    </div>
+                    <div class="wrap-table-head">
               <span class="col-md-6">
               <a class="user-mention">文件名称</a>
               </span>
-              <span class="col-md-4"><a>上传时间</a></span>
-              <span class="col-md-2"><a>文件大小</a></span>
-             
-              </span>
-              </div>
-              <div class="wrap-table">
-              <table class="table table-hover">
-                <tbody id="appendant">
-                  <!-- <tr>
-                    <th>文件名</th>
-                    <th>上传时间</th>
-                    <th>文件大小</th>
-                  </tr> -->
-                  <!-- <foreach name="resourceList" item="res">
-                  <tr>
-                  <td><a>{$res['ResOriginName']}</a></td>
-                  <td><a>{$res['ReleaseTime']}</a></td>
-                  <td><a>{$res['FileSize']/1000}kb</a></td>
-                  </tr>
-                </foreach> -->
-                </tbody>
-              </table>
-              </div>            
+                        <span class="col-md-4"><a>上传时间</a></span>
+                        <span class="col-md-2"><a>文件大小</a></span>
+
+                        </span>
+                    </div>
+                    <div class="wrap-table">
+                        <table class="table table-hover">
+                            <tbody id="appendant">
+                            <!-- <tr>
+                              <th>文件名</th>
+                              <th>上传时间</th>
+                              <th>文件大小</th>
+                            </tr> -->
+                            <!-- <foreach name="resourceList" item="res">
+                            <tr>
+                            <td><a>{$res['ResOriginName']}</a></td>
+                            <td><a>{$res['ReleaseTime']}</a></td>
+                            <td><a>{$res['FileSize']/1000}kb</a></td>
+                            </tr>
+                          </foreach> -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="templatemo-content-widget-s white-bg col-6">
+                    <div>上传文件</div>
+                    <!--<form accept-charset="utf-8" enctype="multipart/form-data" method="post" class="btn-group-form" action="">
+                    <input class="file-select" type="file" name="file" id="file" multiple="multiple">
+                    <input class="btn btn-sm right" type="submit" name="submit" value="上传文件"></input>
+                    <input class="btn btn-sm right" type="submit" name="submit" value="发布文件"></input>
+                    </form>-->
+                    <form accept-charset="utf-8" enctype="multipart/form-data" method="post" class="btn-group-form"
+                          action="__URL__/upload">
+                        <div id="queue"></div>
+                        <input id="file-select" name="file[]" type="file" multiple="true">
+                        <select name="category" class="form">
+                            <option value="课件">课件</option>
+                            <option value="文档">文档</option>
+                            <option value="视频">视频</option>
+                        </select>
+                        <input type="hidden" name="course_id" value="{$course[0]['CourseID']}"/>
+                        <input class="btn btn-sm right" type="submit" name="submit" value="上传文件"/>
+                    </form>
+                    <!-- <script type="text/javascript">
+                      $(function() {
+                        $('#file-select').uploadify({
+                          'swf'      : '__PUBLIC__/uploadify.swf',
+                          'uploader' : '__PUBLIC__/uploadify.php',
+                          'method'    : 'post',
+                          'removeTimeout':1000
+                        });
+                      });
+                    </script> -->
+                </div>
             </div>
-            <div class="templatemo-content-widget-s white-bg col-6">
-            <div>上传文件</div>
-            <!--<form accept-charset="utf-8" enctype="multipart/form-data" method="post" class="btn-group-form" action="">
-            <input class="file-select" type="file" name="file" id="file" multiple="multiple"> 
-            <input class="btn btn-sm right" type="submit" name="submit" value="上传文件"></input>
-            <input class="btn btn-sm right" type="submit" name="submit" value="发布文件"></input>
-            </form>-->
-            <form accept-charset="utf-8" enctype="multipart/form-data" method="post" class="btn-group-form" action="__URL__/upload">
-                <div id="queue"></div>
-                <input id="file-select" name="file[]" type="file" multiple="true">
-                <select name="category" class="form">
-                  <option value="课件">课件</option>
-                  <option value="文档">文档</option>
-                  <option value="视频">视频</option>
-                </select>
-                <input type="hidden" name="course_id" value="{$course[0]['CourseID']}">
-                <input class="btn btn-sm right" type="submit" name="submit" value="上传文件"></input>
-            </form>
-              <!-- <script type="text/javascript">
-                $(function() {
-                  $('#file-select').uploadify({
-                    'swf'      : '__PUBLIC__/uploadify.swf',
-                    'uploader' : '__PUBLIC__/uploadify.php',
-                    'method'    : 'post',
-                    'removeTimeout':1000
-                  });
-                });
-              </script> -->
-            </div>
-          </div>
-      </div>
+        </div>
     </div>
     <!--Modals-->
-   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">下载文件</h4>
-      </div>
-      <form action="__URL__/download" method="get">
-      <div class="modal-body">
-              <div class="wrap-table">
-              <table class="files" id="files">
-                <tbody id="deleteappend">
-                <!--  <foreach name="resourceList" item="res">
-                    <tr>
-                    <td><input type="checkbox" name="id_array[]" value="{$res['ResID']}"></td>
-                    <td class="name"><a>{$res['ResOriginName']}</a></td>
-                    </tr>
-                  </foreach> -->
-                  </tbody>
-              </table>
-              </div>            
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">下载文件</h4>
+                </div>
+                <form action="__URL__/download" method="get">
+                    <div class="modal-body">
+                        <div class="wrap-table">
+                            <table class="files" id="files">
+                                <tbody id="deleteappend">
+                                <!--  <foreach name="resourceList" item="res">
+                                    <tr>
+                                    <td><input type="checkbox" name="id_array[]" value="{$res['ResID']}"></td>
+                                    <td class="name"><a>{$res['ResOriginName']}</a></td>
+                                    </tr>
+                                  </foreach> -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" id="download" class="btn btn-default" value="下载">
+                    </div>
+                </form>
             </div>
-      <div class="modal-footer">
-        <input type="submit" id="download" class="btn btn-default" value="下载" >
-      </div>
-      </form>
+        </div>
     </div>
-  </div>
-</div>
- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">删除文件</h4>
-      </div>
-      <form action="__URL__/delete" method="post">
-      <div class="modal-body">
-              <div class="wrap-table">
-              <table class="files" id="deletes">
-                <tbody id="addappend">
-              <!--  <foreach name="resourceList" item="res">
-                    <tr>
-                    <td><input type="checkbox" name="id_array[]" value="{$res['ResID']}"></td>
-                    <td class="name"><a>{$res['ResOriginName']}</a></td>
-                    </tr>
-                  </foreach> -->
-                </tbody>
-              </table>
-              </div>            
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">删除文件</h4>
+                </div>
+                <form action="__URL__/delete" method="post">
+                    <div class="modal-body">
+                        <div class="wrap-table">
+                            <table class="files" id="deletes">
+                                <tbody id="addappend">
+                                <!--  <foreach name="resourceList" item="res">
+                                      <tr>
+                                      <td><input type="checkbox" name="id_array[]" value="{$res['ResID']}"></td>
+                                      <td class="name"><a>{$res['ResOriginName']}</a></td>
+                                      </tr>
+                                    </foreach> -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="course_id" value="{$course[0]['CourseID']}">
+                        <input id="delete" type="submit" class="btn btn-default" value="删除">
+                    </div>
+                </form>
             </div>
-      <div class="modal-footer">
-        <input type="hidden" name="course_id" value="{$course[0]['CourseID']}">
-        <input id="delete" type="submit" class="btn btn-default" value="删除" >
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="Assignment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">发布作业</h4>
-      </div>
-
-      <form action="__URL__/addHomework" method="post">
-        <div class="modal-body">
-          <div class="form-group">
-            <input type="text" required="required" class="form-control" name="homework_name" placeholder="作业标题"/>
-            开始时间:<input required="required"  type="date" class="form-control" name="start_time"/>
-            结束时间:<input required="required"  type="date" class="form-control" name="end_time"/>
-            <input type="checkbox" name="isGroup" id="isGroup"/>是否是团队项目
-            <textarea required="required"  class="form-control" name="require" placeholder="作业要求" rows="6"></textarea>
-          </div>
         </div>
-        <div class="modal-footer">
-          <input type="hidden" name="course_id" value="{$course[0]['CourseID']}"/>
-          <input type="submit" class="btn btn-info" value="发布" />
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="关闭" />
+    </div>
+
+    <div class="modal fade" id="Assignment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">发布作业</h4>
+                </div>
+
+                <form action="__URL__/addHomework" method="post">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="text" required="required" class="form-control" name="homework_name"
+                                   placeholder="作业标题"/>
+                            开始时间:<input required="required" type="date" class="form-control" name="start_time"/>
+                            结束时间:<input required="required" type="date" class="form-control" name="end_time"/>
+                            <input type="checkbox" name="isGroup" id="isGroup"/>是否是团队项目
+                            <textarea required="required" class="form-control" name="require" placeholder="作业要求"
+                                      rows="6"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="course_id" value="{$course[0]['CourseID']}"/>
+                        <input type="submit" class="btn btn-info" value="发布"/>
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="关闭"/>
+                    </div>
+                </form>
+
+            </div>
         </div>
-      </form>
-
-    </div>
-    </div>
     </div>
 
- <script>
-    var p1=0;
-    var p2=0;
-    var p3=0;
-    var category = $('select[name = "category"]');
-    function changeCate(){
-        
-        var resUrl = '__URL__/ajaxCourse/course_id/{$course[0]['CourseID']}';
-        $.ajax({
-            type:'POST',
-            url:resUrl,
-            data:{
-              category:category.val(),
-            },
-            success:function(data){
-              load(data);
-              add(data);
-            },
-            dataType:"json"
-        });
+    <script>
+        var p1 = 0;
+        var p2 = 0;
+        var p3 = 0;
+        var category = $('select[name = "category"]');
+        function changeCate() {
+            var resUrl = "__URL__/ajaxCourse/course_id/{$course[0]['CourseID']}";
 
-    }
+            $.ajax({
+                type: 'POST',
+                url: resUrl,
+                data: {
+                    category: category.val(),
+                },
+                success: function (data) {
+                    load(data);
+                    add(data);
+                },
+                dataType: "json"
+            });
 
-    // function load(data){
-    //   alert(data[0]['ResActualName']);
-    // }
-    
-    function load(data){
-        $("#appendant").empty();
-      for(var i=0,l=data.length;i<l;i++){  
-        p1=0;p2=0;p3=0;
-      for(var key in data[i]){  
-      if(key=="ResOriginName") {p1=i;}
-      if(key=="ReleaseTime"){p2=i;}
-      if(key=="FileSize"){p3=i;}
-     }
-       $("#appendant").append("<tr><td class='col-md-6'>"+data[p1]["ResOriginName"]+"</td><td class='col-md-4'>"+data[p2]["ReleaseTime"]+"</td><td class='col-md-2'>"+data[p3]["FileSize"]/1000+"KB</td></tr>");
-    }}
-    function add(data){
-      $("#deleteappend").empty();
-      for(var i=0,l=data.length;i<l;i++){  
-        p1=0;p2=0;p3=0;
-      for(var key in data[i]){  
-      if(key=="ResOriginName") {p1=i;}
-      if(key=="ReleaseTime"){p2=i;}
-      if(key=="FileSize"){p3=i;}
-     }
-       $("#deleteappend").append("<tr><td><input type='checkbox' name='id_array[]' value='{$res['ResID']}'></td><td><a>"+data[p1]["ResOriginName"]+"</a></td>"+"<td>"+data[p2]["ReleaseTime"]+"</td></tr>");
-       $("#addappend").append("<tr><td><input type='checkbox' name='id_array[]' value='{$res['ResID']}'></td><td><a>"+data[p1]["ResOriginName"]+"</a></td>"+"<td>"+data[p2]["ReleaseTime"]+"</td></tr>");
-    }}
-  </script>
-  </body>
+        }
+
+        // function load(data){
+        //   alert(data[0]['ResActualName']);
+        // }
+
+        function load(data) {
+            $("#appendant").empty();
+            for (var i = 0, l = data.length; i < l; i++) {
+                p1 = 0;
+                p2 = 0;
+                p3 = 0;
+                for (var key in data[i]) {
+                    if (key == "ResOriginName") {
+                        p1 = i;
+                    }
+                    if (key == "ReleaseTime") {
+                        p2 = i;
+                    }
+                    if (key == "FileSize") {
+                        p3 = i;
+                    }
+                }
+                $("#appendant").append("<tr><td class='col-md-6'>" + data[p1]["ResOriginName"] + "</td><td class='col-md-4'>" + data[p2]["ReleaseTime"] + "</td><td class='col-md-2'>" + data[p3]["FileSize"] / 1000 + "KB</td></tr>");
+            }
+        }
+        function add(data) {
+            $("#deleteappend").empty();
+            for (var i = 0, l = data.length; i < l; i++) {
+                p1 = 0;
+                p2 = 0;
+                p3 = 0;
+                for (var key in data[i]) {
+                    if (key == "ResOriginName") {
+                        p1 = i;
+                    }
+                    if (key == "ReleaseTime") {
+                        p2 = i;
+                    }
+                    if (key == "FileSize") {
+                        p3 = i;
+                    }
+                }
+                $("#deleteappend").append("<tr><td><input type='checkbox' name='id_array[]' value='{$res['ResID']}'></td><td><a>" + data[p1]["ResOriginName"] + "</a></td>" + "<td>" + data[p2]["ReleaseTime"] + "</td></tr>");
+                $("#addappend").append("<tr><td><input type='checkbox' name='id_array[]' value='{$res['ResID']}'></td><td><a>" + data[p1]["ResOriginName"] + "</a></td>" + "<td>" + data[p2]["ReleaseTime"] + "</td></tr>");
+            }
+        }
+    </script>
+</body>
 </html>
