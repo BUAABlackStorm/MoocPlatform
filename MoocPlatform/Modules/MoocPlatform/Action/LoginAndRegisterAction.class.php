@@ -35,6 +35,7 @@ Class LoginAndRegisterAction extends Action{
         if($type == 1 ){
             $student = M('student')->where(array('StuID' => I('StuID')))->find();
             if($student['Password'] == md5(I('Password')) ){
+                session(null);
                 session('student',$student);
                 $url = '';//登录成功后的跳转地址
                 $this->success("登录成功",U(GROUP_NAME.$url),1);
@@ -46,6 +47,7 @@ Class LoginAndRegisterAction extends Action{
         else if($type == 2){
             $teacher = M('teacher')->where(array('TeaID' => I('TeaID')))->find();
             if($teacher['Password'] == md5(I('Password')) ){
+                session(null);
                 session('teacher',$teacher);
                 $url='/Teacher'; //登录成功后的跳转地址
                 $this->success("登录成功",U(GROUP_NAME.$url),1);
@@ -57,6 +59,7 @@ Class LoginAndRegisterAction extends Action{
         else if($type == 3){
             $senate = M('senate')->where(array('SenID' => I('SenID')))->find();
             if($senate['Password'] == md5(I('Password')) ){
+                session(null);
                 session('senate',$senate);
                 $url = '/Manage/AdminCourse/courseList';
                 $this->success("登录成功",U($url),1);
@@ -180,9 +183,6 @@ Class LoginAndRegisterAction extends Action{
         $this->redirect('/LoginAndRegister/LoginView');
     }
 
-    public function test(){
-        p(I('test'));
-    }
 
 }
 
