@@ -97,18 +97,15 @@
                     <td>{$vo['CourseID']}.</td>
                     <td>{$vo['CourseName']}</td>
                     <td>{$vo['DepartmentName']}</td>
-<<<<<<< HEAD
-                    <if condition="($courseinfo['isOpen'] eq 1)">
+                    <!--<td>{$vo['isOpen']}</td>-->
+                    <if condition="($vo['isOpen'] eq 1)">
                       <td>课程正在进行中...</td>
-                      <else />
+                    <else />
                       <td>课程已结束</td>
                     </if>
-                    <form name="input" action="http://localhost:8080/MoocPlatform/Index.php/Manage/AdminCourse/courseInfo" method="post">
-=======
                     <form name="input" action="{:U(GROUP_NAME.'/AdminCourse/courseInfo')}" method="post">
->>>>>>> master
                       <input type="hidden" name="CourseID" value={$vo['CourseID']}>
-                      <if condition="($courseinfo['isOpen'] eq 1)">
+                      <if condition="($vo['isOpen'] eq 1)">
                         <td style="text-algin:center"><input type="submit" value="编辑" class="templatemo-edit-btn text-center" /></td>
                       <else />
                         <td style="text-algin:center"><input type="submit" value="编辑" class="templatemo-edit-btn text-center" disabled="disabled"/></td>
@@ -135,8 +132,7 @@
     <script src="__PUBLIC__/AdminCourse/js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
     <script src="__PUBLIC__/AdminCourse/js/jquery-migrate-1.2.1.min.js"></script> <!--  jQuery Migrate Plugin -->
     <script>
-      
-     
+
     </script>
     <script type="text/javascript" src="js/templatemo-script.js"></script>      <!-- Templatemo Script -->
 

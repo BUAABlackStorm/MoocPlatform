@@ -142,8 +142,8 @@
                                 <if condition="$studentlist neq null">
                                     <foreach name="studentlist" item="vo" key="k" >
                                         <tr>
-                                            <td><input type="checkbox" name="checkStuID[]" id="s1" value={$vo['StuID']} checked>
-                                                <label for="s1" class="font-weight-400"><span></span>{$vo['StuID']}</label>
+                                            <td><input type="checkbox" name="checkStuID[]" id={$vo['StuID']} value={$vo['StuID']} checked>
+                                                <label for={$vo['StuID']} class="font-weight-400"><span></span>{$vo['StuID']}</label>
                                             </td>
                                             <td>{$vo['StuName']}</td>
                                             <td>{$vo['Grade']}</td>
