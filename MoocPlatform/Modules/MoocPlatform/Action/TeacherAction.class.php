@@ -24,6 +24,7 @@ class TeacherAction extends VerifyLoginAction
 					->where('resource.OwnerID='.$teacher['TeaID'].' and resource.CourseID='.$course_id)
 					->select();
 		$this->assign('resourceList',$resourceList);
+		//dump(json_encode($resourceList));
 
 		$db2=M('course');
 		$course=$db2
@@ -32,6 +33,17 @@ class TeacherAction extends VerifyLoginAction
 		$this->assign('course',$course);
 
 		$this->display('course');
+	}
+
+	public function ajaxCourse($course_id)
+	{
+		$teacher=session('teacher');
+		$db = M('resource');
+		$resourceList=$db
+					->where('resource.OwnerID='.$teacher['TeaID'].' and resource.CourseID='.$course_id.' and resource.ResKindID='.I('param.category'))
+					->select();
+
+		$this->ajaxreturn($resourceList);
 	}
 
     public function upload()
@@ -61,7 +73,13 @@ class TeacherAction extends VerifyLoginAction
 		else
 		{
 			$teacher=session('teacher');
-			$db=M('resource');
+			$db1=M('resource');
+			$db2=M('resoucekind');
+
+			$res_kind=$db2
+						->where('resoucekind.ResType='.'"'.I('param.category').'"')
+						->select();
+			$res_kind_id=$res_kind[0]['ResKindID'];
 
     		foreach($info as $file)
     		{
@@ -71,8 +89,10 @@ class TeacherAction extends VerifyLoginAction
     					'ResOriginName'=>$file['name'],
     					'ResActualName'=>$file['savename'],
     					'ResPath'=>$file['savepath'],
+    					'ResKindID'=>$res_kind_id,
+    					'FileSize'=>$file['size']
 				);
-    			$db->add($res);
+    			$db1->add($res);
     		}
 
     		$this->redirect('/Teacher/course/course_id/'.I('param.course_id'));
@@ -116,7 +136,31 @@ class TeacherAction extends VerifyLoginAction
 
     public function addHomework()
     {
+    	$teacher=session('teacher');
+    	$db=M("homework");
+    	$isGroup=1;
+
+    	if (I('param.isGroup')=='on') 
+    	{
+    		$isGroup=1;
+    	}
+    	else
+    	{
+    		$isGroup=0;
+    	}
     	
+    	$homework=array(
+    				'CourseID'=>I('param.course_id'),
+    				'TeaID'=>$teacher['TeaID'],
+    				'HwName'=>I('param.homework_name'),
+    				'StartDate'=>I('param.start_time'),
+    				'EndDate'=>I('param.end_time'),
+    				'isGroupHw'=>$isGroup,
+    				'Require'=>I('param.require')
+    		);
+    	$db->add($homework);
+
+    	$this->redirect('/Teacher/course/course_id/'.I('param.course_id'));
     }
 }
 
