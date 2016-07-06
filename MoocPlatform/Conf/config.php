@@ -10,7 +10,7 @@ return array(
     //数据库连接参数
     'DB_HOST' => 'localhost',
     'DB_USER' => 'root',
-    'DB_PWD' => '8304',
+    'DB_PWD' => '19950326',
     'DB_NAME' => 'moocdb',
     'DB_PREFIX' => '',
 
