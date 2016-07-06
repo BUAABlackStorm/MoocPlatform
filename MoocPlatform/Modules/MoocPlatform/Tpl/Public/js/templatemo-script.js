@@ -17,13 +17,6 @@ $(document).ready(function(){
 			$(this).hide();
 		});
 	});
-	$('#download').click(function(){
-		var p=$("#files input").is(':checked');
-		if(p==false) alert('请至少选择一个下载项目！');
-		});
-	$('#delete').click(function(){
-		var p=$("#deletes input").is(':checked');
-		if(p==false) alert('请至少选择一个删除项目！');
-		});
-	});
+	
+	
 

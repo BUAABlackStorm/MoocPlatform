@@ -67,9 +67,21 @@ class StudentAction extends Action {
      * 课程资源界面
      */
     public function resource() {
+
+
         $CourseID = I('CourseID');
         session('selectedCourseID', $CourseID);
-        //dump(session('selectedCourseID'));
+
+//        if(session("?selectedCourseID")){
+//            $CourseID = I('CourseID');
+//            session('selectedCourseID', $CourseID);
+//            //p(1);
+//            p(session('selectedCourseID'));
+//        }else{
+//            $CourseID = session('selectedCourseID');
+//            //p($CourseID);
+//        }
+
 
         $kejianCount = M('Resource')->where('ResKindID=1 AND CourseID=%d', $CourseID)->count();
         $docCount = M('Resource')->where('ResKindID=2 AND CourseID=%d', $CourseID)->count();
@@ -130,9 +142,10 @@ class StudentAction extends Action {
     public function submithomework() {
         //p(I('HwID'));
         $stuID = session('student')['StuID'];
-        p($stuID);
+        //p($stuID);
 
         session('selectedHwID', I('HwID'));
+        //p(session('selectedHwID'));
         
         $homework = M('Homework')->where(array("HwID" => I('HwID')))->find();
         $this->homework = $homework;
@@ -142,11 +155,11 @@ class StudentAction extends Action {
 
         $hwstu = M('Hwstu')->where($condition)->find();
         $this->hwstu = $hwstu;
-        p($hwstu);
+        //p($hwstu);
 
         session('selectedHwstuID', $hwstu['ID']);
 
-        p(session('selectedHwstuID'));
+        //p(session('selectedHwstuID'));
         
         $files = M('Hwres')->where(array("HwStuID" => $hwstu['ID']))->select();
         $attachment = array();
@@ -156,7 +169,7 @@ class StudentAction extends Action {
             $attachment[$key] = $tmp;
         }
         $this->attachment = $attachment;
-        p($attachment);
+        //p($attachment);
 
         $this->display('Student/submithomework');
     }
@@ -199,14 +212,14 @@ class StudentAction extends Action {
         else
         {
             $db1=M('resource');
-            $db2=M('resoucekind');
+            //$db2=M('resoucekind');
 
-            $res_kind=$db2
-                ->where('resoucekind.ResType='.'"'.I('param.category').'"')
-                ->select();
-            $res_kind_id=$res_kind[0]['ResKindID'];
+//            $res_kind=$db2
+//                ->where('resoucekind.ResType='.'"'.I('param.category').'"')
+//                ->select();
+//            $res_kind_id=$res_kind[0]['ResKindID'];
 
-            dump(session('selectedHwID'));
+            //dump(session('selectedHwID'));
             $condition['StuID'] = $stuID;
             $condition['HwID'] = session('selectedHwID');
             $hwstu = M('Hwstu')->where($condition)->find();
@@ -216,7 +229,7 @@ class StudentAction extends Action {
 
 
             // 第一次提交
-            if ($hwstu['id'] == '')
+            if ($hwstu['ID'] == '')
             {
                 $hs = array(
                     'HwID' => session('selectedHwID'),
@@ -225,7 +238,7 @@ class StudentAction extends Action {
                 $hwstuID = M('Hwstu')->add($hs);
             }
 
-            p($hwstuID);
+            //p($hwstuID);
 
             foreach($info as $file)
             {
@@ -235,7 +248,7 @@ class StudentAction extends Action {
                     'ResOriginName'=>$file['name'],
                     'ResActualName'=>$file['savename'],
                     'ResPath'=>$file['savepath'],
-                    'ResKindID'=>$res_kind_id,
+//                    'ResKindID'=>$res_kind_id,
                     'FileSize'=>$file['size']
                 );
                 $result = $db1->add($res);
@@ -244,13 +257,13 @@ class StudentAction extends Action {
                     'HwStuID' => $hwstuID,
                     'ResID' => $result,
                 );
-                dump($hr);
+                //dump($hr);
                 M('Hwres')->add($hr);
             }
 
 
 
-            $this->redirect('Student/submithomework', array('HwID' => session('selectedHwID')), 5, '页面跳转中...');
+            $this->redirect('Student/submithomework', array('HwID' => session('selectedHwID')), 1, '页面跳转中...');
         }
     }
 

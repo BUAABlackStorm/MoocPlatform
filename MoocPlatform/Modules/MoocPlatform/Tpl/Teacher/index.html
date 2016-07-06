@@ -51,7 +51,7 @@
           <ul>
             <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>在线聊天</a></li>
             <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>个人信息</a></li>
-            <li><a href="{:U(GROUP_NAME.'/LoginAndRegister/Logout')}"><i class="fa fa-bar-chart fa-fw"></i>登陆注销</a></li>
+            <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>登陆注销</a></li>
           </ul>  
         </nav>
       </div>
@@ -68,23 +68,18 @@
         </div>
         <div class="templatemo-content-container">
           <div class="templatemo-flex-row flex-content-row">
-            <div class="templatemo-content-widget white-bg col-4">
+            <div class="templatemo-content-widget white-bg col-md-12">
               <!--<i class="fa fa-times"></i>-->
-              <div class="file-navigation in-mid-page">
-              </div>
-              <div class="wrap-table-head">
-              <span class="author-section">
-                <img class="avatar" src="__PUBLIC__/images/neko.jpg">
-                <a class="user-mention">我的课程列表</a>
-                <a class="user-mention right">点击进入相应课程的管理界面</a>
-              </span>
-              </div>
-              <div class="wrap-table">
-              <table class="files">
-                <tbody>
+              <div class="panel panel-default table-responsive">
+              <table class="table table-striped table-bordered templatemo-user-table" >
+              <thead>
+                <tr>
+                  <td>课程名称</td>
+                  <td>选择课程</td>
+                </tr>
+                </thead>
                 <foreach name="course_teacher" item="c_t">
                   <tr>
-                  <td class="icon"><!--svg--></td>
                   <td class="name"><a>{$c_t['CourseName']}</a></td>
                   <if condition="$c_t['isOpen'] eq 1 ">
                     <td class="right"><a href="__URL__/course/course_id/{$c_t['CourseID']}" class="btn btn-success">选择</a></td>
@@ -93,7 +88,9 @@
                   </if>
                   </tr>
                 </foreach>
-
+                </tbody>
+              </table>
+              </div>       
                 </tbody>
               </table>
               </div>            
