@@ -16,31 +16,41 @@ class TeacherAction extends VerifyLoginAction
 		$this->display();
 	}
 
-	public function course($course_id)
+	public function personal_info()
+	{
+		$this->display();
+	}
+
+	public function personal_info_mod()
+	{
+		$this->redirect('/Teacher/personal_info/');
+	}
+
+	public function course()
 	{
 		$teacher=session('teacher');
-		$db1 = M('resource');
-		$resourceList=$db1
-					->where('resource.OwnerID='.$teacher['TeaID'].' and resource.CourseID='.$course_id)
-					->select();
-		$this->assign('resourceList',$resourceList);
+		// $db1 = M('resource');
+		// $resourceList=$db1
+		// 			->where('resource.OwnerID='.$teacher['TeaID'].' and resource.CourseID='.I('param.course_id'))
+		// 			->select();
+		// $this->assign('resourceList',$resourceList);
 		//dump(json_encode($resourceList));
 
-		$db2=M('course');
-		$course=$db2
-				->where('course.CourseID='.$course_id)
+		$db=M('course');
+		$course=$db
+				->where('course.CourseID='.I('param.course_id'))
 				->select();
-		$this->assign('course',$course);
+		session('teacher_selected_course',$course[0]);//dump(session('teacher_selected_course')['CourseID']);
 
 		$this->display('course');
 	}
 
-	public function ajaxCourse($course_id)
+	public function ajaxCourse()
 	{
 		$teacher=session('teacher');
 		$db = M('resource');
 		$resourceList=$db
-					->where('resource.OwnerID='.$teacher['TeaID'].' and resource.CourseID='.$course_id.' and resource.ResKindID='.I('param.category'))
+					->where('resource.OwnerID='.$teacher['TeaID'].' and resource.CourseID='.session('teacher_selected_course')['CourseID'].' and resource.ResKindID='.I('param.category'))
 					->select();
 
 		$this->ajaxreturn($resourceList);
@@ -68,7 +78,7 @@ class TeacherAction extends VerifyLoginAction
 		if(!$info)
 		{
     		//$this->error($upload->getError());
-    		$this->redirect('/Teacher/course/course_id/'.I('param.course_id'));
+    		$this->redirect('/Teacher/course/course_id/'.session('teacher_selected_course')['CourseID']);
 		}
 		else
 		{
@@ -81,13 +91,11 @@ class TeacherAction extends VerifyLoginAction
 						->select();
 			$res_kind_id = $res_kind[0]['ResKindID'];
 
-
-
     		foreach($info as $file)
     		{
     			$res=array(
     					'OwnerID'=>$teacher['TeaID'],
-    					'CourseID'=>I('param.course_id'),
+    					'CourseID'=>session('teacher_selected_course')['CourseID'],
     					'ResOriginName'=>$file['name'],
     					'ResActualName'=>$file['savename'],
     					'ResPath'=>$file['savepath'],
@@ -98,7 +106,7 @@ class TeacherAction extends VerifyLoginAction
     		}
 
 
-    		$this->redirect('/Teacher/course/course_id/'.I('param.course_id'));
+    		$this->redirect('/Teacher/course/course_id/'.session('teacher_selected_course')['CourseID']);
 		}
     }
 
@@ -134,7 +142,25 @@ class TeacherAction extends VerifyLoginAction
     		$db->where('resource.ResID='.$id)->delete();
     	}
 
-    	$this->redirect('/Teacher/course/course_id/'.I('param.course_id'));
+    	$this->redirect('/Teacher/course/course_id/'.session('teacher_selected_course')['CourseID']);
+    }
+
+    public function homework()
+    {
+    	if(!session("?teacher_selected_course"))
+    	{
+    		$this->redirect('/Teacher/');
+    	}
+
+    	$db=M("homework");
+    	$course_id=session('teacher_selected_course')['CourseID'];
+    	$teacher=session('teacher');
+    	$homework=$db
+    				->where('homework.CourseID='.$course_id.' and homework.TeaID='.$teacher['TeaID'])
+    				->select();
+
+    	$this->assign('homework',$homework);
+    	$this->display();
     }
 
     public function addHomework()
@@ -153,7 +179,7 @@ class TeacherAction extends VerifyLoginAction
     	}
     	
     	$homework=array(
-    				'CourseID'=>I('param.course_id'),
+    				'CourseID'=>session('teacher_selected_course')['CourseID'],
     				'TeaID'=>$teacher['TeaID'],
     				'HwName'=>I('param.homework_name'),
     				'StartDate'=>I('param.start_time'),
@@ -163,7 +189,69 @@ class TeacherAction extends VerifyLoginAction
     		);
     	$db->add($homework);
 
-    	$this->redirect('/Teacher/course/course_id/'.I('param.course_id'));
+    	$this->redirect('/Teacher/course/course_id/'.session('teacher_selected_course')['CourseID']);
+    }
+
+    private function exportExcel($expName,$expCellName,$expTableData)
+    {
+    	$cellNum = count($expCellName);
+    	$dataNum = count($expTableData);
+
+    	vendor("PHPExcel.Classes.PHPExcel");
+
+    	$objPHPExcel = new PHPExcel();
+        $cellName = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AV','AW','AX','AY','AZ');
+
+        for($i=0;$i<$cellNum;$i++)
+        {
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue($cellName[$i].'1', $expCellName[$i][1]);
+        }
+
+        for($i=0;$i<$dataNum;$i++)
+        {
+          for($j=0;$j<$cellNum;$j++)
+          {
+            $objPHPExcel->getActiveSheet(0)->setCellValue($cellName[$j].($i+2), $expTableData[$i][$expCellName[$j][0]]);
+          }             
+        }
+
+        header('pragma:public');
+        header('Content-type:application/vnd.ms-excel;charset=utf-8;name="'.$expName.'.xls"');
+        header('Content-Disposition:attachment;filename="'.$expName.'.xls"');//attachment新窗口打印inline本窗口打印
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  
+        $objWriter->save('php://output'); 
+        exit; 
+    }
+
+    public function exportHomeworkExcel()
+    {
+    	$xlsCellName=array(
+	        array('ID','ID'),
+	        array('HwID','作业ID'),
+	        array('StuID','学号'),
+	        array('StuName','姓名'),
+	        array('Sex','性别'),
+	        array('Department','院系编号'),
+	        array('Class','班级'),
+	        array('content','作业文本内容'),
+	        array('Score','作业分数'),
+	        array('Comment','作业评论') 
+        );
+
+        $db1=M('hwstu');
+        $hwID=I('param.hwID');
+        $xlsData=$db1
+        		->where('hwstu.HwID='.$hwID)
+        		->join('student ON student.StuID=hwstu.StuID')
+        		->Field('hwstu.ID,hwstu.HwID,hwstu.StuID,student.StuName,student.Sex,student.Department,student.Class,hwstu.content,hwstu.Score,hwstu.Comment')
+        		->select();
+
+        $db2=M('homework');
+        $homework=$db2
+        			->where('homework.HwID='.$hwID)
+        			->select();//dump($homework);
+
+        $this->exportExcel($homework[0]['HwName'],$xlsCellName,$xlsData);
     }
 }
 

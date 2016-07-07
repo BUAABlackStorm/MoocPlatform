@@ -187,7 +187,7 @@ class StudentAction extends Action {
         import('ORG.Net.UploadFile');
         $config = array(
             'maxSize'    =>    3145728,
-            'savePath'   =>    './MoocPlatform/Modules/MoocPlatform/Uploads/',
+            'savePath'   =>    './MoocPlatform/Modules/MoocPlatform/Uploads/Student/',
             'saveRule'   =>    'uniqid',
             'allowExts'  =>    array('jpg', 'png', 'jpeg','doc','docx','xls','xlsx','ppt','pptx','txt'),
             'autoSub'    =>    true,

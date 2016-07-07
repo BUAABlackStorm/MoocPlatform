@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <title>教师页面</title>
+
+    <script src="__PUBLIC__/js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
+    <script src="__PUBLIC__/js/jquery-migrate-1.2.1.min.js"></script> <!--  jQuery Migrate Plugin -->
+    <script src="__PUBLIC__/js/jquery.uploadify.min.js" ></script>
+    
+    <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/js/templatemo-script.js"></script>   
+    
+      <!-- Templatemo Script -->
+    <meta name="description" content="">
+    <meta name="author" content="templatemo">
+    <link href="__PUBLIC__/css/font-awesome.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/templatemo-style.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/uploadify.css" rel="stylesheet">
+  </head>
+  <body>  
+    <!-- Left column -->
+    <div class="templatemo-flex-row">
+      <div class="templatemo-sidebar">
+         <header class="templatemo-site-header">
+          <div align="center"><img src="__PUBLIC__/images/person.jpg"  class="img-circle" height="50" width="50">
+          <h2>教师用户</h2>
+          </div>
+        </header>
+          
+        <div class="profile-name" align="center">
+        <span>{:session('teacher')['TeaName']}</span>
+        <br>
+        </div>
+
+        <div class="profile-name" align="center">
+        <span>{:session('teacher')['TeaID']}</span>
+        <br>
+        </div>
+        
+
+        <div class="mobile-menu-icon">
+            <i class="fa fa-bars"></i>
+        </div>
+        <nav class="templatemo-left-nav">          
+          <ul>
+            <li><a href="__URL__/"><i class="fa fa-home fa-fw"></i>课程资源</a></li>
+            <li><a href="__URL__/homework"><i class="active"></i>作业管理</a></li>
+            <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>在线聊天</a></li>
+            <li><a href="__URL__/personal_info"><i class="fa fa-bar-chart fa-fw"></i>个人信息</a></li>
+            <li><a href="{:U(GROUP_NAME.'/LoginAndRegister/Logout')}"><i class="fa fa-bar-chart fa-fw"></i>登陆注销</a></li>
+          </ul>  
+        </nav>
+      </div>
+      <div class="templatemo-content col-1 light-gray-bg">
+        <div class="templatemo-top-nav-container">
+          <div class="row">
+            <nav class="templatemo-top-nav col-lg-12 col-md-12">
+              <ul class="text-uppercase">
+                <li><a href="__URL__/" class="active">课程选择</a></li>
+              </ul>  
+            </nav> 
+          </div>
+        </div>
+        <div class="templatemo-content-container">
+          <div class="templatemo-flex-row flex-content-row">
+            <div class="templatemo-content-widget white-bg col-2">
+                  <form action="__URL__/exportHomeworkExcel" method="get">
+                      <input type="hidden" name="hwID" value="7">
+                      <input type="submit" class="btn btn-succeess" name="exportHomeworkExcel" value="下载学生作业表格">
+                  </form>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="Assignment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">发布作业</h4>
+      </div>
+
+      <form action="__URL__/addHomework" method="post">
+        <div class="modal-body">
+          <div class="form-group">
+            <input type="text" required="required" class="form-control" name="homework_name" placeholder="作业标题"/>
+            开始时间:<input required="required"  type="date" class="form-control" name="start_time"/>
+            结束时间:<input required="required"  type="date" class="form-control" name="end_time"/>
+            <input type="checkbox" name="isGroup" id="isGroup"/>是否是团队项目
+            <textarea required="required"  class="form-control" name="require" placeholder="作业要求" rows="6"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="submit" class="btn btn-info" value="发布" />
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="关闭" />
+        </div>
+      </form>
+
+    </div>
+    </div>
+    </div>
+  </body>
+</html>
