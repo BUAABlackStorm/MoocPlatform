@@ -145,7 +145,7 @@ class TeacherAction extends VerifyLoginAction
     	$this->redirect('/Teacher/course/course_id/'.session('teacher_selected_course')['CourseID']);
     }
 
-    public function homework()
+    public function homework_index()
     {
     	if(!session("?teacher_selected_course"))
     	{
@@ -160,6 +160,26 @@ class TeacherAction extends VerifyLoginAction
     				->select();
 
     	$this->assign('homework',$homework);
+    	$this->display();
+    }
+
+    public function someHomework()
+    {
+    	$hwID=I('param.hwID');
+
+    	$db1=M("homework");
+    	$some_homework=$db1
+    					->where('homework.hwID='.$hwID)
+    					->select();//dump($some_homework);
+
+    	$db2=M('hwstu');
+    	$student_homework=$db2
+    						->where('hwstu.HwID='.$hwID)
+    						->join('student ON student.StuID=hwstu.StuID')
+    						->select();//dump($student_homework);
+
+    	$this->assign('some_homework',$some_homework);
+    	$this->assign('student_homework',$student_homework);
     	$this->display();
     }
 
@@ -252,6 +272,59 @@ class TeacherAction extends VerifyLoginAction
         			->select();//dump($homework);
 
         $this->exportExcel($homework[0]['HwName'],$xlsCellName,$xlsData);
+    }
+
+    public function importHomeworkExcel()
+    {
+    	if(empty($_FILES))
+    	{
+    		$this->redirect('/Teacher/someHomework/hw_id/'.I('param.hwID'));
+    	}
+
+    	import('ORG.Net.UploadFile');
+
+    	$config = array(
+		    'maxSize'    =>    3145728,
+		    'savePath'   =>    './MoocPlatform/Modules/MoocPlatform/Uploads/Teacher/',
+		    'saveRule'   =>    'uniqid',
+		    'allowExts'  =>    array('jpg', 'png', 'jpeg','doc','docx','xls','xlsx','ppt','pptx','txt'),
+		    'autoSub'    =>    true,
+		    'subType'	 =>	   'date',
+		    'dateFormat'    =>    'Y-m-d',
+		);
+
+		$upload = new UploadFile($config);
+
+		$upload->upload();
+		$info= $upload->getUploadFileInfo();
+
+		if(!$info)
+		{
+    		//$this->error($upload->getError());
+    		$this->redirect('/Teacher/someHomework/hw_id/'.I('param.hwID'));
+		}
+
+		vendor("PHPExcel.Classes.PHPExcel");
+
+		$file_name=$info[0]['savepath'].$info[0]['savename'];
+        $objReader = PHPExcel_IOFactory::createReader('Excel5');
+        $objPHPExcel = $objReader->load($file_name,$encode='utf-8');
+        $sheet = $objPHPExcel->getSheet(0);
+        $highestRow = $sheet->getHighestRow(); // 取得总行数
+        // $highestColumn = $sheet->getHighestColumn(); // 取得总列数
+
+        for($i=2;$i<=$highestRow;$i++)
+        {
+        	$data['Score'] = $objPHPExcel->getActiveSheet()->getCell("I".$i)->getValue();
+        	$data['Comment'] = $objPHPExcel->getActiveSheet()->getCell("J".$i)->getValue();
+
+        	M('hwstu')->where('hwstu.ID='.($objPHPExcel->getActiveSheet()->getCell("A".$i)->getValue()))
+        			  ->save($data);
+        }
+
+        unlink($file_name);
+
+        // $this->redirect('/Teacher/someHomework/hwID/'.I('param.hwID'));
     }
 }
 

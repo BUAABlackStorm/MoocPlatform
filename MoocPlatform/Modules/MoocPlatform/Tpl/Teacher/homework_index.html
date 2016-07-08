@@ -70,7 +70,13 @@
             <div class="templatemo-content-widget white-bg col-2">
                   <form action="__URL__/exportHomeworkExcel" method="get">
                       <input type="hidden" name="hwID" value="7">
-                      <input type="submit" class="btn btn-succeess" name="exportHomeworkExcel" value="下载学生作业表格">
+                      <input type="submit" class="btn btn-success" name="exportHomeworkExcel" value="下载学生作业表格">
+                  </form>
+
+                  <form action="__URL__/importHomeworkExcel" method="post" enctype="multipart/form-data">
+                      <input type="hidden" name="hwID" value="7">
+                      <input type="file" name="file_excel" value="选择文件">
+                      <input type="submit" class="btn btn-success" name="importHomeworkExcel" value="上传学生作业表格">
                   </form>
               </div>
           </div>
