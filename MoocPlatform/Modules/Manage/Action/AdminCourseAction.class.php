@@ -425,13 +425,107 @@ class AdminCourseAction extends Action{
 
         $this->display('AdminCourse/studentList');
     }
-    public function hello(){
-        echo 'Success';
+    private function exportExcel($expName,$expCellName,$expTableData)
+    {
+        $cellNum = count($expCellName);
+        $dataNum = count($expTableData);
+
+        vendor("PHPExcel.Classes.PHPExcel");
+
+        $objPHPExcel = new PHPExcel();
+        $cellName = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AV','AW','AX','AY','AZ');
+
+        for($i=0;$i<$cellNum;$i++)
+        {
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue($cellName[$i].'1', $expCellName[$i][1]);
+        }
+
+        for($i=0;$i<$dataNum;$i++)
+        {
+            for($j=0;$j<$cellNum;$j++)
+            {
+                $objPHPExcel->getActiveSheet(0)->setCellValue($cellName[$j].($i+2), $expTableData[$i][$expCellName[$j][0]]);
+            }
+        }
+
+        header('pragma:public');
+        header('Content-type:application/vnd.ms-excel;charset=utf-8;name="'.$expName.'.xls"');
+        header('Content-Disposition:attachment;filename="'.$expName.'.xls"');//attachment新窗口打印inline本窗口打印
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+        exit;
     }
-    public function test(){
-        echo 'hello';
-        $this->display('AdminCourse/courseList_1');
+
+    public function exportStudentExcel()
+    {
+        $CourseID = $_POST['CourseID'];
+        $xlsCellName=array(
+            array('CourseID','课程ID'),
+            array('StudentID','学号'),
+            array('StuName','姓名'),
+            array('Department','系别'),
+            array('Email','联系方式')
+        );
+
+        $test = M();
+        $sql = 'SELECT coursestudent.CourseID,coursestudent.StudentID,student.StuName,student.Department,student.Email FROM coursestudent JOIN student on coursestudent.StudentID = student.StuID WHERE coursestudent.CourseID = '.$CourseID;
+        $xlsData = $test ->query($sql);
+
+        $this->exportExcel($CourseID.'_学生列表',$xlsCellName,$xlsData);
+    }
+
+    public function importStudentExcel()
+    {
+        if(empty($_FILES))
+        {
+            $this->error('文件为空','courseList');
+        }
+
+        import('ORG.Net.UploadFile');
+
+        $config = array(
+            'maxSize'    =>    3145728,
+            'savePath'   =>    './MoocPlatform/Modules/Manage/Uploads/',
+            'saveRule'   =>    'uniqid',
+            'allowExts'  =>    array('jpg', 'png', 'jpeg','doc','docx','xls','xlsx','ppt','pptx','txt'),
+            'autoSub'    =>    true,
+            'subType'	 =>	   'date',
+            'dateFormat'    =>    'Y-m-d',
+        );
+
+        $upload = new UploadFile($config);
+
+        $upload->upload();
+        $info= $upload->getUploadFileInfo();
+
+        if(!$info)
+        {
+            $this->error('信息为空','courseList');
+        }
+
+        vendor("PHPExcel.Classes.PHPExcel");
+
+        $file_name=$info[0]['savepath'].$info[0]['savename'];
+        $objReader = PHPExcel_IOFactory::createReader('Excel5');
+        $objPHPExcel = $objReader->load($file_name,$encode='utf-8');
+        $sheet = $objPHPExcel->getSheet(0);
+        $highestRow = $sheet->getHighestRow(); // 取得总行数
+        // $highestColumn = $sheet->getHighestColumn(); // 取得总列数
+
+        $coursestudent = M('coursestudent');
+        for($i=2;$i<=$highestRow;$i++)
+        {
+            $data['CourseID'] = $objPHPExcel->getActiveSheet()->getCell("A".$i)->getValue();
+            $data['StudentID'] = $objPHPExcel->getActiveSheet()->getCell("B".$i)->getValue();
+
+            $flag = $coursestudent ->where('CourseID='.$data['CourseID'].' AND StudentID ='.$data['StudentID'])->select();
+            if($flag == null){
+                $coursestudent -> add($data);
+            }
+        }
+        unlink($file_name);
+        //$this->redirect('/Teacher/someHomework/hwID/'.I('param.hwID'));
+        $this->success('导入成功','courseList');
     }
 }
-
 ?>
