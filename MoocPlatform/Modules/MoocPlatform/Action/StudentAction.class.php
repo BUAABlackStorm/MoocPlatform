@@ -433,7 +433,6 @@ class StudentAction extends Action {
     public function principal(){
         $StuID = I('StuID');
         $GroupID = I('GroupID');
-<<<<<<< HEAD
 
         $data = array();
 
@@ -447,21 +446,6 @@ class StudentAction extends Action {
         );
         $save = M('learninggroup') -> where(array('GroupID' => $GroupID)) ->save($saveMember);
 
-=======
-
-        $data = array();
-
-        //找到之前的组长ID
-        $principalID = M('learninggroup') -> where(array('GroupID' => $GroupID)) -> getField('PrincipalID');
-        $data['PrincipalID'] = $principalID;
-
-        //更新learninggroup中的PrincipalID
-        $saveMember = array(
-            'PrincipalID' => $StuID,
-        );
-        $save = M('learninggroup') -> where(array('GroupID' => $GroupID)) ->save($saveMember);
-
->>>>>>> 85c2352ac0e9ad5d25ce4515308786f12d1baa18
 
         if( $save){
             $data['status'] = 'success';
@@ -470,7 +454,6 @@ class StudentAction extends Action {
         }
         $this->ajaxreturn($data);
 
-<<<<<<< HEAD
     }
 
     /**
@@ -546,7 +529,5 @@ class StudentAction extends Action {
     public function applycourse() {
         $selectManageGroupID = 1;
          
-=======
->>>>>>> 85c2352ac0e9ad5d25ce4515308786f12d1baa18
     }
 }
