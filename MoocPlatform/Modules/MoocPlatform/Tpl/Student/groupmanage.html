@@ -87,7 +87,7 @@
                 </div>
             </div> 
             <br />
-            <form class="form-horizontal">
+            <form class="form-horizontal" >
                 <div class="form-group">
                     <div class="col-lg-3">
                         <form method="post" action="{:U(GROUP_NAME.'/Student/selectgroups')}">
@@ -99,7 +99,7 @@
                             </select>
                         </form>
                     </div>
-                     <!--<a data-toggle="modal" href="#Modal" class="btn btn-success" onclick="showMembers()">团队成员</a>-->
+                    <!--<a id="groupmember" class="btn btn-success" rel="popover">团队成员</a>-->
                     <a class="btn btn-success" onclick="showMembers()">团队成员</a>
                 </div>
             </form>   
@@ -117,19 +117,22 @@
                                 <thead>
                                     <tr>
                                         <td>申请列表<span class="caret"></span></a></td>
-                                        <td>操作 <span class="caret"></span></a></td>  
+                                        <td>操作<span class="caret"></span></a></td>  
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <foreach name="groupApplyMembers" item="gams">
                                     <tr>
-                                        <td> <div id="workname"> 队员1 </div> </td>
-                                        <td>
-                                            <button onclick="window.location.href='#' " id="TeamID" class="btn btn-success templatemo-edit-button" > 拒绝加入 </button>
+                                        <td> {$gams.StuName} </td>
+                                        <td> 
+                                            <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/agreerefuse\', array(\'StuID\' => $gams[\'StuID\'], \'flag\' => 1))}'" class="btn btn-success templatemo-edit-button" > 同意加入 </button>
+                                            <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/agreerefuse\', array(\'StuID\' => $gams[\'StuID\'], \'flag\' => 2))}'" class="btn btn-success templatemo-edit-button" > 拒绝加入 </button>
                                         </td>
                                     </tr>
+                                    </foreach>
                                     <tr>
                                         <td colspan="2">
-                                            <button onclick="window.location.href='#' " id="TeamID" class="btn btn-success templatemo-edit-button" > 结束组建 </button>
+                                            <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/endbuild\')}'" class="btn btn-success templatemo-edit-button" > 结束组建 </button>
                                         </td>
                                     </tr>
                                 </tbody>      
@@ -152,31 +155,24 @@
                                 <thead>
                                     <tr>
                                         <td>课程列表<span class="caret"></span></a></td>
-                                        <td>操作 <span class="caret"></span></a></td>  
+                                        <td>操作<span class="caret"></span></a></td>  
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <foreach name="canJoinCourses" item="cjcs">
                                     <tr>
-                                        <td> <div id="workname"> 课程1 </div> </td>
+                                        <td> {$cjcs.CourseName} </td>
                                         <td> 
-                                            <button onclick="window.location.href='#' " id="CourseID" class="btn btn-success templatemo-edit-button" > 申请加入 </button>
+                                            <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/applycourse\')}'" class="btn btn-success templatemo-edit-button" > 申请加入 </button>
                                         </td>
                                     </tr>
+                                    </foreach>
                                 </tbody>      
                             </table>    
             	        </div>  
         	        </div>
                 </div>           
-            </div>    
-            <!--<div class="col-lg-3">-->
-                <!--<select id="TeamID" class="selectpicker show-tick form-control">-->
-                    <!--<option> 选择新的负责人</option>-->
-                    <!--<option>13211042</option>-->
-                    <!--<option>13211043</option>-->
-                <!--</select>-->
-                <!--<br />-->
-                <!--<button onclick="window.location.href='#' " id="TeamID" class="btn btn-success btn templatemo-edit-button"> 确定更改  </button>-->
-            <!--</div> -->
+            </div>
         </div>
     </div>
 
@@ -212,7 +208,6 @@
             </div>
         </div>
     </div>
-
 </body>
 
 
@@ -221,8 +216,7 @@
 <script type="text/javascript" src="__PUBLIC__/js/bootstrap-filestyle.min.js"></script>  <!-- http://markusslima.github.io/bootstrap-filestyle/ -->
 <script type="text/javascript" src="__PUBLIC__/js/templatemo-script.js"></script>        <!-- Templatemo Script -->
 <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
-<script>
-
+<script>	
     var selectGroup = $('select[name = "selectGroups"]');
     function showMembers(){
         if(selectGroup.val() == 0){
@@ -303,7 +297,6 @@
             dataType: 'json',
         });
     }
-
 </script>
 
 </body>

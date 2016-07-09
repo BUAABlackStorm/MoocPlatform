@@ -293,7 +293,7 @@ class StudentAction extends Action {
             $hasJoinGroups[$key]['NowPerson'] = M('groupstu')->where('GroupID = %d', $value['GroupID'])->count();
             
             // 查询改团队 已加入课程
-            $hasJoinCourseIDs = M('groupcourse')->where('GroupID = %d', $value['GroupID'])->select();
+            $hasJoinCourseIDs = M('groupcourse')->where('GroupID = %d AND ApplyStatus=1', $value['GroupID'])->select();
             foreach ($hasJoinCourseIDs as $k => $v) {
                 $hasJoinGroups[$key]['Courses'][$k] = M('Course')->where('CourseID = %d', $v['CourseID'])->find();
             }
@@ -322,7 +322,7 @@ class StudentAction extends Action {
             $canJoinGroups[$index]['NowPerson'] = M('groupstu')->where('GroupID = %d', $value['GroupID'])->count() + 1;
             
             // 查询改团队 已加入课程
-            $canJoinCourseIDs = M('groupcourse')->where('GroupID = %d', $value['GroupID'])->select();
+            $canJoinCourseIDs = M('groupcourse')->where('GroupID = %d AND ApplyStatus=1', $value['GroupID'])->select();
             foreach ($canJoinCourseIDs as $k => $v) {
                 $canJoinGroups[$index]['Courses'][$k] = M('Course')->where('CourseID = %d', $v['CourseID'])->find();
             }
@@ -366,23 +366,26 @@ class StudentAction extends Action {
         $this->redirect('Student/group', '', 1, '申请成功，正在返回...');
     }
 
-    public function groupbuild() {
 
-        $this->display('Student/groupbuild');
-    }
-    
     /**
      * 组建团队
      */
+    public function groupbuild() {
+        $this->display('Student/groupbuild');
+    }
+    
     public function groupbuildadd() {
         $group = array(
             'GroupName' => I('groupName'),
             'PrincipalID' => session('student')['StuID'],
             'MaxPerson' => I('groupMaxPer'),
+            'BuildStatus' => 0,     // 正在组建团队
         );
-
+        
         // TODO: 判断是否符合条件
         M('Learninggroup')->add($group);
+        
+        $this->redirect('Student/groupmanage', '', 1, '申请成功，正在返回...');
     }
 
     /**
@@ -451,5 +454,80 @@ class StudentAction extends Action {
         }
         $this->ajaxreturn($data);
 
+    }
+
+    /**
+     * 处理申请
+     */
+    public function handleapply() {
+        $selectManageGroupID = 1;
+        
+        // 获取所有 申请团队ID
+        $groupApplyMemberIDs = M('groupstu')->where('GroupID = %d AND JoinStatus = 0', $selectManageGroupID)->select();
+        foreach ($groupApplyMemberIDs as $key => $value) {
+            $groupApplyMembers[$key] = M('Student')->where('StuID = %d', $value['StudentID'])->find();
+        }
+        $this->groupApplyMembers = $groupApplyMembers;
+        //dump($groupApplyMembers);
+        $this->display('Student/groupmanage');
+    }
+
+    /**
+     * 同意加入 or 拒绝加入团队
+     */
+    public function agreerefuse() {
+        $selectManageGroupID = 1;
+        //dump(I('StuID'));
+        //dump(I('flag'));
+        
+        $data['JoinStatus'] = I('flag');
+        M('groupstu')->where('GroupID = %d AND StudentID = %d', $selectManageGroupID, I('StuID'))->save($data);
+
+        $this->redirect('Student/groupmanage', '', 1, '处理成功，正在返回...');
+    }
+
+    /**
+     * 结束组建团队
+     */
+    public function endbuild() {
+        $selectManageGroupID = 1;
+
+        $data['BuildStatus'] = 1;
+        M('learninggroup')->where('GroupID = %d', $selectManageGroupID)->save($data); 
+
+        $this->redirect('Student/groupmanage', '', 1, '处理成功，正在返回...');
+    }
+
+    /**
+     * 申请课程
+     * TODO: 区分正在申请否？
+     */
+    public function canapplycourse() {
+        $selectManageGroupID = 1;
+
+        // 找出所有已申请的CourseID
+        $hasJoinCourseIDs = M('groupcourse')->where('GroupID = %d', $selectManageGroupID)->getField('CourseID', true);
+        // 找出所有开设的课程
+        $allOpenCourses = M('Course')->where('isOpen = 1')->select();
+        
+        $canJoinCourses = array();
+        $index = 0;
+        foreach ($allOpenCourses as $key => $value) {
+            if (in_array($value['CourseID'], $hasJoinCourseIDs)) {
+                continue;   // 团队 已加入该课程
+            }
+            
+            $canJoinCourses[$index] = $value;
+            ++$index;
+        }
+        $this->canJoinCourses = $canJoinCourses;
+        dump($canJoinCourses);
+        
+        $this->display('Student/groupmanage');
+    }
+
+    public function applycourse() {
+        $selectManageGroupID = 1;
+         
     }
 }
