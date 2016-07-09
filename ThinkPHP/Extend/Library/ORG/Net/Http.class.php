@@ -146,7 +146,7 @@ class Http {
      * @return void
      */
     static public function download ($filename, $showname='',$content='',$expire=180) {
-        if(is_file($filename)) {
+        if(file_exists($filename)) {
             $length = filesize($filename);
         }elseif(is_file(UPLOAD_PATH.$filename)) {
             $filename = UPLOAD_PATH.$filename;
