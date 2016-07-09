@@ -143,9 +143,18 @@ class StudentAction extends Action {
         $homework = M('Homework')->where(array("HwID" => I('HwID')))->find();
         $this->homework = $homework;
         
+        // 判断作业是否结束
+        if ( (strtotime("now") >= strtotime($homework['StartDate']))
+            and (strtotime("now") <= strtotime($homework['EndDate'])) ) {
+            $this->isOutdate = 1;
+        } else {
+            $this->isOutdate = 0;
+        }
+            
+        
+        
         $condition['StuID'] = $stuID;
         $condition['HwID'] = I('HwID');
-
         $hwstu = M('Hwstu')->where($condition)->find();
         $this->hwstu = $hwstu;
         //p($hwstu);
@@ -154,6 +163,7 @@ class StudentAction extends Action {
 
         //p(session('selectedHwstuID'));
         
+        // 获得已上传附件
         $files = M('Hwres')->where(array("HwStuID" => $hwstu['ID']))->select();
         $attachment = array();
         foreach ($files as $key=>$value) {
@@ -163,7 +173,7 @@ class StudentAction extends Action {
         }
         $this->attachment = $attachment;
         //p($attachment);
-
+        
         $this->display('Student/submithomework');
     }
 
@@ -173,6 +183,8 @@ class StudentAction extends Action {
      */
     public function delete() {
         //dump(I('ResID'));
+        $delFilepath = M('Resource')->where(array("ResID" => I('ResID')))->find();
+        unlink($delFilepath['ResPath'].$delFilepath['ResActualName']);
         
         M('Resource')->where(array("ResID" => I('ResID')))->delete();
         M('Hwres')->where(array("ResID" => I('ResID')))->delete();
@@ -181,6 +193,7 @@ class StudentAction extends Action {
     }
 
     public function upload() {
+        //dump(I('content'));
 
         $stuID = session('student')['StuID'];
 
@@ -197,42 +210,45 @@ class StudentAction extends Action {
         $upload = new UploadFile($config);
         $upload->upload();
         $info= $upload->getUploadFileInfo();
-        if(!$info)
+        
+        if(!$info && !I('content'))
         {
             //$this->error($upload->getError());
-            $this->redirect('Student/submithomework', array('HwID' => session('selectedHwID')), 1, '页面跳转中...');
+            $this->redirect('Student/submithomework', array('HwID' => session('selectedHwID')), 2, '请填写作业内容...');
         }
         else
         {
-            $db1=M('resource');
-            //$db2=M('resoucekind');
-
-//            $res_kind=$db2
-//                ->where('resoucekind.ResType='.'"'.I('param.category').'"')
-//                ->select();
-//            $res_kind_id=$res_kind[0]['ResKindID'];
-
-            //dump(session('selectedHwID'));
+            /**
+             * 获取HwStu ID
+             * 参数:
+             *  StuID 学生ID: session获取
+             *  HwID  作业ID: session获取
+             */
             $condition['StuID'] = $stuID;
             $condition['HwID'] = session('selectedHwID');
             $hwstu = M('Hwstu')->where($condition)->find();
             $this->hwstu = $hwstu;
 
             $hwstuID = $hwstu['ID'];
-
-
-            // 第一次提交
+            // 第一次提交, 创建HwStu记录, 后面只要修改即可
             if ($hwstu['ID'] == '')
             {
                 $hs = array(
                     'HwID' => session('selectedHwID'),
                     'StuID' => $stuID,
+                    'Content' => I('content'),
                 );
                 $hwstuID = M('Hwstu')->add($hs);
+            } else {    // 更新HwStu文本作业内容
+                if (I('content') != '') {
+                    $data['Content'] = I('content');
+                    M('Hwstu')->where('ID = %d', $hwstu['ID'])->save($data);
+                }
             }
 
             //p($hwstuID);
 
+            // 添加附件
             foreach($info as $file)
             {
                 $res = array(
@@ -244,22 +260,127 @@ class StudentAction extends Action {
 //                    'ResKindID'=>$res_kind_id,
                     'FileSize'=>$file['size']
                 );
-                $result = $db1->add($res);
+                $result = M('resource')->add($res);
 
                 $hr = array(
                     'HwStuID' => $hwstuID,
                     'ResID' => $result,
                 );
-                //dump($hr);
                 M('Hwres')->add($hr);
             }
-
-
 
             $this->redirect('Student/submithomework', array('HwID' => session('selectedHwID')), 1, '页面跳转中...');
         }
     }
 
-}
-?>
+    public function group() {
+        $stuID = session('student')['StuID'];
 
+        // 查询加入的所有团队id, 并获得团队基本信息
+        $hasJoinGroupStus = M('groupstu')->where('StudentID = %d AND JoinStatus = 1', $stuID)->select();
+        $hasJoinGroups = array();
+        foreach ($hasJoinGroupStus as $key => $value) {
+            $hasJoinGroups[$key] = M('Learninggroup')->where('GroupID = %d', $value['GroupID'])->find();
+
+            // 查询该团队 负责人
+            $stuPrin = M('Student')->where('StuID = %d', $hasJoinGroups[$key]['PrincipalID'])->find();
+            $hasJoinGroups[$key]['PrinName'] = $stuPrin['StuName'];
+            
+            // 查询该团队 已加入的人数
+            $hasJoinGroups[$key]['NowPerson'] = M('groupstu')->where('GroupID = %d', $value['GroupID'])->count();
+            
+            // 查询改团队 已加入课程
+            $hasJoinCourseIDs = M('groupcourse')->where('GroupID = %d', $value['GroupID'])->select();
+            foreach ($hasJoinCourseIDs as $k => $v) {
+                $hasJoinGroups[$key]['Courses'][$k] = M('Course')->where('CourseID = %d', $v['CourseID'])->find();
+            }
+        }
+        //p($hasJoinGroups);
+        $this->hasJoinGroups = $hasJoinGroups;
+        
+        // 查询可加入的团队id及信息
+        // 已加入所有团队ID
+        $hasJoinGroupIDs = M('groupstu')->where('StudentID = %d AND JoinStatus != 1', $stuID)->getField('GroupID', true);
+        // 所有非自己创建的团队
+        $notMeBuildGroups = M('Learninggroup')->where('PrincipalID != %d', $stuID)->select();
+        $canJoinGroups = array();
+        $index = 0;
+        foreach ($notMeBuildGroups as $key => $value) {
+            if (in_array($value['GroupID'], $hasJoinGroupIDs)) { // 已加入团队
+                continue;
+            }
+            $canJoinGroups[$index] = $value;
+
+            // 查询该团队 负责人
+            $stuPrin = M('Student')->where('StuID = %d', $canJoinGroups[$index]['PrincipalID'])->find();
+            $canJoinGroups[$index]['PrinName'] = $stuPrin['StuName'];
+            
+            // 查询该团队 已加入的人数
+            $canJoinGroups[$index]['NowPerson'] = M('groupstu')->where('GroupID = %d', $value['GroupID'])->count();
+            
+            // 查询改团队 已加入课程
+            $canJoinCourseIDs = M('groupcourse')->where('GroupID = %d', $value['GroupID'])->select();
+            foreach ($canJoinCourseIDs as $k => $v) {
+                $canJoinGroups[$index]['Courses'][$k] = M('Course')->where('CourseID = %d', $v['CourseID'])->find();
+            }
+            
+            $canJoinGroups[$index]['JoinStatus'] = M('groupstu')->where('StudentID = %d', $stuID)->find();
+            
+            ++$index;
+        }
+        $this->canJoinGroups = $canJoinGroups;        
+        dump($canJoinGroups);
+        
+        $this->display('Student/group');
+    }
+
+    /**
+     * 退出团队
+     */
+    public function groupexit() {
+        //dump(I('GroupID'));
+        $groupstu = array(
+            'GroupID' => I('GroupID'),
+            'StudentID' => session('student')['StuID'],
+        );
+        
+        M('groupstu')->where($groupstu)->delete();
+        $this->redirect('Student/group', '', 1, '删除成功，正在返回...');
+    }
+
+    /**
+     * 申请加入团队
+     */
+    public function applyjoin() {
+        $groupstu = array(
+            'GroupID' => I('GroupID'),
+            'StudentID' => session('student')['StuID'],
+            'JoinStatus' => 0,  // 申请加入
+        );
+        
+        M('groupstu')->data($groupstu)->add();
+    }
+
+    public function groupbuild() {
+
+        $this->display('Student/groupbuild');
+    }
+    
+    /**
+     * 组建团队
+     */
+    public function groupbuildadd() {
+        $group = array(
+            'GroupName' => I('groupName'),
+            'PrincipalID' => session('student')['StuID'],
+            'MaxPerson' => I('groupMaxPer'),
+        );
+
+        // TODO: 判断是否符合条件
+        M('Learninggroup')->add($group);
+    }
+
+    
+    
+    
+}

@@ -47,11 +47,12 @@
         </div>
         <nav class="templatemo-left-nav">
             <ul>
-                <li><a href="{:U(GROUP_NAME.'/Student/studentinfo')}"><i class="fa fa-home fa-fw"></i>个人资料</a></li>
-                <li><a href="{:U(GROUP_NAME.'/Student/courseinfo')}"><i class="fa fa-database fa-fw"></i>课程信息</a></li>
-                <li><a href="{:U(GROUP_NAME.'/Student/resource')}"><i class="fa fa-map-marker fa-fw"></i>资源</a></li>
-                <li><a href="{:U(GROUP_NAME.'/Student/homework')}" class="active"><i class="fa fa-users fa-fw"></i>提交作业</a></li>
-                <li><a href="{:U(GROUP_NAME.'/LoginAndRegister/Logout')}"><i class="fa fa-eject fa-fw"></i>退出</a></li>
+                <li><a href="{:U(GROUP_NAME.'/Student/studentinfo')}"><i class="fa fa-info-circle fa-fw"></i>个人资料</a></li>
+                <li><a href="{:U(GROUP_NAME.'/Student/courseinfo')}"><i class="fa fa-th-list fa-fw"></i>课程信息</a></li>
+                <li><a href="{:U(GROUP_NAME.'/Student/resource')}"><i class="fa fa-database fa-fw"></i>资源</a></li>
+                <li><a href="{:U(GROUP_NAME.'/Student/homework')}" class="active"><i class="fa fa-file fa-fw"></i>作业</a></li>
+                <li><a href="{:U(GROUP_NAME.'/Student/group')}"><i class="fa fa-group fa-fw"></i>团队</a></li>                
+                <li><a href="{:U(GROUP_NAME.'/LoginAndRegister/Logout')}"><i class="fa fa-sign-out fa-fw"></i>退出</a></li>
             </ul>
         </nav>
     </div>
@@ -64,7 +65,8 @@
                         <li><a href="{:U(GROUP_NAME.'/Student/studentinfo')}">个人资料</a></li>
                         <li><a href="{:U(GROUP_NAME.'/Student/courseinfo')}">课程信息</a></li>
                         <li><a href="{:U(GROUP_NAME.'/Student/resource')}">资源</a></li>
-                        <li><a href="{:U(GROUP_NAME.'/Student/homework')}">提交作业</a></li>
+                        <li><a href="{:U(GROUP_NAME.'/Student/homework')}">作业</a></li>
+                        <li><a href="{:U(GROUP_NAME.'/Student/group')}">团队</a></li>
                         <li><a href="{:U(GROUP_NAME.'/LoginAndRegister/Logout')}">退出</a></li>
                         <!--<li><input type="text" class="form-control"></li>-->
                     </ul>
@@ -73,18 +75,34 @@
         </div>   
         <div class="templatemo-content-widget white-bg" style="width: 80%">  
             <form class="form-horizontal">
+                <p>
+                    <b>{$homework.HwName}</b>
+                    {$homework.StartDate} ~ {$homework.EndDate}
+                </p>
+
                 <p><b>作业要求:</b></p>
                 <p>{$homework.Require}</p>
-                <p><b>作业分数:</b></p>
-                <p>{$hwstu.Score}</p>
-                <p><b>作业评论:</b></p>
-                <p>{$hwstu.Comment}</p>
+
+                
+
+                <if condition="$hwstu.Score neq ''">
+                    <p><b>作业分数:</b></p>
+                    <p>{$hwstu.Score}</p>
+                    <p><b>作业评论:</b></p>
+                    <p>{$hwstu.Comment}</p>
+                </if>
             </form>  
             <br/><br/><br/>
-
-            <p><b>已上传的文件</b></p>
+            
+            <if condition="$hwstu.Content neq ''">
+                <p><b>已上传文本作业</b></p>
+                {$hwstu.Content}
+            </if>
+            <if condition="$attachment neq null">
+                <p><b>已上传作业附件</b></p>
+            </if>
             <foreach name="attachment" item="att">
-                {$att.ResOriginName}                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{:U(GROUP_NAME.'/Student/download', array('resID' => $att['ResID']))}">{$att.ResOriginName}</a>         &nbsp;&nbsp;&nbsp;&nbsp;
                 提交时间: {$att.ReleaseTime}     &nbsp;&nbsp;&nbsp;&nbsp;
                 <button type="button" onclick="window.location.href='{:U(GROUP_NAME.\'/Student/delete\', array(\'ResID\' => $att[\'ResID\']))}'" id="delete" class="templatemo-blue-button">删除</button>
                 <br/> <br/>
@@ -104,31 +122,28 @@
                     <!--<button type="reset" class="templatemo-white-button">重新选择</button>-->
                 <!--</div> -->
             <!--</form>-->
-            
-            <form accept-charset="utf-8" enctype="multipart/form-data" method="post" class="btn-group-form" action="{:U(GROUP_NAME.'/Student/upload')}">
-                <div id="queue"></div>
-                <p><b>文本作业</b></p>
-                <textarea id="answer" cols=80 rows=4>
-                </textarea>
+            <if condition="$isOutdate eq 1">
+                <form accept-charset="utf-8" enctype="multipart/form-data" method="post" class="btn-group-form" action="{:U(GROUP_NAME.'/Student/upload')}">
+                    <div id="queue"></div>
+
+                    <p><b>文本作业</b></p>
+                    <textarea name="content" cols=80 rows=4></textarea>
                 
-                <p><b>附件作业</b></p>
-                <input id="file-select" name="file[]" type="file" multiple="true">
+                    <p><b>附件作业</b></p>
+                    <input id="file-select" name="file[]" type="file" multiple="true">
                 <!--<select name="category" class="form">-->
                   <!--<option value="课件">课件</option>-->
                   <!--<option value="文档">文档</option>-->
                   <!--<option value="视频">视频</option>-->
                 <!--</select>-->
-                <input class="btn btn-sm right" type="submit" name="submit" value="上传文件"></input>
-            </form>
-
+                    <input class="btn btn-sm right" type="submit" name="submit" value="上传文件"></input>
+                </form>
+            </if>
         </div> 
+
     </div>
 </div>
 </body>
-
-
-
-
 
 
 <!-- JS -->
