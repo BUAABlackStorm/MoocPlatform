@@ -60,14 +60,14 @@ class TeacherAction extends VerifyLoginAction
     {
     	import('ORG.Net.UploadFile');
 
-    	$config = array(
-		    'maxSize'    =>    3145728,
-		    'savePath'   =>    './MoocPlatform/Modules/MoocPlatform/Uploads/Teacher/',
-		    'saveRule'   =>    'uniqid',
-		    'allowExts'  =>    array('jpg', 'png', 'jpeg','doc','docx','xls','xlsx','ppt','pptx','txt'),
-		    'autoSub'    =>    true,
-		    'subType'	 =>	   'date',
-		    'dateFormat'    =>    'Y-m-d',
+		$config = array(
+				'maxSize'    =>    3145728,
+				'savePath'   =>    './MoocPlatform/Modules/MoocPlatform/Uploads/Teacher/',
+				'saveRule'   =>    'uniqid',
+				'allowExts'  =>    array('jpg', 'png', 'jpeg','doc','docx','xls','xlsx','ppt','pptx','txt'),
+				'autoSub'    =>    true,
+				'subType'	 =>	   'date',
+				'dateFormat'    =>    'Y-m-d',
 		);
 
 		$upload = new UploadFile($config);
