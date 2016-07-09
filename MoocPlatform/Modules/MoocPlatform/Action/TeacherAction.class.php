@@ -23,6 +23,64 @@ class TeacherAction extends VerifyLoginAction
 
 	public function personal_info_mod()
 	{
+		$passwd1=I('param.password1');
+		$passwd2=I('param.password2');
+		$email=I('param.Email');
+		$teacher=session('teacher');
+		$isSuccessful=2;
+
+		if((""!=$passwd1)||(""!=$passwd2))
+		{
+			if($passwd1==$passwd2)
+			{
+				$data['Password']=md5($passwd1);
+
+				M('teacher')->where('teacher.TeaID='.$teacher['TeaID'])
+							->save($data);
+				$tea=M('teacher')->where('teacher.TeaID='.$teacher['TeaID'])
+								 ->select();
+
+				session('teacher',$tea[0]);
+
+				$isSuccessful=1;
+			}
+			else
+			{
+				$isSuccessful=0;
+			}
+		}
+
+		if(($isSuccessful!=0)&&(""!=$email))
+		{
+			$data['Email']=$email;
+
+			$tea=M('teacher')->where('teacher.TeaID='.$teacher['TeaID'])
+					 		 ->select();//dump($tea);dump($email);
+			if($tea[0]['Email']!=$email)
+			{
+				M('teacher')->where('teacher.TeaID='.$teacher['TeaID'])
+							->save($data);
+				$tea=M('teacher')->where('teacher.TeaID='.$teacher['TeaID'])
+					 		 ->select();
+
+				$isSuccessful=1;
+				session('teacher',$tea[0]);
+			}
+		}
+
+		if(1==$isSuccessful)
+		{
+			session('personal_info_mod_msg',"修改成功!");
+		}
+		else if(0==$isSuccessful)
+		{
+			session('personal_info_mod_msg',"修改失败!");
+		}
+		else if(2==$isSuccessful)
+		{
+			session('personal_info_mod_msg',null);
+		}
+
 		$this->redirect('/Teacher/personal_info/');
 	}
 
@@ -314,7 +372,7 @@ class TeacherAction extends VerifyLoginAction
 		    'maxSize'    =>    3145728,
 		    'savePath'   =>    './MoocPlatform/Modules/MoocPlatform/Uploads/Teacher/',
 		    'saveRule'   =>    'uniqid',
-		    'allowExts'  =>    array('jpg', 'png', 'jpeg','doc','docx','xls','xlsx','ppt','pptx','txt'),
+		    'allowExts'  =>    array('xls','xlsx'),
 		    'autoSub'    =>    true,
 		    'subType'	 =>	   'date',
 		    'dateFormat'    =>    'Y-m-d',
@@ -400,7 +458,7 @@ class TeacherAction extends VerifyLoginAction
         $download_file = array();
         $download_file_name = array();
         $download_file_count=0;
-        
+
         foreach ($resource as $res)
         {
 			$download_file[$download_file_count] = $res['ResPath'].$res['ResActualName'];
@@ -409,6 +467,177 @@ class TeacherAction extends VerifyLoginAction
 
         $scandir=new traverseDir("","");
         $scandir->tozip($download_file,$download_file_name);
+    }
+
+    private function exportGroupExcel($expName,$expCellName,$expTableData1,$expTableData2)
+    {
+    	$cellNum = count($expCellName);
+    	$expTableDataNum1 = count($expTableData1);
+
+    	vendor("PHPExcel.Classes.PHPExcel");
+
+    	$objPHPExcel = new PHPExcel();
+        $cellName = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AV','AW','AX','AY','AZ');
+
+        for($i=0;$i<$cellNum;$i++)
+        {
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue($cellName[$i].'1', $expCellName[$i][1]);
+        }
+
+        $amount=2;
+        for($i=0;$i<$expTableDataNum1;$i++)
+        {
+        	$eachGroupNumber=count($expTableData2[$i]);
+
+        	for ($j=0; $j <=4; $j++)
+        	{
+        		$objPHPExcel->getActiveSheet(0)->setCellValue($cellName[$j].$amount, $expTableData1[$i][$expCellName[$j][0]]);
+        	}
+        	for ($j=10; $j <$cellNum; $j++)
+        	{
+        		$objPHPExcel->getActiveSheet(0)->setCellValue($cellName[$j].$amount, $expTableData1[$i][$expCellName[$j][0]]);
+        	}
+
+        	for ($j=0; $j < $eachGroupNumber; $j++)
+        	{ 
+        		for ($k=5; $k < 10; $k++)
+	        	{
+					$objPHPExcel->getActiveSheet(0)->setCellValue($cellName[$k].$amount, $expTableData2[$i][$j][$expCellName[$k][0]]);
+	        	}
+
+	        	$amount++;
+	        }
+
+	        for ($j=0; $j <=4; $j++)
+	        { 
+	        	$objPHPExcel->getActiveSheet(0)->mergeCells($cellName[$j].($amount-$eachGroupNumber).':'.$cellName[$j].($amount-1));
+
+				$objPHPExcel->getActiveSheet()->getStyle($cellName[$j].($amount-$eachGroupNumber))->getAlignment()
+				->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+	        }
+
+	        for ($j=10; $j < $cellNum; $j++)
+	        { 
+	        	$objPHPExcel->getActiveSheet(0)->mergeCells($cellName[$j].($amount-$eachGroupNumber).':'.$cellName[$j].($amount-1));
+
+				$objPHPExcel->getActiveSheet()->getStyle($cellName[$j].($amount-$eachGroupNumber))->getAlignment()
+				->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+	        }
+        }
+
+        header('pragma:public');
+        header('Content-type:application/vnd.ms-excel;charset=utf-8;name="'.$expName.'.xls"');
+        header('Content-Disposition:attachment;filename="'.$expName.'.xls"');//attachment新窗口打印inline本窗口打印
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  
+        $objWriter->save('php://output'); 
+        exit; 
+    }
+
+    public function exportGroupHomeworkExcel()
+    {
+    	$xlsCellName=array(
+	        array('GroupID','小组编号'),
+	        array('GroupName','小组名称'),
+	        array('ID','ID'),
+	        array('HwID','作业ID'),
+	        array('PrincipalID','组长学号'),
+	        array('StuID','学号'),
+	        array('StuName','姓名'),
+	        array('Sex','性别'),
+	        array('Department','院系编号'),
+	        array('Class','班级'),
+	        array('content','作业文本内容'),
+	        array('Score','作业分数'),
+	        array('Comment','作业评论')
+        );
+
+        $db1=M('hwstu');
+        $db2=M('learninggroup');
+        $db3=M('homework');
+        $hwID=I('param.hwID');
+        $group_count=0;
+        $group_member=array();
+
+        $xlsData1=$db1
+        		->where('hwstu.HwID='.$hwID)
+        		->join('student ON student.StuID=hwstu.StuID')
+        		->join('learninggroup ON learninggroup.PrincipalID=hwstu.StuID')
+        		->Field('hwstu.ID,hwstu.HwID,hwstu.StuID,student.StuName,student.Sex,student.Department,student.Class,hwstu.content,hwstu.Score,hwstu.Comment,learninggroup.GroupID,learninggroup.GroupName,learninggroup.PrincipalID')
+        		->select();//dump($xlsData1);
+        $group_count=count($xlsData1);
+
+        for($i=0;$i<$group_count;$i++)
+        { 
+        	$xlsData2=$db2
+        			->where('learninggroup.PrincipalID='.$xlsData1[$i]['StuID'])
+        			->join('groupstu ON groupstu.GroupID=learninggroup.GroupID')
+        			->join('student ON student.StuID=groupstu.StudentID')
+        			->Field('student.StuID,student.StuName,student.Sex,student.Department,student.Class')
+        			->select();
+        	$group_member[$i]=$xlsData2;
+        }//dump($group_member[0]);
+
+        $homework=$db3
+        			->where('homework.HwID='.$hwID)
+        			->select();//dump($homework);
+
+        $this->exportGroupExcel($homework[0]['HwName'],$xlsCellName,$xlsData1,$group_member);
+    }
+
+    public function importGroupHomeworkExcel()
+    {
+    	if(empty($_FILES))
+    	{
+    		$this->redirect('/Teacher/someHomework/hwID/'.I('param.hwID'));
+    	}
+
+    	import('ORG.Net.UploadFile');
+
+    	$config = array(
+		    'maxSize'    =>    3145728,
+		    'savePath'   =>    './MoocPlatform/Modules/MoocPlatform/Uploads/Teacher/',
+		    'saveRule'   =>    'uniqid',
+		    'allowExts'  =>    array('xls','xlsx'),
+		    'autoSub'    =>    true,
+		    'subType'	 =>	   'date',
+		    'dateFormat'    =>    'Y-m-d',
+		);
+
+		$upload = new UploadFile($config);
+
+		$upload->upload();
+		$info= $upload->getUploadFileInfo();
+
+		if(!$info)
+		{
+    		//$this->error($upload->getError());
+    		$this->redirect('/Teacher/someHomework/hwID/'.I('param.hwID'));
+		}
+
+		vendor("PHPExcel.Classes.PHPExcel");
+
+		$file_name=$info[0]['savepath'].$info[0]['savename'];
+        $objReader = PHPExcel_IOFactory::createReader('Excel5');
+        $objPHPExcel = $objReader->load($file_name,$encode='utf-8');
+        $sheet = $objPHPExcel->getSheet(0);
+        $highestRow = $sheet->getHighestRow(); // 取得总行数
+        // $highestColumn = $sheet->getHighestColumn(); // 取得总列数
+
+        for($i=2;$i<=$highestRow;$i++)
+        {
+        	if(""!=$objPHPExcel->getActiveSheet()->getCell("A".$i)->getValue())
+        	{
+        		$data['Score'] = $objPHPExcel->getActiveSheet()->getCell("L".$i)->getValue();
+	        	$data['Comment'] = $objPHPExcel->getActiveSheet()->getCell("M".$i)->getValue();
+
+	        	M('hwstu')->where('hwstu.ID='.($objPHPExcel->getActiveSheet()->getCell("C".$i)->getValue()))
+	        			  ->save($data);
+	        }
+        }
+
+        unlink($file_name);
+
+        $this->redirect('/Teacher/someHomework/hwID/'.I('param.hwID'));
     }
 }
 

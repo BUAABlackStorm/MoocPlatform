@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <title>个人信息</title>
+    <meta name="description" content="">
+    <meta name="author" content="templatemo">
+    <!-- 
+    Visual Admin Template
+    http://www.templatemo.com/preview/templatemo_455_visual_admin
+    -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
+    <link href="__PUBLIC__/css/font-awesome.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/templatemo-style.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/templatemo-style.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>  
+    <!-- Left column -->
+    <div class="templatemo-flex-row">
+      <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+         <div align="center"><img src="__PUBLIC__/images/person.jpg"  class="img-circle" height="50" width="50">
+          <h2>教师用户</h2>
+          </div>
+        </header>
+         <div class="profile-name" align="center">
+        <span>{:session('teacher')['TeaName']}</span>
+        <br>
+        </div>
+
+        <div class="profile-name" align="center">
+        <span>{:session('teacher')['TeaID']}</span>
+        <br>
+        </div>
+         
+        <br>   
+        <!-- Search box 
+        <form class="templatemo-search-form" role="search">
+          <div class="input-group">
+              <button type="submit" class="fa fa-search"></button>
+              <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">           
+          </div>
+        </form>  -->
+        <div class="mobile-menu-icon">
+            <i class="fa fa-bars"></i>
+        </div>
+        <nav class="templatemo-left-nav">          
+          <ul>
+            <li><a href="__URL__/"><i class="fa fa-home fa-fw"></i>课程资源</a></li>
+            <li><a href="__URL__/homework_index"><i class="fa fa-bar-chart fa-fw"></i>作业管理</a></li>
+            <li><a href="__URL__/teaChat"><i class="fa fa-bar-chart fa-fw"></i>在线聊天</a></li>
+            <li><a href="__URL__/personal_info" class="active"><i class="fa fa-home fa-fw"></i>个人信息</a></li>
+            <li><a href="{:U(GROUP_NAME.'/LoginAndRegister/Logout')}"><i class="fa fa-bar-chart fa-fw"></i>登陆注销</a></li>
+          </ul>  
+        </nav>
+      </div>
+      <!-- Main content --> 
+      <div class="templatemo-content col-1 light-gray-bg">
+        
+          <div class="row">
+            
+          </div>
+       
+        <div class="templatemo-content-container">
+          <div class="templatemo-flex-row flex-content-row">
+            <div class="col-md-12">
+              <if condition="session('?personal_info_mod_msg')">
+                <if condition="session('personal_info_mod_msg') eq '修改成功!'">
+                  <div class="alert alert-success">
+                <else />
+                  <div class="alert alert-danger">
+                </if>
+                    <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h3>{:session('personal_info_mod_msg')}</h3>
+                  </div>
+
+                {:session('personal_info_mod_msg',null)}
+
+              </if>
+                <h2 class="margin-bottom-10 text-center">教师个人详细信息</h2>
+                <h4 class="margin-bottom-10 text-center" style="color:blue;">不想修改的情况下可以不填！</h4>
+                <br>
+                <form name="input" action="__URL__/personal_info_mod" method="post">
+                <div class="row form-group">
+                  <div class="col-lg-4 col-md-4 form-group text-right">
+                    <h3>教师证号</h3>
+                  </div >
+                  <div class="col-lg-4 col-md-4 form-group">
+                    <input type="text" class="form-control" value="{:session('teacher')['TeaID']}" name="teaID" disabled="disabled">
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-lg-4 col-md-4 form-group text-right">
+                    <h3>姓名</h3>
+                  </div >
+                  <div class="col-lg-4 col-md-4 form-group">
+                    <input type="text" disabled="disabled" class="form-control" value="{:session('teacher')['TeaName']}" name="teaName">
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-lg-4 col-md-4 form-group text-right">
+                    <h3>密码</h3>
+                  </div >
+                  <div class="col-lg-4 col-md-4 form-group">
+                    <input type="password" name="password1" class="form-control" >
+                  </div>
+                  <label class="control-label col-md-3 " style="text-align:left" id="tea_label_pwd"></label>
+                </div>
+                <div class="row form-group">
+                  <div class="col-lg-4 col-md-4 form-group text-right">
+                    <h3>二次确认密码</h3>
+                  </div >
+                  <div class="col-lg-4 col-md-4 form-group">
+                    <input type="password" name="password2" class="form-control" onblur="return check_confirm_password_2();">
+                  </div>
+                  <label class="control-label col-md-3 " style="text-align:left" id="tea_label_chk_pwd"></label>
+                </div>
+                <div class="row form-group">
+                  <div class="col-lg-4 col-md-4 form-group text-right">
+                  <h3>性别</h3>                  
+                  </div >
+                  <div class="col-lg-4 col-md-4 form-group">
+                    <input type="text" disabled="disabled" class="form-control" value="{:session('teacher')['Sex']}" name="StudentSex">
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-lg-4 col-md-4 form-group text-right">                  
+                    <h3>院系</h3>
+                  </div >
+                  <div class="col-lg-4 col-md-4 form-group">
+                    <input type="text" disabled="disabled" class="form-control" value="{:session('teacher')['Department']}" name="Department">
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-lg-4 col-md-4 form-group text-right">                  
+                    <h3>联系方式</h3>
+                  </div >
+                  <div class="col-lg-4 col-md-4 form-group">
+                    <input type="text" class="form-control" id="inputFirstName" value="{:session('teacher')['Email']}" name="Email">
+                  </div>
+                </div>
+                <div class="row form-group text-center">
+                  <button type="submit" class="templatemo-blue-button"><h4>保存</h4></button>
+                </div>
+               </form>
+              </div>
+          </div>     
+        </div>
+      </div>
+    </div>
+    
+    <!-- JS -->
+    <script src="__PUBLIC__/js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
+    <script src="__PUBLIC__/js/jquery-migrate-1.2.1.min.js"></script> <!--  jQuery Migrate Plugin -->
+    <script src="__PUBLIC__/js/bootstrap-filestyle.min.js"></script>  <!-- http://markusslima.github.io/bootstrap-filestyle/ -->
+    <script src="__PUBLIC__/js/templatemo-script.js"></script>        <!-- Templatemo Script -->
+    <script src="__PUBLIC__/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+    <script src="__PUBLIC__/js/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/js/templatemo-script.js"></script>
+    <script>
+    function check_password_2(){
+      var pw1 = $("input[name='password1']").val();
+      var label = document.getElementById("tea_label_pwd");  
+      if(pw1.length < 6 || pw1.length > 15)
+      {
+        label.innerHTML="密码长度必须在6-15之间！";
+        label.style.color="red";
+        
+        return false;
+      }
+      label.innerHTML="";
+      return true;
+    }
+      function check_confirm_password_2(){
+        var pw1 = $("input[name='password1']").val();  
+        var pw2 = $("input[name='password2']").val();  
+        var label = document.getElementById("tea_label_chk_pwd");
+
+        if (pw2!=pw1){
+          label.innerHTML = "两次输入密码不一致";
+          label.style.color = "red";
+          return false;
+        }
+        else{
+          label.innerHTML="";
+          return true;
+        }
+      }
+    </script>
+
+  </body>
+</html>
