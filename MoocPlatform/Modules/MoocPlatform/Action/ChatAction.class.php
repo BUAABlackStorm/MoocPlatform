@@ -1,45 +1,49 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Lenovo
  * Date: 2016/7/6
  * Time: 9:24
  */
+Class ChatAction extends VerifyLoginAction
+{
 
-Class ChatAction extends Action{
+    public function chat()
+    {
 
-    public function chat(){
-
-        if(session("?student")){
+        if (session("?student")) {
             $type = 0;
             $stu = session('student');
             $id = $stu['StuID'];
-        }else{
+        } else {
             $type = 1;
             $tea = session('teacher');
             $id = $tea['TeaID'];
         }
 
+        $courseID = I('CourseID');
+
         //$student = D('ChatMsg') -> getStudent(array('type' => 0));
-        $teacher = D('ChatMsg') -> getTeacher(array('type' => 1));
-        $all = D('ChatMsg') -> getAll();
+        $teacher = D('ChatMsg')->getTeacher(array('type' => 1, 'CourseID' => $courseID));
+        $all = D('ChatMsg')->getAll(array('CourseID' => $courseID));
         //p($all);die;
 
         $this->type = $type;
         $this->id = $id;
         $this->all = $all;
         $this->teacher = $teacher;
+        $this->course = $courseID;
 
-        $com_show = M('com_show') -> where(array('UserID' => $id , 'type' => $type)) ->find();
-        if( empty($com_show) ){
+        $com_show = M('com_show')->where(array('UserID' => $id, 'type' => $type))->find();
+        if (empty($com_show)) {
             $data = array(
                 'UserID' => $id,
                 'type' => $type,
                 'showTime' => time(),
             );
-            M('com_show') -> add($data);
-        }
-        else{
+            M('com_show')->add($data);
+        } else {
             $data = array(
                 'ID' => $com_show['ID'],
                 'showTime' => time(),
@@ -50,69 +54,63 @@ Class ChatAction extends Action{
         $this->display();
     }
 
-    public function fresh(){
+    public function fresh()
+    {
 
-        if(session("?student")){
-            $type = 0;
-            $stu = session('student');
-            $id = $stu['StuID'];
-        }else{
-            $type = 1;
-            $tea = session('teacher');
-            $id = $tea['TeaID'];
-        }
-
-
-        $time =  M('com_show') -> where(array('id' => $id , 'type' => $type )) ->find() ;
-        //$msg = M('communication') -> where( array( 'Times'=>array('gt', $time['showTime']) ,'UserID' => array('neq',$id) )) -> select();
-
-//        if($type == 0){
-//            $msg = D('ChatMsg') -> getStudent(array('Times'=> array('gt',$time['showTime']),'UserID' => array('neq',$id)));
+//        if(session("?student")){
+//            $type = 0;
+//            $stu = session('student');
+//            $id = $stu['StuID'];
 //        }else{
-//            $msg = D('ChatMsg') -> getTeacher(array('Times'=> array('gt',$time['showTime']),'UserID' => array('neq',$id)));
+//            $type = 1;
+//            $tea = session('teacher');
+//            $id = $tea['TeaID'];
 //        }
 
+        $type = I('type');
+        $id = I('id');
+        $courseID = I('courseID');
+        $time = M('com_show')->where(array('UserID' => $id, 'type' => $type))->find();
 
-      $msg = D('ChatMsg') -> getAll(array('Times'=> array('gt',$time['showTime']),'UserID' => array('neq',$id)));
+        $msg = D('ChatMsg')->getAll(array('Times' => array('gt', $time['showTime']), 'UserID' => array('neq', $id), 'CourseID' => $courseID));
 
-        if( !empty($msg) ){
+        if (!empty($msg)) {
             $data = array(
                 'showTime' => time(),
             );
-            M('com_show') -> where(array('id' => $id , 'type' => $type )) -> save($data);
+            M('com_show')->where(array('UserID' => $id, 'type' => $type))->save($data);
         }
 
-        //$msg['id'] = $id;
         $this->ajaxreturn($msg);
 
     }
 
-    public function publish(){
+    public function publish()
+    {
         $type = I('type');
         $id = I('id');
         $msg = I('msg');
+        $courseID = I('courseID');
 
         $com = array(
-            'CourseID' => 1,
+            'CourseID' => $courseID,
             'UserID' => $id,
             'Times' => time(),
             'Content' => $msg,
             'type' => $type,
         );
-        $id = M('communication') -> add($com);
+        $id = M('communication')->add($com);
 
 
-        if($type == 0){
-            $data = D('ChatMsg') -> getStudent(array('ID' => $id));
-        }else{
-            $data = D('ChatMsg') -> getTeacher(array('ID' => $id));
-        }
+//        if($type == 0){
+//            $data = D('ChatMsg') -> getStudent(array('ID' => $id));
+//        }else{
+//            $data = D('ChatMsg') -> getTeacher(array('ID' => $id));
+//        }
 
-        //$data = M('communication') -> where(array('ID' => $id)) ->select();
-        //$data['time'] = date("Y-m-d H:i:s", $data[0]['Times']);
-
-        $this->ajaxreturn($data);
+        //$this->ajaxreturn($data);
     }
 
 }
+
 ?>

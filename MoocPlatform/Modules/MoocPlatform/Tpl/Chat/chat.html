@@ -153,14 +153,12 @@
             </div>
         </header>
         <div class="profile-name" align="center">
-            <!--<span>{:session('student')['StuName']}</span>-->
             <?php $student = session('student');?>
             <span>{:$student['StuName'] }</span>
         </div>
         <div class="profile-name" align="center">
-            <!--<span>{:session('student')['StuID']}</span>-->
             <span>{:$student['StuID']}</span>
-            <br></br>
+            <br/>
         </div><!--$Student Name-->
         <div class="mobile-menu-icon">
             <i class="fa fa-bars"></i>
@@ -186,7 +184,8 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">讨论区</h3>
                         </div>
-                        <div class="panel-body" style="min-height: 590px; max-height: 590px; overflow-y: scroll;">
+                        <input type="hidden" name="courseID" value="{:$course}"/>
+                        <div class="panel-body" id="main_panel" style="min-height: 590px; max-height: 590px; overflow-y: scroll;">
                             <ul id="main_list">
                                 <foreach name="all" item="v">
                                     <!--学生发言-->
@@ -253,61 +252,6 @@
                                     </if>
 
                                 </foreach>
-
-                                <!--<li>-->
-                                <!--&lt;!&ndash; left &ndash;&gt;-->
-                                <!--<div class="sender">-->
-                                <!--<div>   -->
-                                <!--<span >王瀛<span>&nbsp;2016-7-6 10:51</span></span>-->
-                                <!--</div>-->
-                                <!--<div>-->
-                                <!--<div class="left_triangle">-->
-                                <!--</div>-->
-                                <!--<span >有作业吗?</span>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</li>-->
-
-                                <!--<li>-->
-                                <!--&lt;!&ndash; right &ndash;&gt;-->
-                                <!--<div class="receiver">-->
-                                <!--<div>-->
-                                <!--<span ><span>2016-7-6 10:52&nbsp;</span>郑超一</span>-->
-                                <!--</div>-->
-                                <!--<div>-->
-                                <!--<div class="right_triangle"></div>-->
-                                <!--<span >没作业.</span>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                <!--&lt;!&ndash; left &ndash;&gt;-->
-                                <!--<div class="sender">-->
-                                <!--<div>-->
-                                <!--<span >王瀛<span>&nbsp;2016-7-6 10:51</span></span>-->
-                                <!--</div>-->
-                                <!--<div>-->
-
-                                <!--<div class="left_triangle">-->
-                                <!--</div>-->
-
-                                <!--<span >今年第1号台风 “尼伯特”已于8日5时50分在台湾省台东县太麻里乡沿海登陆，登陆时中心附近最大风力有16级（55米/秒）。受台风影响，台湾东部地区出现大暴雨或特大暴雨，花莲、台东局地降雨量已达300-400毫米，台东兰屿测得最大阵风71.3米/秒。</span>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                <!--&lt;!&ndash; right &ndash;&gt;-->
-                                <!--<div class="receiver">-->
-                                <!--<div>-->
-                                <!--<span ><span>2016-7-6 10:52&nbsp;</span>郑超一</span>-->
-                                <!--</div>-->
-                                <!--<div>-->
-                                <!--<div class="right_triangle">-->
-                                <!--</div>-->
-                                <!--<span >8时，“尼伯特”由超强台风减弱为强台风，台风中心位于台湾屏东县境内，中央气象台继续发布台风橙色预警。预计8日白天，“尼伯特”将以每小时15-20公里的速度继续向西偏北方向移动，强度将明显减弱，下午移入台湾海峡。9日早晨到上午在福建龙海到连江一带沿海再次登陆，预计登陆时强度为台风级（33-40米/秒，12-13级）。</span>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!--</li>-->
                             </ul>
                         </div>
 
@@ -318,7 +262,7 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">教师回复汇总</h3>
                         </div>
-                        <div class="panel-body" style="min-height: 590px; max-height: 590px; overflow-y: scroll;">
+                        <div class="panel-body" id="tea_panel" style="min-height: 590px; max-height: 590px; overflow-y: scroll;">
                             <ul id="teacher_list">
                                 <foreach name="teacher" item="v">
 
@@ -395,7 +339,13 @@
 <script type="text/javascript">
 
 
+    var div = document.getElementById("main_panel");
+    var div2 = document.getElementById("tea_panel");
+    var courseID = $('input[name = "courseID"]');
+
     $('document').ready(function () {
+        div.scrollTop = div.scrollHeight;
+        div2.scollTop = div2.scrollHeight;
         fresh();
     });
 
@@ -403,18 +353,53 @@
     //刷新
     function fresh() {
         var id = "{$id}";
+        var type = "{$type}";
 
-        //var chatUrl = "{:U(GROUP_NAME.'/Chat/fresh',array('id'=>" +id+",'type'=>"+type+"))}";
+        //alert(courseID.val());
+
         var chatUrl = "{:U(GROUP_NAME.'/Chat/fresh')}";
         $.ajax({
             type: 'POST',
             url: chatUrl,
+            data: {
+                id: id,
+                type: type,
+                courseID:courseID.val(),
+            },
             success: function (data) {
                 loadMsg(data, id);
             },
             dataType: "json",
         });
-        setTimeout(fresh, 1000);
+        setTimeout(fresh, 3000);
+    }
+
+
+    //发布
+    function publish(id, type) {
+
+        var msg = $('input[name = "msg"]');
+        var pUrl = "{:U(GROUP_NAME.'/Chat/publish')}";
+        if(msg.val() == ""){
+            alert("请输入发送消息！");
+        }else{
+            publishMsg(msg.val(),type);
+            $.ajax({
+                type: 'POST',
+                url: pUrl,
+                data: {
+                    id: id,
+                    type: type,
+                    msg: msg.val(),
+                    courseID:courseID.val(),
+                },
+                success: function () {
+                    //alert("发布成功");
+                    $('#msg').val('');
+                },
+                dataType: "json",
+            });
+        }
     }
 
 
@@ -436,6 +421,7 @@
                             "<span>" + data[v]['Content'] + "</span>" +
                             "</div> </div> </li>"
                     );
+                    div.scrollTop = div.scrollHeight;
                 }
 
                 //学生他人发言
@@ -450,6 +436,8 @@
                             "<span>" + data[v]['Content'] + "</span>" +
                             "</div> </div> </li>"
                     );
+
+                    div.scrollTop = div.scrollHeight;
                 }
 
             }
@@ -479,6 +467,8 @@
                             "<span>" + data[v]['Content'] + "</span>" +
                             "</div></div> </li>"
                     );
+                    div.scrollTop = div.scrollHeight;
+                    div2.scollTop = div2.scrollHeight;
 
                 }
                 //他人发言
@@ -504,40 +494,70 @@
                             "<span>" + data[v]['Content'] + "</span>" +
                             "</div></div> </li>"
                     );
-
+                    div.scrollTop = div.scrollHeight;
+                    div2.scollTop = div2.scrollHeight;
                 }
             }
             //$('#chat').append("<p>" + data[0]['Content'] + "</p>");
         }
 
+
     }
 
-    //发布
-    function publish(id, type) {
 
-        var msg = $('input[name = "msg"]');
-        var pUrl = "{:U(GROUP_NAME.'/Chat/publish')}";
-        $.ajax({
-            type: 'POST',
-            url: pUrl,
-            data: {
-                id: id,
-                type: type,
-                msg: msg.val(),
-            },
-            success: function (data) {
-                alert("发布成功");
-                $('#msg').val('');
-                loadMsg(data,id);
-            },
-            dataType: "json",
-        });
+    function publishMsg(msg,type){
+
+        var timestamp = new Date().getTime();
+
+        //学生
+        if(type == 0){
+            $('#main_list').append("<li>" +
+                    "<div class='receiver'>" +
+                    "<div>" +
+                    "<span><span>" + unix_to_datetime(timestamp/1000) + "&nbsp;</span>" + "{:$student['StuName']}" + "</span>" +
+                    "</div>" +
+                    "<div>" +
+                    "<div class='right_triangle'></div>" +
+                    "<span>" + msg + "</span>" +
+                    "</div> </div> </li>"
+            );
+            div.scrollTop = div.scrollHeight;
+        }
+        //老师
+        else{
+            $('#main_list').append("<li>" +
+                    "<div class='receiver'>" +
+                    "<div>" +
+                    "<span><span>" + unix_to_datetime(timestamp/1000) + "&nbsp;</span>" + "{:$student['StuName']}" + "</span>" +
+                    "</div>" +
+                    "<div>" +
+                    "<div class='right_triangle'></div>" +
+                    "<span>" + msg + "</span>" +
+                    "</div> </div> </li>"
+            );
+            div.scrollTop = div.scrollHeight;
+
+            $('#teacher_list').append("<li>" +
+                    "<div class='receiver'>" +
+                    "<div>" +
+                    "<span><span>" + unix_to_datetime(timestamp/1000) + "&nbsp;</span>" + "{:$teacher['TeaName']}" + "</span>" +
+                    "</div>" +
+                    "<div>" +
+                    "<div class='right_triangle'></div>" +
+                    "<span>" + msg + "</span>" +
+                    "</div></div></li>"
+            );
+            div2.scrollTop = div2.scrollHeight;
+
+        }
+
+
     }
 
     //时间戳转换为时间格式
     function unix_to_datetime(unix) {
-        var now = new Date(parseInt(unix) * 1000);
 
+        var now = new Date(parseInt(unix) * 1000);
         var y = now.getFullYear();
         var m = now.getMonth() + 1;
         var d = now.getDate();
@@ -552,6 +572,8 @@
         return m < 10 ? '0' + m : m
     }
 
+
 </script>
+
 </body>
 </html>
