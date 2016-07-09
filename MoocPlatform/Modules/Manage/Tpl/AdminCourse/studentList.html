@@ -82,9 +82,8 @@
                             <br>
                             <h3>新增学生名单</h3>
                         </div >
-
-
                     </div>
+
                     <div class="row form-group">
                         <form name="f1" action="{:U(GROUP_NAME.'/AdminCourse/getStu')}" method="post">
                             <div class="col-lg-3 col-md-3 form-group text-center">
@@ -170,6 +169,26 @@
 
                     </div>
 
+                    <div class="row form-group">
+                        <div class="templatemo-flex-row flex-content-row">
+                            <div class="templatemo-content-widget white-bg col-2">
+                                <div class="col-lg-6 col-md-6 text-right">
+                                    <form action="{:U(GROUP_NAME.'/AdminCourse/exportStudentExcel')}" method="post">
+                                         <input type="hidden" name="CourseID" value={$courseinfo['CourseID']}>
+                                         <input type="submit" class="templatemo-white-button" name="exportHomeworkExcel" value="下载选课学生列表">
+                                    </form>
+                                </div>
+                                <div class="col-lg-6 col-md-6 ">
+                                    <form action="{:U(GROUP_NAME.'/AdminCourse/importStudentExcel')}" method="post" enctype="multipart/form-data">
+                                    <input type="file" name="file_excel" value="选择文件">
+                                    <input type="hidden" name="CourseID" value={$courseinfo['CourseID']}>
+                                    <br>
+                                    <input type="submit" class="templatemo-white-button" name="importHomeworkExcel" value="上传学生作业表格">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="panel panel-default table-responsive">
                         <table class="table table-striped table-bordered templatemo-user-table">
                             <thead>

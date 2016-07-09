@@ -64,10 +64,9 @@
           <div class="row">
             <nav class="templatemo-top-nav col-lg-12 col-md-12">
               <ul class="text-uppercase">
-                <li><a href="" class="active">教务中心</a></li>
-                <li><a href="">信息管理</a></li>
-                <li><a href="">帮助中心</a></li>
-                <li><a href="login.html">登出</a></li>
+                <li><a href="{:U(GROUP_NAME.'/AdminInfo/searchTeacher')}">教师信息管理</a></li>
+                <li><a href="{:U(GROUP_NAME.'/AdminInfo/beginsearch')}"  class="active">学生信息管理</a></li>
+                <li><a href="{:U('MoocPlatform/LoginAndRegister/Logout')}">登出</a></li>
               </ul>  
             </nav> 
           </div>
