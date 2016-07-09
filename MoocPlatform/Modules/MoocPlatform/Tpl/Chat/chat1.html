@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.2.min.js"></script>
+<body>
+
+<div id="chat">
+    <foreach name="msg" item="v">
+        <p>{$v['Content']}</p>
+    </foreach>
+</div>
+
+<input type="text" name="msg" id="msg"/>
+<button id="btn" onclick="publish({$id},{$type})">发布</button>
+
+
+</body>
+<script>
+
+    $('document').ready(function(){
+//        var id = "{$id}";
+//        var type = "{$type}";
+        fresh();
+    });
+
+
+    //刷新
+    function fresh(){
+        var id = "{$id}";
+        var type = "{$type}";
+
+        //var chatUrl = "{:U(GROUP_NAME.'/Chat/fresh',array('id'=>" +id+",'type'=>"+type+"))}";
+        var chatUrl = "{:U(GROUP_NAME.'/Chat/fresh')}";
+        $.ajax({
+            type:'POST',
+            url:chatUrl,
+            success: function(data){
+                loadMsg(data);
+            },
+            dataType:"json",
+        });
+        setTimeout(fresh, 1000);
+    }
+
+
+    //http://localhost/MoocPlatform/Chat/chat
+
+    function loadMsg(data){
+        //alert(data['id']);
+        $('#chat').append("<p>" + data[0]['Content'] +  "</p>");
+    }
+
+    //发布
+    function publish(id,type){
+
+        var msg = $('input[name = "msg"]');
+        var pUrl = "{:U(GROUP_NAME.'/Chat/publish')}";
+        $.ajax({
+            type:'POST',
+            url:pUrl,
+            data:{
+                id:id,
+                type:type,
+                msg:msg.val(),
+            },
+            success:function(data){
+                alert("发布成功");
+                $('#msg').val('');
+                //alert(data[0]['Content']);
+                //alert(data['time']);
+                loadMsg(data);
+            },
+            dataType:"json",
+        });
+    }
+
+</script>
+</html>
