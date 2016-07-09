@@ -15,7 +15,8 @@ class StudentAction extends Action {
      * 参数: $stuID
      */
     public function studentinfo() {
-        $stuID = session('student')['StuID'];
+        $stu = session('student');
+        $stuID = $stu['StuID'];
 
         $Student = M('Student');
         $stu = $Student->where('StuID = %d', $stuID)->find();
@@ -30,7 +31,8 @@ class StudentAction extends Action {
      * 参数: $stuID
      */
     public function courseinfo() {
-        $stuID = session('student')['StuID'];
+        $stu = session('student');
+        $stuID = $stu['StuID'];
 
         $couStu = M('coursestudent')->where(array("StudentID" => $stuID))->select();
         //$this->couStu = $couStu;
@@ -134,7 +136,8 @@ class StudentAction extends Action {
      */
     public function submithomework() {
         //p(I('HwID'));
-        $stuID = session('student')['StuID'];
+        $stu = session('student');
+        $stuID = $stu['StuID'];
         //p($stuID);
 
         session('selectedHwID', I('HwID'));
@@ -195,7 +198,8 @@ class StudentAction extends Action {
     public function upload() {
         //dump(I('content'));
 
-        $stuID = session('student')['StuID'];
+        $stu = session('student');
+        $stuID = $stu['StuID'];
 
         import('ORG.Net.UploadFile');
         $config = array(

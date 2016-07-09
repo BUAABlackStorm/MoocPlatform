@@ -1,63 +1,557 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <style type="text/css">
+        #main {
+            padding-bottom: 50px;
+        }
+
+        /* 必须使用和footer相同的高度 */
+        #footer {
+            position: relative;
+            margin-top: -50px; /* footer高度的负值 */
+            height: 50px;
+            clear: both;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>讨论区</title>
+    <meta name="description" content="">
+    <meta name="author" content="templatemo">
+    <!--
+        Visual Admin Template
+        http://www.templatemo.com/preview/templatemo_455_visual_admin
+    -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet'
+          type='text/css'>
+    <link href="__PUBLIC__/css/font-awesome.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/jqvmap/jqvmap.css" media="screen" rel="stylesheet" type="text/css"/>
+    <link href="__PUBLIC__/css/templatemo-style.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        /* Teacher */
+        .teacher {
+            clear: both;
+        }
+
+        .teacher div:nth-of-type(1) {
+            float: left;
+        }
+
+        .teacher div:nth-of-type(2) {
+            /*background-color: aquamarine; */
+            background-color: #ff8a80;
+            float: left;
+            margin: 0 20px 10px 15px;
+            padding: 10px 10px 10px 0px;
+            border-radius: 7px;
+        }
+
+        .teacher div:first-child img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .teacher_left_triangle {
+            height: 0px;
+            width: 0px;
+            border-width: 8px;
+            border-style: solid;
+            /*border-color:transparent aquamarine transparent transparent;  */
+            border-color: transparent #ff8a80 transparent transparent;
+            position: relative;
+            left: -16px;
+            top: 3px;
+        }
+
+        /* bubble style */
+        .sender {
+            clear: both;
+        }
+
+        .sender div:nth-of-type(1) {
+            float: left;
+        }
+
+        .sender div:nth-of-type(2) {
+            /*background-color: aquamarine; */
+            background-color: greenyellow;
+            float: left;
+            margin: 0 20px 10px 15px;
+            padding: 10px 10px 10px 0px;
+            border-radius: 7px;
+        }
+
+        .receiver div:first-child img,
+        .sender div:first-child img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .receiver {
+            clear: both;
+        }
+
+        .receiver div:nth-child(1) {
+            float: right;
+        }
+
+        .receiver div:nth-of-type(2) {
+            float: right;
+            /*background-color: gold; */
+            background-color: #b2dfdb;
+            margin: 0 10px 10px 20px;
+            padding: 10px 0px 10px 10px;
+            border-radius: 7px;
+        }
+
+        .left_triangle {
+            height: 0px;
+            width: 0px;
+            border-width: 8px;
+            border-style: solid;
+            /*border-color:transparent aquamarine transparent transparent;  */
+            border-color: transparent greenyellow transparent transparent;
+            position: relative;
+            left: -16px;
+            top: 3px;
+        }
+
+        .right_triangle {
+            height: 0px;
+            width: 0px;
+            border-width: 8px;
+            border-style: solid;
+            /*border-color:transparent transparent transparent gold;*/
+            border-color: transparent transparent transparent #b2dfdb;
+
+            position: relative;
+            right: -16px;
+            top: 3px;
+        }
+
+    </style>
+
 </head>
 <body>
+<!-- Left column -->
+<div class="templatemo-flex-row">
+    <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+            <div align="center"><img src="__PUBLIC__/images/person.jpg" class="img-circle" height="50" width="50">
 
-<foreach name="msg" item="v">
-    <p>{$v[0]['Content']}</p>
-</foreach>
+                <h2>学生用户</h2>
+            </div>
+        </header>
+        <div class="profile-name" align="center">
+            <!--<span>{:session('student')['StuName']}</span>-->
+            <?php $student = session('student');?>
+            <span>{:$student['StuName'] }</span>
+        </div>
+        <div class="profile-name" align="center">
+            <!--<span>{:session('student')['StuID']}</span>-->
+            <span>{:$student['StuID']}</span>
+            <br></br>
+        </div><!--$Student Name-->
+        <div class="mobile-menu-icon">
+            <i class="fa fa-bars"></i>
+        </div>
+        <nav class="templatemo-left-nav">
+            <ul>
+                <li><a href="{:U(GROUP_NAME.'/Student/studentinfo')}"><i class="fa fa-home fa-fw"></i>个人资料</a></li>
+                <li><a href="{:U(GROUP_NAME.'/Student/courseinfo')}"><i class="fa fa-database fa-fw"></i>课程信息</a></li>
+                <li><a href="{:U(GROUP_NAME.'/Student/resource')}"><i class="fa fa-map-marker fa-fw"></i>资源</a></li>
+                <li><a href="{:U(GROUP_NAME.'/Student/homework')}"><i class="fa fa-users fa-fw"></i>提交作业</a></li>
+                <li><a href="" class="active"><i class="fa fa-map-marker fa-fw"></i>讨论区</a></li>
+                <li><a href="{:U(GROUP_NAME.'/LoginAndRegister/Logout')}"><i class="fa fa-eject fa-fw"></i>退出</a></li>
+            </ul>
+        </nav>
+    </div>
+    <!-- Main content -->
+    <div class="templatemo-content col-1 light-gray-bg">
+        <div class="container">
+            <div class="row">
 
-<input type="text" name="msg" id="msg"/>
-<button id="btn" onclick="publicsh({$id},{$type})">发布</button>
+                <div class="col-md-6">
+                    <div class="panel panel-default   margin-10">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">讨论区</h3>
+                        </div>
+                        <div class="panel-body" style="min-height: 590px; max-height: 590px; overflow-y: scroll;">
+                            <ul id="main_list">
+                                <foreach name="all" item="v">
+                                    <!--学生发言-->
+                                    <if condition=" $v['type'] eq 0">
+                                        <if condition=" $v['UserID'] eq $id">
+                                            <li>
+                                                <!-- right -->
+                                                <div class="receiver">
+                                                    <div>
+                                                        <span><span>{:date("Y-m-d H:i:s", $v['Times'])} &nbsp;</span>{$v.student.StuName}</span>
+                                                    </div>
+                                                    <div>
+                                                        <div class="right_triangle"></div>
+                                                        <span>{$v.Content}</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <else/>
+                                            <li>
+                                                <!-- left -->
+                                                <div class="sender">
+                                                    <div>
+                                                        <span>{$v.student.StuName}<span>&nbsp;{:date("Y-m-d H:i:s", $v['Times'])}</span></span>
+                                                    </div>
+                                                    <div>
+                                                        <div class="left_triangle">
+                                                        </div>
+                                                        <span>{$v.Content}</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </if>
+
+                                        <!--老师发言-->
+                                        <else/>
+                                        <if condition=" $v['UserID'] eq $id">
+                                            <li>
+                                                <!-- right -->
+                                                <div class="receiver">
+                                                    <div>
+                                                        <span><span>{:date("Y-m-d H:i:s", $v['Times'])} &nbsp;</span>{$v.teacher.TeaName}</span>
+                                                    </div>
+                                                    <div>
+                                                        <div class="right_triangle"></div>
+                                                        <span>{$v.Content}</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <else/>
+                                            <li>
+                                                <!-- left -->
+                                                <div class="teacher">
+                                                    <div>
+                                                        <span>{$v.teacher.TeaName}<span>&nbsp;{:date("Y-m-d H:i:s", $v['Times'])}</span></span>
+                                                    </div>
+                                                    <div>
+                                                        <div class="teacher_left_triangle">
+                                                        </div>
+                                                        <span>{$v.Content}</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </if>
+                                    </if>
+
+                                </foreach>
+
+                                <!--<li>-->
+                                <!--&lt;!&ndash; left &ndash;&gt;-->
+                                <!--<div class="sender">-->
+                                <!--<div>   -->
+                                <!--<span >王瀛<span>&nbsp;2016-7-6 10:51</span></span>-->
+                                <!--</div>-->
+                                <!--<div>-->
+                                <!--<div class="left_triangle">-->
+                                <!--</div>-->
+                                <!--<span >有作业吗?</span>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!--</li>-->
+
+                                <!--<li>-->
+                                <!--&lt;!&ndash; right &ndash;&gt;-->
+                                <!--<div class="receiver">-->
+                                <!--<div>-->
+                                <!--<span ><span>2016-7-6 10:52&nbsp;</span>郑超一</span>-->
+                                <!--</div>-->
+                                <!--<div>-->
+                                <!--<div class="right_triangle"></div>-->
+                                <!--<span >没作业.</span>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                <!--&lt;!&ndash; left &ndash;&gt;-->
+                                <!--<div class="sender">-->
+                                <!--<div>-->
+                                <!--<span >王瀛<span>&nbsp;2016-7-6 10:51</span></span>-->
+                                <!--</div>-->
+                                <!--<div>-->
+
+                                <!--<div class="left_triangle">-->
+                                <!--</div>-->
+
+                                <!--<span >今年第1号台风 “尼伯特”已于8日5时50分在台湾省台东县太麻里乡沿海登陆，登陆时中心附近最大风力有16级（55米/秒）。受台风影响，台湾东部地区出现大暴雨或特大暴雨，花莲、台东局地降雨量已达300-400毫米，台东兰屿测得最大阵风71.3米/秒。</span>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                <!--&lt;!&ndash; right &ndash;&gt;-->
+                                <!--<div class="receiver">-->
+                                <!--<div>-->
+                                <!--<span ><span>2016-7-6 10:52&nbsp;</span>郑超一</span>-->
+                                <!--</div>-->
+                                <!--<div>-->
+                                <!--<div class="right_triangle">-->
+                                <!--</div>-->
+                                <!--<span >8时，“尼伯特”由超强台风减弱为强台风，台风中心位于台湾屏东县境内，中央气象台继续发布台风橙色预警。预计8日白天，“尼伯特”将以每小时15-20公里的速度继续向西偏北方向移动，强度将明显减弱，下午移入台湾海峡。9日早晨到上午在福建龙海到连江一带沿海再次登陆，预计登陆时强度为台风级（33-40米/秒，12-13级）。</span>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!--</li>-->
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-default  margin-10 ">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">教师回复汇总</h3>
+                        </div>
+                        <div class="panel-body" style="min-height: 590px; max-height: 590px; overflow-y: scroll;">
+                            <ul id="teacher_list">
+                                <foreach name="teacher" item="v">
+
+                                    <!--老师发言-->
+                                    <if condition=" $v['UserID'] eq $id">
+                                        <li>
+                                            <!-- right -->
+                                            <div class="receiver">
+                                                <div>
+                                                    <span><span>{:date("Y-m-d H:i:s", $v['Times'])} &nbsp;</span>{$v.teacher.TeaName}</span>
+                                                </div>
+                                                <div>
+                                                    <div class="right_triangle"></div>
+                                                    <span>{$v.Content}</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <else/>
+                                        <li>
+                                            <!-- left -->
+                                            <div class="teacher">
+                                                <div>
+                                                    <span>{$v.teacher.TeaName}<span>&nbsp;{:date("Y-m-d H:i:s", $v['Times'])}</span></span>
+                                                </div>
+                                                <div>
+                                                    <div class="teacher_left_triangle">
+                                                    </div>
+                                                    <span>{$v.Content}</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </if>
+                                    </if>
 
 
-</body>
-<script>
+                                </foreach>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-//    $('document').ready(function(){
-//       chat();
-//    });
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default  margin-10">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">发送消息</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="msg" name="msg" placeholder="请输入消息"/>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" onclick="publish({$id},{$type})">
+                                            发送
+                                        </button>
+                                    </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- JS -->
+<script src="__PUBLIC__/js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
+<script src="__PUBLIC__/js/jquery-migrate-1.2.1.min.js"></script> <!--  jQuery Migrate Plugin -->
+<!-- <script src="https://www.google.com/jsapi"></script> -->
+
+<script type="text/javascript" src="__PUBLIC__/js/templatemo-script.js"></script>      <!-- Templatemo Script -->
+<script type="text/javascript">
+
+
+    $('document').ready(function () {
+        fresh();
+    });
 
 
     //刷新
-    function chat(){
+    function fresh() {
+        var id = "{$id}";
+
+        //var chatUrl = "{:U(GROUP_NAME.'/Chat/fresh',array('id'=>" +id+",'type'=>"+type+"))}";
         var chatUrl = "{:U(GROUP_NAME.'/Chat/fresh')}";
         $.ajax({
-            type:'POST',
-            url:chatUrl,
-            success: function(data){
-                loadMes(data);
+            type: 'POST',
+            url: chatUrl,
+            success: function (data) {
+                loadMsg(data, id);
             },
-            dataType:"json",
+            dataType: "json",
         });
+        setTimeout(fresh, 1000);
     }
 
-    function loadMsg(data){
+
+    function loadMsg(data,id) {
+
+        for (var v in data) {
+            //学生
+            if (data[v]['type'] == 0) {
+
+                //学生本人发言
+                if (data[v]['UserID'] == id) {
+                    $('#main_list').append("<li>" +
+                            "<div class='receiver'>" +
+                            "<div>" +
+                            "<span><span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span>" + data[v]['student']['StuName'] + "</span>" +
+                            "</div>" +
+                            "<div>" +
+                            "<div class='right_triangle'></div>" +
+                            "<span>" + data[v]['Content'] + "</span>" +
+                            "</div> </div> </li>"
+                    );
+                }
+
+                //学生他人发言
+                else {
+                    $('#main_list').append("<li>" +
+                            "<div class='sender'>" +
+                            "<div>" +
+                            "<span>" + data[v]['student']['StuName'] + "<span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span></span>" +
+                            "</div>" +
+                            "<div>" +
+                            "<div class='left_triangle'></div>" +
+                            "<span>" + data[v]['Content'] + "</span>" +
+                            "</div> </div> </li>"
+                    );
+                }
+
+            }
+
+            //老师
+            else {
+                if (data[v]['UserID'] == id) {
+                    //本人发言
+                    $('#main_list').append("<li>" +
+                            "<div class='receiver'>" +
+                            "<div>" +
+                            "<span><span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span>" + data[v]['teacher']['TeaName'] + "</span>" +
+                            "</div>" +
+                            "<div>" +
+                            "<div class='right_triangle'></div>" +
+                            "<span>" + data[v]['Content'] + "</span>" +
+                            "</div> </div> </li>"
+                    );
+
+                    $('#teacher_list').append("<li>" +
+                            "<div class='receiver'>" +
+                            "<div>" +
+                            "<span><span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span>" + data[v]['teacher']['TeaName'] + "</span>" +
+                            "</div>" +
+                            "<div>" +
+                            "<div class='right_triangle'></div>" +
+                            "<span>" + data[v]['Content'] + "</span>" +
+                            "</div></div> </li>"
+                    );
+
+                }
+                //他人发言
+                else {
+                    $('#main_list').append("<li>" +
+                            "<div class='teacher'>" +
+                            "<div>" +
+                            "<span>" + data[v]['teacher']['TeaName'] + "<span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span></span>" +
+                            "</div>" +
+                            "<div>" +
+                            "<div class='teacher_left_triangle'></div>" +
+                            "<span>" + data[v]['Content'] + "</span>" +
+                            "</div> </div> </li>"
+                    );
+
+                    $('#teacher_list').append("<li>" +
+                            "<div class='teacher'>" +
+                            "<div>" +
+                            "<span>" + data[v]['teacher']['TeaName'] + " <span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span></span>" +
+                            "</div>" +
+                            "<div>" +
+                            "<div class='teacher_left_triangle'></div>" +
+                            "<span>" + data[v]['Content'] + "</span>" +
+                            "</div></div> </li>"
+                    );
+
+                }
+            }
+            //$('#chat').append("<p>" + data[0]['Content'] + "</p>");
+        }
 
     }
 
     //发布
-    function publish(id,type){
+    function publish(id, type) {
 
         var msg = $('input[name = "msg"]');
         var pUrl = "{:U(GROUP_NAME.'/Chat/publish')}";
         $.ajax({
-            type:'POST',
-            url:pUrl,
-            data:{
-                id:id,
-                type:type,
-                msg:msg.val(),
+            type: 'POST',
+            url: pUrl,
+            data: {
+                id: id,
+                type: type,
+                msg: msg.val(),
             },
-            success:function(data){
+            success: function (data) {
                 alert("发布成功");
+                $('#msg').val('');
+                loadMsg(data,id);
             },
-            dataType:"json",
+            dataType: "json",
         });
     }
 
+    //时间戳转换为时间格式
+    function unix_to_datetime(unix) {
+        var now = new Date(parseInt(unix) * 1000);
+
+        var y = now.getFullYear();
+        var m = now.getMonth() + 1;
+        var d = now.getDate();
+        var h = now.getHours();
+        var mm = now.getMinutes();
+        var s = now.getSeconds();
+        return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s)
+
+        //return now.toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+    }
+    function add0(m) {
+        return m < 10 ? '0' + m : m
+    }
+
 </script>
+</body>
 </html>
