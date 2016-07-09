@@ -80,26 +80,26 @@
                     {$homework.StartDate} ~ {$homework.EndDate}
                 </p>
 
-                <p><b>作业要求:</b></p>
+                <h3>作业要求:</h3>
                 <p>{$homework.Require}</p>
 
                 
 
                 <if condition="$hwstu.Score neq ''">
-                    <p><b>作业分数:</b></p>
+                    <h3>作业分数:</h3>
                     <p>{$hwstu.Score}</p>
-                    <p><b>作业评论:</b></p>
+                    <h3>>作业评论:</h3>
                     <p>{$hwstu.Comment}</p>
                 </if>
             </form>  
             <br/><br/><br/>
             
             <if condition="$hwstu.Content neq ''">
-                <p><b>已上传文本作业</b></p>
+                <h3>已上传文本作业</h3>
                 {$hwstu.Content}
             </if>
             <if condition="$attachment neq null">
-                <p><b>已上传作业附件</b></p>
+                <h3>已上传作业附件</h3>
             </if>
             <foreach name="attachment" item="att">
                 <a href="{:U(GROUP_NAME.'/Student/download', array('resID' => $att['ResID']))}">{$att.ResOriginName}</a>         &nbsp;&nbsp;&nbsp;&nbsp;
