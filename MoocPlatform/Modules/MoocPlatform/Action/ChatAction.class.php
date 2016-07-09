@@ -6,7 +6,7 @@
  * Date: 2016/7/6
  * Time: 9:24
  */
-Class ChatAction extends Action
+Class ChatAction extends VerifyLoginAction
 {
 
     public function chat()
