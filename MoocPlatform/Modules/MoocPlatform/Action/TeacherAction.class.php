@@ -26,6 +26,11 @@ class TeacherAction extends VerifyLoginAction
 		$this->redirect('/Teacher/personal_info/');
 	}
 
+	public function teaChat()
+	{
+		$this->display();
+	}
+
 	public function course()
 	{
 		$teacher=session('teacher');
@@ -121,6 +126,7 @@ class TeacherAction extends VerifyLoginAction
     		import('ORG.Util.FileToZip');
 
 	        $download_file = array();
+	        $download_file_name = array();
 	        $download_file_count=0;
 	        
 	        foreach ($id_array as $id)
@@ -129,13 +135,12 @@ class TeacherAction extends VerifyLoginAction
 					->where('resource.ResID='.$id)
 					->select();
 
-				$download_file[$download_file_count++] = $res[0];
+				$download_file[$download_file_count] = $res[0]['ResPath'].$res[0]['ResActualName'];
+				$download_file_name[$download_file_count++] = $res[0]['ResOriginName'];
 	        }
 
-	        $cur_file=$download_file[0]['ResPath'];
-
-	        $scandir=new traverseDir($cur_file,$cur_file);    //$save_path zip包文件目录
-	        $scandir->tozip($download_file,session('teacher_selected_course')['CourseName']);
+	        $scandir=new traverseDir("","");
+	        $scandir->tozip($download_file,$download_file_name);
     	}
     	else
     	{
@@ -197,7 +202,7 @@ class TeacherAction extends VerifyLoginAction
     	$student_homework=$db2
     						->where('hwstu.HwID='.$hwID)
     						->join('student ON student.StuID=hwstu.StuID')
-    						->Field('hwstu.ID,hwstu.HwID,hwstu.StuID,student.StuName,student.Sex,student.Department,student.Class,hwstu.Content,hwstu.ResID,hwstu.Score,hwstu.Comment')
+    						->Field('hwstu.ID,hwstu.HwID,hwstu.StuID,student.StuName,student.Sex,student.Department,student.Class,hwstu.Content,hwstu.Score,hwstu.Comment')
     						->select();//dump($student_homework);
 
     	$this->assign('some_homework',$some_homework);
@@ -367,31 +372,43 @@ class TeacherAction extends VerifyLoginAction
     public function downloadHomeworkZip()
     {
     	$hwID=I('param.hwID');
-    	$hwName=I('param.hwName');
-    	$db1=M('hwstu');
-    	$db2=M('resource');
-    	$hwstu=$db1
+    	$stuID=I('param.stuID');
+    	$db=M('hwstu');
+    	$resource;
+
+    	if(""==$stuID)
+    	{
+			$resource=$db
     			->where('hwstu.HwID='.$hwID)
-    			->select();
+    			->join('student ON student.StuID=hwstu.StuID')
+    			->join('hwres ON hwres.HwStuID=hwstu.ID')
+    			->join('resource ON resource.ResID=hwres.ResID')
+    			->select();//dump($resource);
+    	}
+    	else
+    	{
+    		$resource=$db
+    			->where('hwstu.HwID='.$hwID.' and Hwstu.StuID='.$stuID)
+    			->join('student ON student.StuID=hwstu.StuID')
+    			->join('hwres ON hwres.HwStuID=hwstu.ID')
+    			->join('resource ON resource.ResID=hwres.ResID')
+    			->select();//dump($resource);
+    	}
 
     	import('ORG.Util.FileToZip');
 
         $download_file = array();
+        $download_file_name = array();
         $download_file_count=0;
         
-        foreach ($hwstu as $h_s)
+        foreach ($resource as $res)
         {
-        	$res=$db2
-				->where('resource.ResID='.$h_s['ResID'])
-				->select();
-
-			$download_file[$download_file_count++] = $res[0];
+			$download_file[$download_file_count] = $res['ResPath'].$res['ResActualName'];
+			$download_file_name[$download_file_count++] = $res['StuID'].'_'.$res['StuName'].'/'.$res['ResOriginName'];
         }
 
-        $cur_file=$download_file[0]['ResPath'];
-
-        $scandir=new traverseDir($cur_file,$cur_file);    //$save_path zip包文件目录
-        $scandir->tozip($download_file,$hwName);
+        $scandir=new traverseDir("","");
+        $scandir->tozip($download_file,$download_file_name);
     }
 }
 
