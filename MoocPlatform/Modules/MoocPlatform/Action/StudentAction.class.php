@@ -155,7 +155,6 @@ class StudentAction extends Action {
         }
             
         
-        
         $condition['StuID'] = $stuID;
         $condition['HwID'] = I('HwID');
         $hwstu = M('Hwstu')->where($condition)->find();
@@ -304,7 +303,7 @@ class StudentAction extends Action {
         
         // 查询可加入的团队id及信息
         // 已加入所有团队ID
-        $hasJoinGroupIDs = M('groupstu')->where('StudentID = %d AND JoinStatus != 1', $stuID)->getField('GroupID', true);
+        $hasJoinGroupIDs = M('groupstu')->where('StudentID = %d AND JoinStatus = 1', $stuID)->getField('GroupID', true);
         // 所有非自己创建的团队
         $notMeBuildGroups = M('Learninggroup')->where('PrincipalID != %d', $stuID)->select();
         $canJoinGroups = array();
@@ -320,20 +319,21 @@ class StudentAction extends Action {
             $canJoinGroups[$index]['PrinName'] = $stuPrin['StuName'];
             
             // 查询该团队 已加入的人数
-            $canJoinGroups[$index]['NowPerson'] = M('groupstu')->where('GroupID = %d', $value['GroupID'])->count();
+            $canJoinGroups[$index]['NowPerson'] = M('groupstu')->where('GroupID = %d', $value['GroupID'])->count() + 1;
             
             // 查询改团队 已加入课程
             $canJoinCourseIDs = M('groupcourse')->where('GroupID = %d', $value['GroupID'])->select();
             foreach ($canJoinCourseIDs as $k => $v) {
                 $canJoinGroups[$index]['Courses'][$k] = M('Course')->where('CourseID = %d', $v['CourseID'])->find();
             }
-            
-            $canJoinGroups[$index]['JoinStatus'] = M('groupstu')->where('StudentID = %d', $stuID)->find();
+
+            // 查询自己加入该团队的状态
+            $canJoinGroups[$index]['JoinStatus'] = M('groupstu')->where('StudentID = %d AND GroupID = %d', $stuID, $value['GroupID'])->find()['JoinStatus'];
             
             ++$index;
         }
         $this->canJoinGroups = $canJoinGroups;        
-        dump($canJoinGroups);
+        //dump($canJoinGroups);
         
         $this->display('Student/group');
     }
@@ -363,6 +363,7 @@ class StudentAction extends Action {
         );
         
         M('groupstu')->data($groupstu)->add();
+        $this->redirect('Student/group', '', 1, '申请成功，正在返回...');
     }
 
     public function groupbuild() {
@@ -384,7 +385,26 @@ class StudentAction extends Action {
         M('Learninggroup')->add($group);
     }
 
+    /**
+     * 管理团队
+     */
+    public function groupmanage() {
+        $manageGroups = M('Learninggroup')->where('PrincipalID = %d', session('student')['StuID'])->select();
+        //dump($manageGroups);
+        $this->manageGroups = $manageGroups;
+
+        $this->display('Student/groupmanage');
+    }    
     
-    
-    
+    public function selectgroups() {
+        $selectGroup = I('selectGroup');
+        $groupMemberIDs = M('groupstu')->where('GroupID = %d', $selectGroup)->select();
+
+        foreach ($groupMemberIDs as $key => $value) {
+            $groupMembers[$key] = M('Student')->where('StuID = %d', $value['StudentID'])->find()['StuName'];
+        }
+
+        $data['groupMembers'] = $groupMembers;
+        $this->ajaxreturn($data);
+    }
 }
