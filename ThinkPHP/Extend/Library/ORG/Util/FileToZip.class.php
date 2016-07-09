@@ -46,7 +46,7 @@ class traverseDir{
                 $items_count=count($items);
                 for ($i=0;$i<$items_count;$i++)
                 {
-                    $zip->addFile($this->currentdir.$items[$i]['ResActualName'],$items[$i]['ResOriginName']);//dump($zip);
+                    $zip->addFile($items[$i],$filename[$i]);//dump($zip);
                 }
 
                 if(!$zip->close())
