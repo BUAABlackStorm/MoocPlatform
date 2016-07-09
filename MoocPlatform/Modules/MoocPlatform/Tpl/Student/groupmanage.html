@@ -91,15 +91,16 @@
                 <div class="form-group">
                     <div class="col-lg-3">
                         <form method="post" action="{:U(GROUP_NAME.'/Student/selectgroups')}">
-                            <select name="selectGroups" class="selectpicker show-tick form-control" onchange="submitGroups()">
-                                <option> 请选择团队 </option>
+                            <select name="selectGroups" class="selectpicker show-tick form-control">
+                                <option value="0"> 请选择团队 </option>
                                 <foreach name="manageGroups" item="mgs">
                                     <option value="{$mgs.GroupID}"> {$mgs.GroupName} </option>
                                 </foreach>
                             </select>
                         </form>
                     </div>
-                     <a id="groupmember" class="btn btn-success" rel="popover">团队成员</a>
+                    <!--<a id="groupmember" class="btn btn-success" rel="popover">团队成员</a>-->
+                    <a class="btn btn-success" onclick="showMembers()">团队成员</a>
                 </div>
             </form>   
             <div class="col-xs-12">  
@@ -116,19 +117,22 @@
                                 <thead>
                                     <tr>
                                         <td>申请列表<span class="caret"></span></a></td>
-                                        <td>操作 <span class="caret"></span></a></td>  
+                                        <td>操作<span class="caret"></span></a></td>  
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <foreach name="groupApplyMembers" item="gams">
                                     <tr>
-                                        <td> <div id="workname"> 队员1 </div> </td>
+                                        <td> {$gams.StuName} </td>
                                         <td> 
-                                            <button onclick="window.location.href='#' " id="TeamID" class="btn btn-success templatemo-edit-button" > 拒绝加入 </button>
+                                            <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/agreerefuse\', array(\'StuID\' => $gams[\'StuID\'], \'flag\' => 1))}'" class="btn btn-success templatemo-edit-button" > 同意加入 </button>
+                                            <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/agreerefuse\', array(\'StuID\' => $gams[\'StuID\'], \'flag\' => 2))}'" class="btn btn-success templatemo-edit-button" > 拒绝加入 </button>
                                         </td>
                                     </tr>
+                                    </foreach>
                                     <tr>
                                         <td colspan="2">
-                                            <button onclick="window.location.href='#' " id="TeamID" class="btn btn-success templatemo-edit-button" > 结束组建 </button>
+                                            <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/endbuild\')}'" class="btn btn-success templatemo-edit-button" > 结束组建 </button>
                                         </td>
                                     </tr>
                                 </tbody>      
@@ -151,31 +155,57 @@
                                 <thead>
                                     <tr>
                                         <td>课程列表<span class="caret"></span></a></td>
-                                        <td>操作 <span class="caret"></span></a></td>  
+                                        <td>操作<span class="caret"></span></a></td>  
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <foreach name="canJoinCourses" item="cjcs">
                                     <tr>
-                                        <td> <div id="workname"> 课程1 </div> </td>
+                                        <td> {$cjcs.CourseName} </td>
                                         <td> 
-                                            <button onclick="window.location.href='#' " id="CourseID" class="btn btn-success templatemo-edit-button" > 申请加入 </button>
+                                            <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/applycourse\')}'" class="btn btn-success templatemo-edit-button" > 申请加入 </button>
                                         </td>
                                     </tr>
+                                    </foreach>
                                 </tbody>      
                             </table>    
             	        </div>  
         	        </div>
                 </div>           
-            </div>    
-            <div class="col-lg-3">
-                <select id="TeamID" class="selectpicker show-tick form-control">
-                    <option> 选择新的负责人</option>
-                    <option>13211042</option>
-                    <option>13211043</option>
-                </select>
-                <br />
-                <button onclick="window.location.href='#' " id="TeamID" class="btn btn-success btn templatemo-edit-button"> 确定更改  </button>
-            </div> 
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="Modal" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            &times;
+                        </button>
+                        <h1 class="modal-title">
+                            团队成员
+                        </h1>
+                    </div>
+                    <div class="modal-body">
+                            <table class="table table-striped table-bordered templatemo-user-table" id="applyinfo" >
+                                <thead>
+                                <tr>
+                                    <td>申请列表<span class="caret"></span></a></td>
+                                    <td>操作 <span class="caret"></span></a></td>
+                                </tr>
+                                </thead>
+                                <tbody id="membersList">
+
+                                </tbody>
+                            </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success templatemo-edit-button" data-dismiss="modal">
+                            关闭
+                        </button>
+                    </div>
+            </div>
         </div>
     </div>
 </body>
@@ -187,39 +217,86 @@
 <script type="text/javascript" src="__PUBLIC__/js/templatemo-script.js"></script>        <!-- Templatemo Script -->
 <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
 <script>	
-    $(function () {
-        $("#groupmember").popover({
-            title: "成员列表",
-            content: "请选择团队",
-        });
-	});
-    
     var selectGroup = $('select[name = "selectGroups"]');
+    function showMembers(){
+        if(selectGroup.val() == 0){
+            alert("请选择团队");
+        }else{
+            $('#Modal').modal();
+            $('.members').remove();
+            var url = "{:U(GROUP_NAME.'/Student/selectgroups')}";
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {
+                    selectGroup: selectGroup.val(),
+                },
+                success: function(data) {
+                    loadData(data);
+                },
+                dataType: 'json',
+            });
+        }
+    }
 
-    function submitGroups(){   
-        var url = "{:U(GROUP_NAME.'/Student/selectgroups')}";
+    function loadData(data){
+        for(var v in data){
+            $('#membersList').append(
+                    "<tr class='members'>" +
+                    "<td>" + data[v]['StuName']+ "</td>"+
+                    "<td>"+
+                    "<button class='btn btn-danger templatemo-edit-button' onclick='deleteMembers(" + data[v]['StuID'] + ")'>移除成员</button>"+
+                    "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+                    "<button class='btn btn-success templatemo-edit-button' onclick='principal(" + data[v]['StuID'] + ")'>设为组长</button>"+
+                    "</td>"+
+                    "</tr>"
+
+            );
+        }
+    }
+
+    function deleteMembers(StuID){
+        var url = "{:U(GROUP_NAME.'/Student/deleteMembers')}";
         $.ajax({
             type: 'POST',
             url: url,
             data: {
-                selectGroup: selectGroup.val(),
+                StuID: StuID,
+                GroupID:selectGroup.val(),
             },
             success: function(data) {
-                load(data);
+                if(data['status'] == 'error'){
+                    alert("删除错误，请重试");
+                }
+                else{
+                    showMembers();
+                }
             },
             dataType: 'json',
         });
     }
 
-    function load(data) {
-        alert(data['groupMembers']);
-        $("#groupmember").popover({
-            title: "成员列表1",
-            content: data['groupMembers'],
-            
+
+    function principal(StuID){
+        var url = "{:U(GROUP_NAME.'/Student/principal')}";
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {
+                StuID: StuID,
+                GroupID:selectGroup.val(),
+            },
+            success: function(data) {
+                if(data['status'] == 'error'){
+                    alert("错误，请重试");
+                }
+                else{
+                    window.location.href="{:U(GROUP_NAME.'/Student/group')}";
+                }
+            },
+            dataType: 'json',
         });
     }
-
 </script>
 
 </body>
