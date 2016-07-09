@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <title>教师页面</title>
+
+    <script src="__PUBLIC__/js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
+    <script src="__PUBLIC__/js/jquery-migrate-1.2.1.min.js"></script> <!--  jQuery Migrate Plugin -->
+    <script src="__PUBLIC__/js/jquery.uploadify.min.js" ></script>
+    
+    <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/js/templatemo-script.js"></script>   
+    
+
+    <meta name="description" content="">
+    <meta name="author" content="templatemo">
+    <link href="__PUBLIC__/css/font-awesome.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/templatemo-style.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/uploadify.css" rel="stylesheet">
+  </head>
+  <body>  
+    <!-- Left column -->
+    <div class="templatemo-flex-row">
+      <div class="templatemo-sidebar">
+         <header class="templatemo-site-header">
+          <div align="center"><img src="__PUBLIC__/images/person.jpg"  class="img-circle" height="50" width="50">
+          <h2>教师用户</h2>
+          </div>
+        </header>
+          
+        <div class="profile-name" align="center">
+        <span>{:session('teacher')['TeaName']}</span>
+        <br>
+        </div>
+
+        <div class="profile-name" align="center">
+        <span>{:session('teacher')['TeaID']}</span>
+        <br>
+        </div>
+        
+
+        <div class="mobile-menu-icon">
+            <i class="fa fa-bars"></i>
+        </div>
+        <nav class="templatemo-left-nav">          
+          <ul>
+            <li><a href="__URL__/"><i class="fa fa-home fa-fw"></i>课程资源</a></li>
+            <li><a href="__URL__/homework_index"><i class="active"></i>作业管理</a></li>
+            <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>在线聊天</a></li>
+            <li><a href="__URL__/personal_info"><i class="fa fa-bar-chart fa-fw"></i>个人信息</a></li>
+            <li><a href="{:U(GROUP_NAME.'/LoginAndRegister/Logout')}"><i class="fa fa-bar-chart fa-fw"></i>登陆注销</a></li>
+          </ul>  
+        </nav>
+      </div>
+      <div class="templatemo-content col-1 light-gray-bg">
+          <div class="row">
+        </div>
+        <div class="templatemo-content-container col-md-10 col-md-offset-1">
+        <div class="panel panel-default ">
+          <div class="panel-heading">
+          <h3 style="color:#fff;">作业内容</h3>
+          </div>             
+          <div class="templatemo-content-widget-r white-bg col-md-12">
+          <h2>作业名称</h2>
+          <pre><ul>
+              <li>{$some_homework[0]['HwName']}</li>
+            </ul></pre>
+          <br />
+          <h2>作业要求</h2>
+          <hr>
+          <pre><ol>
+            <if condition="$some_homework[0]['isGroupHw'] eq 1">
+              <li>团队作业</li>
+            <else />
+              <li>个人作业</li>
+            </if>
+            <li>开始时间: {$some_homework[0]['StartDate']}</li>
+            <li>结束时间: {$some_homework[0]['EndDate']}</li>
+          </ol></pre>
+          <br />
+          <h2>作业描述</h2>
+          <pre>{$some_homework[0]['Require']}</pre>
+          </div>
+          </div> 
+          </div>
+          <div class="templatemo-content-container col-md-12">
+          <div class="panel panel-default table-responsive">
+              <table class="table table-striped table-bordered templatemo-user-table" >
+                <caption>已提交学生作业</caption>
+                <span class="right" style="display:inline-block;margin:0 0 0 10px;">
+                  <form action="__URL__/exportHomeworkExcel" method="get">
+                    <input type="hidden" name="hwID" value="{$some_homework[0]['HwID']}">
+                    <input type="submit" class="templatemo-edit-btn" value="下载成绩">
+                  </form>
+                </span>
+                <span class="right" style="display:inline-block;margin:0 0 0 10px;">
+                  <form action="__URL__/downloadHomeworkZip" method="get">
+                    <input type="hidden" name="hwID" value="{$some_homework[0]['HwID']}">
+                    <input type="hidden" name="hwName" value="{$some_homework[0]['HwName']}">
+                    <input type="submit" class="templatemo-edit-btn" value="批量下载附件">
+                  </form>
+                </span>
+                <span class="right" style="display:inline-block;margin:0 0 0 10px;">
+                  <form action="__URL__/importHomeworkExcel" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="hwID" value="{$some_homework[0]['HwID']}">
+                    <input type="file" name="file" value="上传成绩">
+                    <input type="submit" class="templatemo-edit-btn" value="上传成绩">
+                  </form>
+                </span>
+              <thead>
+                <tr>
+                  <td>学号</td>
+                  <td>姓名</td>
+                  <td>院系编号</td>
+                  <td>班级</td>
+                  <td>作业文本</td>
+                  <td>作业分数</td>
+                  <td>作业评论</td>
+                  <td>确认修改</td>
+                  <td>附件</td>
+                  <!-- <td style="width:90px;">学号</td>
+                  <td style="width:70px;">姓名</td>
+                  <td style="width:85px;">院系编号</td>
+                  <td style="width:70px;">班级</td>
+                  <td>作业文本</td>
+                  <td style="width:85px;">作业分数</td>
+                  <td>作业评论</td> -->
+                </tr>
+                </thead>
+                <tbody>
+                  <foreach name="student_homework" item="s_h">
+                    <form action="__URL__/changeScore" method="post">
+                      <tr>
+                        <td>{$s_h['StuID']}</td>
+                        <td>{$s_h['StuName']}</td>
+                        <td>{$s_h['Department']}</td>
+                        <td>{$s_h['Class']}</td>
+                        <td>{$s_h['Content']}</td>
+                        <td><input type="text" name="score" value="{$s_h['Score']}"></td>
+                        <td><textarea rows="2" name="comment">{$s_h['Comment']}</textarea></td>
+                        <input type="hidden" name="ID" value="{$s_h['ID']}">
+                        <input type="hidden" name="hwID" value="{$s_h['HwID']}">
+                        <td><input type="submit" name="changescore" value="确认"></td>
+                        <input type="hidden" name="id_array[]" value="{$s_h['ResID']}">
+                        <td><input type="submit" formaction="__URL__/download/" formmethod="get" name="download" value="下载"></td>
+                      </tr>
+                    </form>
+                  </foreach>
+                </tbody>
+              </table>
+              </div>
+    </div>
+  </div>
+  </body>
+</html>

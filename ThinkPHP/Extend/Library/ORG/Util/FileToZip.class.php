@@ -35,18 +35,29 @@ class traverseDir{
     /**
      * 压缩文件(zip格式)
      */
-    public function tozip($items){ 
+    public function tozip($items,$filename){ 
         $zip=new ZipArchive();
-        $zipname=date('YmdHis',time());
-        if (!file_exists($zipname)){
-            $zip->open($savepath.$zipname.'.zip',ZipArchive::OVERWRITE);//创建一个空的zip文件
-            for ($i=0;$i<count($items);$i++){
-                $zip->addFile($this->currentdir.'/'.$items[$i],$items[$i]);
-            }
-            $zip->close();
-            $dw=new download($zipname.'.zip',$savepath); //下载文件
+        $zipname=date('YmdHis',time()).'.zip';//dump($this->savepath.$zipname);
+        if (!file_exists($zipname))
+        {
+            //创建一个空的zip文件
+            if(TRUE==($zip->open($zipname,ZipArchive::CREATE)))
+            {
+                $items_count=count($items);
+                for ($i=0;$i<$items_count;$i++)
+                {
+                    $zip->addFile($this->currentdir.$items[$i]['ResActualName'],$items[$i]['ResOriginName']);//dump($zip);
+                }
+
+                if(!$zip->close())
+                {
+                    dump("close error");
+                }
+            }else{dump("open failed");}
+
+            $dw=new download($zipname,""); //下载文件
             $dw->getfiles();
-            unlink($savepath.$zipname.'.zip'); //下载完成后要进行删除   
+            unlink($zipname); //下载完成后要进行删除  
         }
     }
 }

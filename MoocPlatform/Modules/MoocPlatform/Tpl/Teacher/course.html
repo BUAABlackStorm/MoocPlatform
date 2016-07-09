@@ -47,7 +47,7 @@
         </div>
         <nav class="templatemo-left-nav">          
           <ul>
-            <li><a href="__URL__/" class="active"><i class="fa fa-home fa-fw"></i>课程资源</a></li>
+            <li><a href="__URL__/" class="active"><i class="fa fa-home fa-fw"></i>课程管理</a></li>
             <li><a href="__URL__/homework_index"><i class="fa fa-bar-chart fa-fw"></i>作业管理</a></li>
             <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>在线聊天</a></li>
             <li><a href="__URL__/personal_info"><i class="fa fa-bar-chart fa-fw"></i>个人信息</a></li>
@@ -56,14 +56,10 @@
         </nav>
       </div>
       <div class="templatemo-content col-1 light-gray-bg">
-        <div class="templatemo-top-nav-container">
+       
           <div class="row">
-            <nav class="templatemo-top-nav col-lg-12 col-md-12">
-              <ul class="text-uppercase">
-                <li><a href="__URL__/" class="active">课程选择</a></li>
-              </ul>  
-            </nav> 
-          </div>
+           
+          
         </div>
         <div class="templatemo-content-container">
           <div class="templatemo-flex-row flex-content-row">
@@ -73,34 +69,50 @@
                 <h2>课程资源分类</h2>
                 <br />
                 <div>
-                <select name="category" class="form right" onchange="changeCate();">
-                  <option value="0">请选择分类</option>
+                <select id="all" name="category" class="form" onchange="changeCate();">
+                  <option value="0">全部文件</option>
                   <option value="1">课件</option>
                   <option value="2">文档</option>
                   <option value="3">视频</option>
                 </select>
                 </div>
-                <div>
-                  <button data-toggle="modal" data-target="#Assignment" class="templatemo-edit-btn">发布作业</button>
-                   <button data-toggle="modal" data-target="#myModal" class="templatemo-edit-btn">下载文件</button>
-                   <button data-toggle="modal" data-target="#deleteModal" class="templatemo-edit-btn">删除文件</button>
-                </div>
-                
-              </div>
+                  </div>
+                 <!--   <button data-toggle="modal" data-target="#myModal" class="templatemo-edit-btn">下载文件</button>
+                   <button data-toggle="modal" data-target="#deleteModal" class="templatemo-edit-btn">删除文件</button> -->
               <br />
               <div class="panel panel-default table-responsive">
+              <form>
+              <div class="right">
+               <span style="display:inline-block;">
+                      <input type="submit" formaction="__URL__/download" id="download" formmethod="get"class="templatemo-edit-btn" value="下载" >
+                </span>
+                <span style="display:inline-block;">
+                      <input type="submit" id="delete" formaction="__URL__/delete" class="templatemo-edit-btn" formmethod="post" value="删除" >
+                </span>
+                </div>
               <table class="table table-striped table-bordered templatemo-user-table" >
               <thead>
                 <tr>
+                  <td></td>
                   <td>资源名称</td>
                   <td>上传时间</td>
                   <td>文件大小</td>
                 </tr>
                 </thead>
                 <tbody id="appendant">
+                  <foreach name='resourceList' item="r_t">
+                  <tr>
+                   <td>
+                   <input type="checkbox" class="del" name="id_array[]" value="{$r_t['ResID']}"></td>
+                   <td class="name">{$r_t['ResOriginName']}</td>
+                   <td class="time">{$r_t['ReleaseTime']}</td>
+                   <td class="size">{$r_t['FileSize']/1000}KB</td>
+                  </tr>
+                  </foreach>
                 </tbody>
               </table>
-              </div>       
+              </form>
+              </div>
               </div>    
               <div class="templatemo-content-widget-s white-bg col-6">
             <h2>上传文件</h2>
@@ -137,68 +149,7 @@
     </div>
             </div>
 
-          
-    <!--Modals-->
-   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">下载文件</h4>
-      </div>
-      <form action="__URL__/download" method="get">
-      <div class="modal-body">
-                <div class="panel panel-default table-responsive">
-              <table class="table table-striped table-bordered templatemo-user-table" id="delfiles" >
-              <thead>
-                <tr>
-                  <td></td>
-                  <td>资源名称</td>
-                  <td>上传时间</td>
-                </tr>
-                </thead>
-                <tbody id="deleteappend">
-                </tbody>
-              </table>
-              </div>       
-            </div>
-      <div class="modal-footer">
-        <input type="submit" id="download" class="templatemo-edit-btn" value="下载" >
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">删除文件</h4>
-      </div>
-      <form action="__URL__/delete" method="post">
-      <div class="modal-body">
-               <div class="panel panel-default table-responsive">
-              <table class="table table-striped table-bordered templatemo-user-table" id="">
-              <thead>
-                <tr>
-                  <td></td>
-                  <td>资源名称</td>
-                  <td>上传时间</td>
-                </tr>
-                </thead>
-                <tbody id="addappend">
-                </tbody>
-              </table>
-              </div>               
-            </div>
-      <div class="modal-footer">
-        <input id="delete" type="submit" class="btn btn-default" value="删除" >
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
+   
 
 <div class="modal fade" id="Assignment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -230,8 +181,6 @@
 
  <script>
      var p1=0;
-     var p2=0;
-     var p3=0;
      var category = $('select[name = "category"]');
      function changeCate(){
         
@@ -244,52 +193,36 @@
             },
             success:function(data){
               load(data);
-              add(data);
+              //      
             },
             dataType:"json"
         });
 
     }
-
-    // function load(data){
-    //   alert(data[0]['ResActualName']);
-    // }
-
     function load(data){
         $("#appendant").empty();
+        if($("#all").val()==0)
+        {
+           $("#appendant").append("<foreach name='resourceList' item='r_t'><tr><td><input type='checkbox' class='del' name='id_array[]' value='{$r_t['ResID']}'></td><td class='name'>{$r_t['ResOriginName']}</td><td class='time'>{$r_t['ReleaseTime']}</td><td class='size'>{$r_t['FileSize']/1000}KB</td></tr></foreach>");
+        }
+        else{
       for(var i=0,l=data.length;i<l;i++){
-
-          p1=0;p2=0;p3=0;
+          p1=0;
       for(var key in data[i]){  
       if(key=="ResOriginName") {p1=i;}
-      if(key=="ReleaseTime"){p2=i;}
-      if(key=="FileSize"){p3=i;}
      }
 
-       $("#appendant").append("<tr><td>"+data[p1]["ResOriginName"]+"</td><td>"+data[p2]["ReleaseTime"]+"</td><td>"+data[p3]["FileSize"]/1000+"KB</td></tr>");
+       $("#appendant").append("<tr><td><input type='checkbox' class='del' name='id_array[]' value='"+data[p1]["ResID"]+"'></td><td>"+data[p1]["ResOriginName"]+"</td><td>"+data[p1]["ReleaseTime"]+"</td><td>"+data[p1]["FileSize"]/1000+"KB</td></tr>");
     }
-    }
-    function add(data){
-      $("#deleteappend").empty();
-        $('#addappend').empty();
-      for(var i=0,l=data.length;i<l;i++){  
-        p1=0;p2=0;p3=0;
-      for(var key in data[i]){  
-      if(key=="ResOriginName") {p1=i;}
-      if(key=="ReleaseTime"){p2=i;}
-      if(key=="FileSize"){p3=i;}
-     }
-       $("#deleteappend").append("<tr><td><input type='checkbox' id='del' name='id_array[]' value='"+data[p1]["ResID"]+"'></td><td><a>"+data[p1]["ResOriginName"]+"</a></td>"+"<td>"+data[p2]["ReleaseTime"]+"</td></tr>");
-       $("#addappend").append("<tr><td><input type='checkbox' id='down' name='id_array[]' value='"+data[p1]["ResID"]+"'></td><td><a>"+data[p1]["ResOriginName"]+"</a></td>"+"<td>"+data[p2]["ReleaseTime"]+"</td></tr>");
-    }}
+  }
+}
      $('#download').click(function(){
-         var p=$("#del").is(':checked');
-         if(p==false) alert('请至少选择一个下载项目！');
+         var p=$(".del").is(':checked');
+         if(p==false) alert('请至少选择一个下载或删除项目！');
      })
      $('#delete').click(function(){
-         var p=$("#down").is(':checked');
-         if(p==false) alert('请至少选择一个删除项目！');
+         var p=$(".del").is(':checked');
+         if(p==false) alert('请至少选择一个下载或删除项目！');
      })
   </script>
   </body>
-</html>
