@@ -397,14 +397,59 @@ class StudentAction extends Action {
     }    
     
     public function selectgroups() {
-        $selectGroup = I('selectGroup');
-        $groupMemberIDs = M('groupstu')->where('GroupID = %d', $selectGroup)->select();
+        $GroupID = I('selectGroup');
+
+        //查找该组的组长ID
+        $principalID = M('learninggroup') -> where(array('GroupID' => $GroupID)) -> getField('PrincipalID');
+
+        //查找除组长之外的团队成员
+        $groupMemberIDs = M('groupstu')->where(array('GroupID' => $GroupID , 'StudentID' => array('neq',$principalID)))->select();
 
         foreach ($groupMemberIDs as $key => $value) {
-            $groupMembers[$key] = M('Student')->where('StuID = %d', $value['StudentID'])->find()['StuName'];
+            $groupMembers[$key] = M('Student')->where('StuID = %d', $value['StudentID'])->field(array('StuID','StuName'))->find();
         }
 
-        $data['groupMembers'] = $groupMembers;
+        $this->ajaxreturn($groupMembers);
+    }
+
+    public function deleteMembers(){
+        $StuID = I('StuID');
+        $GroupID = I('GroupID');
+
+        $delete = M('groupstu')->where(array('GroupID' => $GroupID , 'StudentID' => $StuID)) -> delete();
+        $data = array();
+        if($delete){
+            $data['status'] = 'success';
+            $this->ajaxreturn($data);
+        }else{
+            $data['status'] = 'error';
+            $this->ajaxreturn($data);
+        }
+    }
+
+    public function principal(){
+        $StuID = I('StuID');
+        $GroupID = I('GroupID');
+
+        $data = array();
+
+        //找到之前的组长ID
+        $principalID = M('learninggroup') -> where(array('GroupID' => $GroupID)) -> getField('PrincipalID');
+        $data['PrincipalID'] = $principalID;
+
+        //更新learninggroup中的PrincipalID
+        $saveMember = array(
+            'PrincipalID' => $StuID,
+        );
+        $save = M('learninggroup') -> where(array('GroupID' => $GroupID)) ->save($saveMember);
+
+
+        if( $save){
+            $data['status'] = 'success';
+        }else{
+            $data['status'] = 'error';
+        }
         $this->ajaxreturn($data);
+
     }
 }
