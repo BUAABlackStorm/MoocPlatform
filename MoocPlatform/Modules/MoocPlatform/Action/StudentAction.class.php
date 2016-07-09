@@ -70,20 +70,13 @@ class StudentAction extends Action {
      */
     public function resource() {
 
-
-        $CourseID = I('CourseID');
-        session('selectedCourseID', $CourseID);
-
-//        if(session("?selectedCourseID")){
-//            $CourseID = I('CourseID');
-//            session('selectedCourseID', $CourseID);
-//            //p(1);
-//            p(session('selectedCourseID'));
-//        }else{
-//            $CourseID = session('selectedCourseID');
-//            //p($CourseID);
-//        }
-
+        if (I('CourseID') == '')
+        {
+            $CourseID = session('selectedCourseID');
+        } else {
+            $CourseID = I('CourseID');
+            session('selectedCourseID', $CourseID);
+        }
 
         $kejianCount = M('Resource')->where('ResKindID=1 AND CourseID=%d', $CourseID)->count();
         $docCount = M('Resource')->where('ResKindID=2 AND CourseID=%d', $CourseID)->count();
@@ -104,7 +97,7 @@ class StudentAction extends Action {
         //dump(session());
 
         //dump(I('resKindID')); 
-        $ress = M('Resource')->where('ResKindID = %d', I('resKindID'))->select();
+        $ress = M('Resource')->where('ResKindID = %d AND CourseID=%d', I('resKindID'), session('selectedCourseID'))->select();
         $this->ress = $ress;
        
         $this->display('Student/resThree');
@@ -198,7 +191,7 @@ class StudentAction extends Action {
         import('ORG.Net.UploadFile');
         $config = array(
             'maxSize'    =>    3145728,
-            'savePath'   =>    './MoocPlatform/Modules/MoocPlatform/Uploads/',
+            'savePath'   =>    './MoocPlatform/Modules/MoocPlatform/Uploads/Student/',
             'saveRule'   =>    'uniqid',
             'allowExts'  =>    array('jpg', 'png', 'jpeg','doc','docx','xls','xlsx','ppt','pptx','txt'),
             'autoSub'    =>    true,
