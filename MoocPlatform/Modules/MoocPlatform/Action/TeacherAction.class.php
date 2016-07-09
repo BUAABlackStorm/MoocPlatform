@@ -75,6 +75,7 @@ class TeacherAction extends VerifyLoginAction
 				'dateFormat'    =>    'Y-m-d',
 		);
 
+
 		$upload = new UploadFile($config);
 
 		$upload->upload();
