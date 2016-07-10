@@ -68,23 +68,14 @@ class TeacherAction extends VerifyLoginAction
 		$config = array(
 				'maxSize'    =>    3145728,
 				'saveRule'   =>    'uniqid',
+				'savePath'   =>    './MoocPlatform/Modules/MoocPlatform/Uploads/Teacher/',
 				'allowExts'  =>    array('jpg', 'png', 'jpeg','doc','docx','xls','xlsx','ppt','pptx','txt'),
 				'autoSub'    =>    true,
 				'subType'	 =>	   'date',
 				'dateFormat'    =>    'Y-m-d',
 		);
 
-		//若在本地运行
-		if($_SERVER['HTTP_HOST'] == "localhost"){
-			$config['savePath'] = './MoocPlatform/Modules/MoocPlatform/Uploads/Teacher/';
-			$upload = new UploadFile($config);
-		}
-		//服务器端运行
-		else{
-			$config['savePath'] = './public/Uploads';
-			$upload = new UploadFile($config,'sae');
-		}
-
+		$upload = new UploadFile($config);
 		$upload->upload();
 		$info= $upload->getUploadFileInfo();
 
@@ -117,8 +108,6 @@ class TeacherAction extends VerifyLoginAction
 				);
     			$db1->add($res);
     		}
-
-
     		$this->redirect('/Teacher/course/course_id/'.session('teacher_selected_course')['CourseID']);
 		}
     }
@@ -155,18 +144,7 @@ class TeacherAction extends VerifyLoginAction
     		$res=$db
 			->where('resource.ResID='.$id_array[0])
 			->select();
-
-			//若在本地运行
-			if($_SERVER['HTTP_HOST'] == "localhost"){
-				Http::download(($res[0]['ResPath']).($res[0]['ResActualName']),urlencode($res[0]['ResOriginName']));
-			}
-			//服务器端运行
-			else{
-				$stor = new SaeStorage();
-				$url = $stor->getUrl('public', $res[0]['ResPath'] . $res[0]['ResActualName']);
-				Header("HTTP/1.1 303 See Other");
-				Header("Location: $url");
-			}
+			Http::download(($res[0]['ResPath']).($res[0]['ResActualName']),urlencode($res[0]['ResOriginName']));
 		}
     }
 
@@ -180,17 +158,7 @@ class TeacherAction extends VerifyLoginAction
     	{
     		$res=$db->where('resource.ResID='.$id)->select();
 
-			//若在本地运行
-			if($_SERVER['HTTP_HOST'] == "localhost"){
-				//删除服务器上的文件
-				unlink(($res[0]['ResPath']).($res[0]['ResActualName']));
-			}
-			//服务器端运行
-			else{
-				$stor = new SaeStorage();
-				$stor->delete('public', $res[0]['ResPath'] . $res[0]['ResActualName']);
-			}
-
+			unlink(($res[0]['ResPath']).($res[0]['ResActualName']));
     		//删除数据库表项
     		$db->where('resource.ResID='.$id)->delete();
     	}
