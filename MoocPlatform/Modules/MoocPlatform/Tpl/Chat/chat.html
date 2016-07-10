@@ -187,10 +187,11 @@
                         <input type="hidden" name="courseID" value="{:$course}"/>
                         <div class="panel-body" id="main_panel" style="min-height: 590px; max-height: 590px; overflow-y: scroll;">
                             <ul id="main_list">
+
                                 <foreach name="all" item="v">
                                     <!--学生发言-->
-                                    <if condition=" $v['type'] eq 0">
-                                        <if condition=" $v['UserID'] eq $id">
+                                    <if condition="$v['type'] eq 0">
+                                        <if condition="$v['UserID'] eq $id">
                                             <li>
                                                 <!-- right -->
                                                 <div class="receiver">
@@ -223,21 +224,6 @@
 
                                         <!--老师发言-->
                                         <else/>
-                                        <if condition=" $v['UserID'] eq $id">
-                                            <li>
-                                                <!-- right -->
-                                                <div class="receiver">
-                                                    <div>
-                                                        <span><span>{:date("Y-m-d H:i:s", $v['Times'])} &nbsp;</span>{$v.teacher.TeaName}</span>
-                                                    </div>
-                                                    <br>
-                                                    <div>
-                                                        <div class="right_triangle"></div>
-                                                        <span>{$v.Content}</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <else/>
                                             <li>
                                                 <!-- left -->
                                                 <div class="teacher">
@@ -252,7 +238,6 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                        </if>
                                     </if>
 
                                 </foreach>
@@ -414,6 +399,7 @@
         for (var v in data) {
             //学生
             if (data[v]['type'] == 0) {
+
 
                 //学生本人发言
                 if (data[v]['UserID'] == id) {

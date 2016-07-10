@@ -64,7 +64,6 @@ Class ChatAction extends VerifyLoginAction
     public function fresh()
     {
 
-
         $type = I('type');
         $id = I('id');
         $courseID = I('courseID');
