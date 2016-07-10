@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="795aa4f6-34d2-41e9-bcd7-1949bc46798a" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/MoocPlatform.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Conf/config.php" afterPath="$PROJECT_DIR$/MoocPlatform/Conf/config.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/Teacher/course.html" afterPath="$PROJECT_DIR$/MoocPlatform/Modules/MoocPlatform/Tpl/Teacher/course.html" />
-    </list>
+    <list default="true" id="795aa4f6-34d2-41e9-bcd7-1949bc46798a" name="Default" comment="" />
     <ignored path="MoocPlatform.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -69,7 +60,7 @@
       <file leaf-file-name="config.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MoocPlatform/Conf/config.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3927273">
+            <state vertical-scroll-proportion="0.0">
               <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
               <folding>
                 <marker date="1468147172962" expanded="true" signature="456:474" placeholder="//..." />
@@ -685,7 +676,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MoocPlatform/Conf/config.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3927273">
+        <state vertical-scroll-proportion="0.0">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding>
             <marker date="1468147172962" expanded="true" signature="456:474" placeholder="//..." />
