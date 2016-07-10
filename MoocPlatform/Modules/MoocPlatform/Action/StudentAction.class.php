@@ -34,15 +34,36 @@ class StudentAction extends Action {
         $stu = session('student');
         $stuID = $stu['StuID'];
 
-        $couStu = M('coursestudent')->where(array("StudentID" => $stuID))->select();
-        //$this->couStu = $couStu;
-
         $courses = array();
-        foreach ($couStu as $key=>$value) {
-            $courses[$key] = M('Course')->where('CourseID = %d', $value['CourseID'])->find();
+        /**
+         * 单人加入的课程ID
+         */
+        $couStu = M('coursestudent')->where(array("StudentID" => $stuID))->select();
+
+        // 查询所有课程名字
+        $courses = array();
+        $index = 0;
+        foreach ($couStu as $value) {
+            $courses[$index] = M('Course')->where('CourseID = %d', $value['CourseID'])->find();
+            $index++;
         }
+
+        /**
+         * 团队加入的课程ID
+         */
+        $groupStu = M('groupstu')->where("StudentID = %d AND JoinStatus = 1", $stuID)->select();
+        foreach ($groupStu as $value) {
+            $tmpCourseIDs = M('groupcourse')->where('GroupID = %d', $value['GroupID'])->select();
+
+            foreach ($tmpCourseIDs as $v) {
+                $courses[$index] = M('Course')->where('CourseID = %d', $v['CourseID'])->find();
+                $courses[$index]['CourseGroupID'] = $v['GroupID'];
+                $index++;
+            }
+        }
+        //dump($courses);
         $this->courses = $courses;
-        
+
         $this->display('Student/courseinfo');        
     }
     
@@ -69,13 +90,13 @@ class StudentAction extends Action {
      * 课程资源界面
      */
     public function resource() {
-
         if (I('CourseID') == '')
         {
             $CourseID = session('selectedCourseID');
         } else {
             $CourseID = I('CourseID');
             session('selectedCourseID', $CourseID);
+            session('CourseGroupID', I('CourseGroupID'));   // 如果是团队课程则记录GroupID
         }
 
         $kejianCount = M('Resource')->where('ResKindID=1 AND CourseID=%d', $CourseID)->count();
@@ -149,20 +170,25 @@ class StudentAction extends Action {
         // 判断作业是否结束
         if ( (strtotime("now") >= strtotime($homework['StartDate']))
             and (strtotime("now") <= strtotime($homework['EndDate'])) ) {
-            $this->isOutdate = 1;
-        } else {
             $this->isOutdate = 0;
+        } else {
+            $this->isOutdate = 1;
         }
-            
+
+        // 判断是否是团队作业组长
+        $this->isGroupHomeworkLeader = 0;
+        $courseGroupPrinID = M('learninggroup')->where('GroupID = %d', session('CourseGroupID'))->find()['PrincipalID'];
+        if ($homework['isGroupHw'] == 1 && $courseGroupPrinID == $stuID) {
+            $this->isGroupHomeworkLeader = 1;
+        }
         
         $condition['StuID'] = $stuID;
         $condition['HwID'] = I('HwID');
         $hwstu = M('Hwstu')->where($condition)->find();
         $this->hwstu = $hwstu;
         //p($hwstu);
-
         session('selectedHwstuID', $hwstu['ID']);
-
+        
         //p(session('selectedHwstuID'));
         
         // 获得已上传附件
