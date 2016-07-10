@@ -35,6 +35,9 @@ Class ChatAction extends VerifyLoginAction
         $this->teacher = $teacher;
         $this->course = $courseID;
 
+
+        //p($teacher);
+
         $com_show = M('com_show')->where(array('UserID' => $id, 'type' => $type))->find();
         if (empty($com_show)) {
             $data = array(
@@ -51,10 +54,9 @@ Class ChatAction extends VerifyLoginAction
             M('com_show')->save($data);
         }
 
-        if($type == 0){
+        if ($type == 0) {
             $this->display();
-        }
-        else{
+        } else {
             $this->display('Teacher/teaChat');
         }
 
@@ -67,9 +69,28 @@ Class ChatAction extends VerifyLoginAction
         $type = I('type');
         $id = I('id');
         $courseID = I('courseID');
+
         $time = M('com_show')->where(array('UserID' => $id, 'type' => $type))->find();
 
-        $msg = D('ChatMsg')->getAll(array('Times' => array('gt', $time['showTime']), 'UserID' => array('neq', $id), 'CourseID' => $courseID));
+//        $condition1 = array(
+//            'UserID' => array('neq', $id),
+//            'type'   => array('neq',$type),
+//            '_logic' => 'or',
+//        );
+//        $condition = array(
+//            '_complex' => $condition1,
+//            'Times' => array('gt', $time['showTime']),
+//            'CourseID' => $courseID,
+//        );
+
+        $condition = array(
+            'UserID' => array('neq', $id),
+            'type' => array('neq', $type),
+            'Times' => array('gt', $time['showTime']),
+        );
+
+
+        $msg = D('ChatMsg')->getAll($condition);
 
         if (!empty($msg)) {
             $data = array(

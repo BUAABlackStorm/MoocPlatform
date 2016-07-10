@@ -154,7 +154,7 @@
         </header>
         <div class="profile-name" align="center">
             <?php $student = session('student');?>
-            <span>{:$student['StuName'] }</span>
+            <span>{:$student['StuName']}</span>
         </div>
         <div class="profile-name" align="center">
             <span>{:$student['StuID']}</span>
@@ -187,11 +187,10 @@
                         <input type="hidden" name="courseID" value="{:$course}"/>
                         <div class="panel-body" id="main_panel" style="min-height: 590px; max-height: 590px; overflow-y: scroll;">
                             <ul id="main_list">
-
                                 <foreach name="all" item="v">
                                     <!--学生发言-->
-                                    <if condition="$v['type'] eq 0">
-                                        <if condition="$v['UserID'] eq $id">
+                                    <if condition=" $v['type'] eq 0">
+                                        <if condition=" $v['UserID'] eq $id">
                                             <li>
                                                 <!-- right -->
                                                 <div class="receiver">
@@ -224,6 +223,21 @@
 
                                         <!--老师发言-->
                                         <else/>
+                                        <if condition=" $v['UserID'] eq $id">
+                                            <li>
+                                                <!-- right -->
+                                                <div class="receiver">
+                                                    <div>
+                                                        <span><span>{:date("Y-m-d H:i:s", $v['Times'])} &nbsp;</span>{$v.teacher.TeaName}</span>
+                                                    </div>
+                                                    <br>
+                                                    <div>
+                                                        <div class="right_triangle"></div>
+                                                        <span>{$v.Content}</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <else/>
                                             <li>
                                                 <!-- left -->
                                                 <div class="teacher">
@@ -238,6 +252,7 @@
                                                     </div>
                                                 </div>
                                             </li>
+                                        </if>
                                     </if>
 
                                 </foreach>
@@ -362,7 +377,7 @@
             },
             dataType: "json",
         });
-        setTimeout(fresh, 3000);
+        setTimeout(fresh, 2000);
     }
 
 
@@ -400,7 +415,6 @@
             //学生
             if (data[v]['type'] == 0) {
 
-
                 //学生本人发言
                 if (data[v]['UserID'] == id) {
                     $('#main_list').append("<li>" +
@@ -422,7 +436,7 @@
                     $('#main_list').append("<li>" +
                             "<div class='sender'>" +
                             "<div>" +
-                            "<span>" + data[v]['student']['StuName'] + "<span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span></span>" +
+                            "<span>" + data[v]['student']['StuName'] + "&nbsp;<span>" + unix_to_datetime(data[v]['Times']) + "</span></span>" +
                             "</div>" +
                             "<br>" +
                             "<div>" +
@@ -472,7 +486,7 @@
                     $('#main_list').append("<li>" +
                             "<div class='teacher'>" +
                             "<div>" +
-                            "<span>" + data[v]['teacher']['TeaName'] + "<span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span></span>" +
+                            "<span>" + data[v]['teacher']['TeaName'] + "&nbsp;<span>" + unix_to_datetime(data[v]['Times']) + "</span></span>" +
                             "</div>" +
                             "<br>" +
                             "<div>" +
@@ -484,7 +498,7 @@
                     $('#teacher_list').append("<li>" +
                             "<div class='teacher'>" +
                             "<div>" +
-                            "<span>" + data[v]['teacher']['TeaName'] + " <span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span></span>" +
+                            "<span>" + data[v]['teacher']['TeaName'] + "&nbsp;<span>" + unix_to_datetime(data[v]['Times']) + "</span></span>" +
                             "</div>" +
                             "<br>" +
                             "<div>" +
@@ -527,7 +541,7 @@
             $('#main_list').append("<li>" +
                     "<div class='receiver'>" +
                     "<div>" +
-                    "<span><span>" + unix_to_datetime(timestamp/1000) + "&nbsp;</span>" + "{:$student['StuName']}" + "</span>" +
+                    "<span><span>" + unix_to_datetime(timestamp/1000) + "&nbsp;</span>" + "{:$teacher['TeaName']}" + "</span>" +
                     "</div>" +
                     "<br>" +
                     "<div>" +

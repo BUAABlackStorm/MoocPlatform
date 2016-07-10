@@ -1,25 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>讨论区</title>
-
-    <script src="__PUBLIC__/js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
-    <script src="__PUBLIC__/js/jquery-migrate-1.2.1.min.js"></script> <!--  jQuery Migrate Plugin -->
-    <script src="__PUBLIC__/js/jquery.uploadify.min.js"></script>
-
-    <script src="__PUBLIC__/js/bootstrap.min.js"></script>
-    <script src="__PUBLIC__/js/templatemo-script.js"></script>
-
-    <!-- Templatemo Script -->
-    <meta name="description" content="">
-    <meta name="author" content="templatemo">
-    <link href="__PUBLIC__/css/font-awesome.min.css" rel="stylesheet">
-    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
-    <link href="__PUBLIC__/css/templatemo-style.css" rel="stylesheet">
-    <link href="__PUBLIC__/css/uploadify.css" rel="stylesheet">
     <style type="text/css">
         #main {
             padding-bottom: 50px;
@@ -33,6 +14,29 @@
             clear: both;
         }
     </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>讨论区</title>
+    <meta name="description" content="">
+    <meta name="author" content="templatemo">
+    <!--
+        Visual Admin Template
+        http://www.templatemo.com/preview/templatemo_455_visual_admin
+    -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet'
+          type='text/css'>
+    <link href="__PUBLIC__/css/font-awesome.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/jqvmap/jqvmap.css" media="screen" rel="stylesheet" type="text/css"/>
+    <link href="__PUBLIC__/css/templatemo-style.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
     <style>
         /* Teacher */
         .teacher {
@@ -136,6 +140,7 @@
         }
 
     </style>
+
 </head>
 <body>
 <!-- Left column -->
@@ -144,40 +149,32 @@
         <header class="templatemo-site-header">
             <div align="center"><img src="__PUBLIC__/images/person.jpg" class="img-circle" height="50" width="50">
 
-                <h2>教师用户</h2>
+                <h2>学生用户</h2>
             </div>
         </header>
-
         <div class="profile-name" align="center">
-            <span>{:session('teacher')['TeaName']}</span>
-            <br>
+            <?php $student = session('student');?>
+            <span>{:$student['StuName'] }</span>
         </div>
-
         <div class="profile-name" align="center">
-            <span>{:session('teacher')['TeaID']}</span>
-            <br>
-        </div>
-
-
+            <span>{:$student['StuID']}</span>
+            <br/>
+        </div><!--$Student Name-->
         <div class="mobile-menu-icon">
             <i class="fa fa-bars"></i>
         </div>
         <nav class="templatemo-left-nav">
             <ul>
-                <li><a href="{:U(GROUP_NAME.'/Teacher/index')}"><i class="fa fa-home fa-fw"></i>课程管理</a></li>
-                <li><a href="{:U(GROUP_NAME.'/Teacher/homework_index')}"><i class="fa fa-bar-chart fa-fw"></i>作业管理</a>
-                </li>
-                <li><a href="{:U(GROUP_NAME.'/Teacher/group')}"><i class="fa fa-bar-chart fa-fw"></i>团队管理</a></li>
-                <li>
-                    <a href="{:U(GROUP_NAME.'/Chat/chat',array('courseID' => session('teacher_selected_course')['CourseID'] ))}"
-                       class="active"><i class="fa fa-bar-chart fa-fw"></i>在线聊天</a></li>
-                <li><a href="{:U(GROUP_NAME.'/Teacher/personal_info')}"><i class="fa fa-bar-chart fa-fw"></i>个人信息</a>
-                </li>
-                <li><a href="{:U(GROUP_NAME.'/LoginAndRegister/Logout')}"><i class="fa fa-bar-chart fa-fw"></i>登陆注销</a>
-                </li>
+                <li><a href="{:U(GROUP_NAME.'/Student/studentinfo')}"><i class="fa fa-home fa-fw"></i>个人资料</a></li>
+                <li><a href="{:U(GROUP_NAME.'/Student/courseinfo')}"><i class="fa fa-database fa-fw"></i>课程信息</a></li>
+                <li><a href="{:U(GROUP_NAME.'/Student/resource')}"><i class="fa fa-map-marker fa-fw"></i>资源</a></li>
+                <li><a href="{:U(GROUP_NAME.'/Student/homework')}"><i class="fa fa-users fa-fw"></i>提交作业</a></li>
+                <li><a href="" class="active"><i class="fa fa-map-marker fa-fw"></i>讨论区</a></li>
+                <li><a href="{:U(GROUP_NAME.'/LoginAndRegister/Logout')}"><i class="fa fa-eject fa-fw"></i>退出</a></li>
             </ul>
         </nav>
     </div>
+    <!-- Main content -->
     <div class="templatemo-content col-1 light-gray-bg">
         <div class="container">
             <div class="row">
@@ -188,13 +185,12 @@
                             <h3 class="panel-title">讨论区</h3>
                         </div>
                         <input type="hidden" name="courseID" value="{:$course}"/>
-                        <div class="panel-body" id="main_panel"
-                             style="min-height: 590px; max-height: 590px; overflow-y: scroll;">
+                        <div class="panel-body" id="main_panel" style="min-height: 590px; max-height: 590px; overflow-y: scroll;">
                             <ul id="main_list">
                                 <foreach name="all" item="v">
                                     <!--学生发言-->
-                                    <if condition=" $v['type'] eq 0">
-                                        <if condition=" $v['UserID'] eq $id">
+                                    <if condition="$v['type'] eq 0">
+                                        <if condition="$v['UserID'] eq $id">
                                             <li>
                                                 <!-- right -->
                                                 <div class="receiver">
@@ -227,21 +223,6 @@
 
                                         <!--老师发言-->
                                         <else/>
-                                        <if condition=" $v['UserID'] eq $id">
-                                            <li>
-                                                <!-- right -->
-                                                <div class="receiver">
-                                                    <div>
-                                                        <span><span>{:date("Y-m-d H:i:s", $v['Times'])} &nbsp;</span>{$v.teacher.TeaName}</span>
-                                                    </div>
-                                                    <br>
-                                                    <div>
-                                                        <div class="right_triangle"></div>
-                                                        <span>{$v.Content}</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <else/>
                                             <li>
                                                 <!-- left -->
                                                 <div class="teacher">
@@ -256,7 +237,6 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                        </if>
                                     </if>
 
                                 </foreach>
@@ -270,8 +250,7 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">教师回复汇总</h3>
                         </div>
-                        <div class="panel-body" id="tea_panel"
-                             style="min-height: 590px; max-height: 590px; overflow-y: scroll;">
+                        <div class="panel-body" id="tea_panel" style="min-height: 590px; max-height: 590px; overflow-y: scroll;">
                             <ul id="teacher_list">
                                 <foreach name="teacher" item="v">
 
@@ -308,6 +287,7 @@
                                     </if>
                                     </if>
 
+
                                 </foreach>
                             </ul>
                         </div>
@@ -325,11 +305,11 @@
                         <div class="panel-body">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="msg" name="msg" placeholder="请输入消息"/>
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button" onclick="publish({$id},{$type})">
-                      发送
-                  </button>
-                </span>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" onclick="publish({$id},{$type})">
+                                            发送
+                                        </button>
+                                    </span>
                             </div>
 
                         </div>
@@ -339,7 +319,6 @@
 
         </div>
     </div>
-
 </div>
 <!-- JS -->
 <script src="__PUBLIC__/js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
@@ -365,6 +344,7 @@
     function fresh() {
         var id = "{$id}";
         var type = "{$type}";
+
 
         //alert(courseID.val());
 
@@ -441,7 +421,7 @@
                     $('#main_list').append("<li>" +
                             "<div class='sender'>" +
                             "<div>" +
-                            "<span>" + data[v]['student']['StuName'] + "&nbsp;<span>" + unix_to_datetime(data[v]['Times']) + "</span></span>" +
+                            "<span>" + data[v]['student']['StuName'] + "<span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span></span>" +
                             "</div>" +
                             "<br>" +
                             "<div>" +
@@ -457,37 +437,39 @@
 
             //老师
             else {
-                if (data[v]['UserID'] == id) {
-                    //本人发言
-                    $('#main_list').append("<li>" +
-                            "<div class='receiver'>" +
-                            "<div>" +
-                            "<span><span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span>" + data[v]['teacher']['TeaName'] + "</span>" +
-                            "</div>" +
-                            "<br>" +
-                            "<div>" +
-                            "<div class='right_triangle'></div>" +
-                            "<span>" + data[v]['Content'] + "</span>" +
-                            "</div> </div> </li>"
-                    );
+//                if (data[v]['UserID'] == id) {
+//
+//                    //本人发言
+//                    $('#main_list').append("<li>" +
+//                            "<div class='receiver'>" +
+//                            "<div>" +
+//                            "<span><span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span>" + data[v]['teacher']['TeaName'] + "</span>" +
+//                            "</div>" +
+//                            "<br>" +
+//                            "<div>" +
+//                            "<div class='right_triangle'></div>" +
+//                            "<span>" + data[v]['Content'] + "</span>" +
+//                            "</div> </div> </li>"
+//                    );
+//
+//                    $('#teacher_list').append("<li>" +
+//                            "<div class='receiver'>" +
+//                            "<div>" +
+//                            "<span><span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span>" + data[v]['teacher']['TeaName'] + "</span>" +
+//                            "</div>" +
+//                            "<br>" +
+//                            "<div>" +
+//                            "<div class='right_triangle'></div>" +
+//                            "<span>" + data[v]['Content'] + "</span>" +
+//                            "</div></div> </li>"
+//                    );
+//                    div.scrollTop = div.scrollHeight;
+//                    div2.scollTop = div2.scrollHeight;
+//
+//                }
+//                //他人发言
+//                else {
 
-                    $('#teacher_list').append("<li>" +
-                            "<div class='receiver'>" +
-                            "<div>" +
-                            "<span><span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span>" + data[v]['teacher']['TeaName'] + "</span>" +
-                            "</div>" +
-                            "<br>" +
-                            "<div>" +
-                            "<div class='right_triangle'></div>" +
-                            "<span>" + data[v]['Content'] + "</span>" +
-                            "</div></div> </li>"
-                    );
-                    div.scrollTop = div.scrollHeight;
-                    div2.scollTop = div2.scrollHeight;
-
-                }
-                //他人发言
-                else {
                     $('#main_list').append("<li>" +
                             "<div class='teacher'>" +
                             "<div>" +
@@ -513,9 +495,8 @@
                     );
                     div.scrollTop = div.scrollHeight;
                     div2.scollTop = div2.scrollHeight;
-                }
+//                }
             }
-            //$('#chat').append("<p>" + data[0]['Content'] + "</p>");
         }
 
 
@@ -546,7 +527,7 @@
             $('#main_list').append("<li>" +
                     "<div class='receiver'>" +
                     "<div>" +
-                    "<span><span>" + unix_to_datetime(timestamp/1000) + "&nbsp;</span>" + "{:session('teacher')['TeaName']}" + "</span>" +
+                    "<span><span>" + unix_to_datetime(timestamp/1000) + "&nbsp;</span>" + "{:$teacher['TeaName']}" + "</span>" +
                     "</div>" +
                     "<br>" +
                     "<div>" +
@@ -559,7 +540,7 @@
             $('#teacher_list').append("<li>" +
                     "<div class='receiver'>" +
                     "<div>" +
-                    "<span><span>" + unix_to_datetime(timestamp/1000) + "&nbsp;</span>" + "{:session('teacher')['TeaName']}" + "</span>" +
+                    "<span><span>" + unix_to_datetime(timestamp/1000) + "&nbsp;</span>" + "{:$teacher['TeaName']}" + "</span>" +
                     "</div>" +
                     "<br>" +
                     "<div>" +
@@ -594,5 +575,6 @@
 
 
 </script>
+
 </body>
 </html>
