@@ -197,6 +197,7 @@
                                                     <div>
                                                         <span><span>{:date("Y-m-d H:i:s", $v['Times'])} &nbsp;</span>{$v.student.StuName}</span>
                                                     </div>
+                                                    <br>
                                                     <div>
                                                         <div class="right_triangle"></div>
                                                         <span>{$v.Content}</span>
@@ -210,6 +211,7 @@
                                                     <div>
                                                         <span>{$v.student.StuName}<span>&nbsp;{:date("Y-m-d H:i:s", $v['Times'])}</span></span>
                                                     </div>
+                                                    <br>
                                                     <div>
                                                         <div class="left_triangle">
                                                         </div>
@@ -228,6 +230,7 @@
                                                     <div>
                                                         <span><span>{:date("Y-m-d H:i:s", $v['Times'])} &nbsp;</span>{$v.teacher.TeaName}</span>
                                                     </div>
+                                                    <br>
                                                     <div>
                                                         <div class="right_triangle"></div>
                                                         <span>{$v.Content}</span>
@@ -241,6 +244,7 @@
                                                     <div>
                                                         <span>{$v.teacher.TeaName}<span>&nbsp;{:date("Y-m-d H:i:s", $v['Times'])}</span></span>
                                                     </div>
+                                                    <br>
                                                     <div>
                                                         <div class="teacher_left_triangle">
                                                         </div>
@@ -274,6 +278,7 @@
                                                 <div>
                                                     <span><span>{:date("Y-m-d H:i:s", $v['Times'])} &nbsp;</span>{$v.teacher.TeaName}</span>
                                                 </div>
+                                                <br>
                                                 <div>
                                                     <div class="right_triangle"></div>
                                                     <span>{$v.Content}</span>
@@ -287,6 +292,7 @@
                                                 <div>
                                                     <span>{$v.teacher.TeaName}<span>&nbsp;{:date("Y-m-d H:i:s", $v['Times'])}</span></span>
                                                 </div>
+                                                <br>
                                                 <div>
                                                     <div class="teacher_left_triangle">
                                                     </div>
@@ -416,6 +422,7 @@
                             "<div>" +
                             "<span><span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span>" + data[v]['student']['StuName'] + "</span>" +
                             "</div>" +
+                            "<br>" +
                             "<div>" +
                             "<div class='right_triangle'></div>" +
                             "<span>" + data[v]['Content'] + "</span>" +
@@ -431,6 +438,7 @@
                             "<div>" +
                             "<span>" + data[v]['student']['StuName'] + "<span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span></span>" +
                             "</div>" +
+                            "<br>" +
                             "<div>" +
                             "<div class='left_triangle'></div>" +
                             "<span>" + data[v]['Content'] + "</span>" +
@@ -451,6 +459,7 @@
                             "<div>" +
                             "<span><span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span>" + data[v]['teacher']['TeaName'] + "</span>" +
                             "</div>" +
+                            "<br>" +
                             "<div>" +
                             "<div class='right_triangle'></div>" +
                             "<span>" + data[v]['Content'] + "</span>" +
@@ -462,6 +471,7 @@
                             "<div>" +
                             "<span><span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span>" + data[v]['teacher']['TeaName'] + "</span>" +
                             "</div>" +
+                            "<br>" +
                             "<div>" +
                             "<div class='right_triangle'></div>" +
                             "<span>" + data[v]['Content'] + "</span>" +
@@ -478,6 +488,7 @@
                             "<div>" +
                             "<span>" + data[v]['teacher']['TeaName'] + "<span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span></span>" +
                             "</div>" +
+                            "<br>" +
                             "<div>" +
                             "<div class='teacher_left_triangle'></div>" +
                             "<span>" + data[v]['Content'] + "</span>" +
@@ -489,6 +500,7 @@
                             "<div>" +
                             "<span>" + data[v]['teacher']['TeaName'] + " <span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span></span>" +
                             "</div>" +
+                            "<br>" +
                             "<div>" +
                             "<div class='teacher_left_triangle'></div>" +
                             "<span>" + data[v]['Content'] + "</span>" +
@@ -516,6 +528,7 @@
                     "<div>" +
                     "<span><span>" + unix_to_datetime(timestamp/1000) + "&nbsp;</span>" + "{:$student['StuName']}" + "</span>" +
                     "</div>" +
+                    "<br>" +
                     "<div>" +
                     "<div class='right_triangle'></div>" +
                     "<span>" + msg + "</span>" +
@@ -530,6 +543,7 @@
                     "<div>" +
                     "<span><span>" + unix_to_datetime(timestamp/1000) + "&nbsp;</span>" + "{:$student['StuName']}" + "</span>" +
                     "</div>" +
+                    "<br>" +
                     "<div>" +
                     "<div class='right_triangle'></div>" +
                     "<span>" + msg + "</span>" +
@@ -542,6 +556,7 @@
                     "<div>" +
                     "<span><span>" + unix_to_datetime(timestamp/1000) + "&nbsp;</span>" + "{:$teacher['TeaName']}" + "</span>" +
                     "</div>" +
+                    "<br>" +
                     "<div>" +
                     "<div class='right_triangle'></div>" +
                     "<span>" + msg + "</span>" +
