@@ -105,7 +105,7 @@
                   <tr>
                    <td>
                    <input type="checkbox" class="del" name="id_array[]" value="{$r_t['ResID']}"></td>
-                   <td class="name">{$r_t['ResOriginName']}</td>
+                   <td class="name"><a href="__ONLINE_TEAHCER__/{$r_t['ResActualName']}">{$r_t['ResOriginName']}</a></td>
                    <td class="time">{$r_t['ReleaseTime']}</td>
                    <td class="size">{$r_t['FileSize']/1000}KB</td>
                   </tr>
@@ -150,36 +150,6 @@
     </div>
             </div>
 
-   
-
-<div class="modal fade" id="Assignment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">发布作业</h4>
-      </div>
-
-      <form action="__URL__/addHomework" method="post">
-        <div class="modal-body">
-          <div class="form-group">
-            <input type="text" required="required" class="form-control" name="homework_name" placeholder="作业标题"/>
-            开始时间:<input required="required"  type="date" class="form-control" name="start_time"/>
-            结束时间:<input required="required"  type="date" class="form-control" name="end_time"/>
-            <input type="checkbox" name="isGroup" id="isGroup"/>是否是团队项目
-            <textarea required="required"  class="form-control" name="require" placeholder="作业要求" rows="6"></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <input type="submit" class="btn btn-info" value="发布" />
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="关闭" />
-        </div>
-      </form>
-
-    </div>
-    </div>
-    </div>
-
  <script>
      var p1=0;
      var category = $('select[name = "category"]');
@@ -213,7 +183,7 @@
       if(key=="ResOriginName") {p1=i;}
      }
 
-       $("#appendant").append("<tr><td><input type='checkbox' class='del' name='id_array[]' value='"+data[p1]["ResID"]+"'></td><td>"+data[p1]["ResOriginName"]+"</td><td>"+data[p1]["ReleaseTime"]+"</td><td>"+data[p1]["FileSize"]/1000+"KB</td></tr>");
+       $("#appendant").append("<tr><td><input type='checkbox' class='del' name='id_array[]' value='"+data[p1]["ResID"]+"'></td><td><a href='__ONLINE_TEAHCER__/"+data[p1]["ResActualName"]+"'>"+data[p1]["ResOriginName"]+"</a></td><td>"+data[p1]["ReleaseTime"]+"</td><td>"+data[p1]["FileSize"]/1000+"KB</td></tr>");
     }
   }
 }
@@ -226,4 +196,3 @@
          if(p==false) alert('请至少选择一个下载或删除项目！');
      })
   </script>
-  </body>
