@@ -31,16 +31,34 @@ class TeacherAction extends VerifyLoginAction
             $group[$group_count++]=$db
                 ->where('groupcourse.GroupID='.$id['GroupID'])
                 ->join('learninggroup ON learninggroup.GroupID=groupcourse.GroupID')
-                ->join('groupstu ON groupstu.GroupID=groupcourse.GroupID')
-                ->join('student ON student.StuID=groupstu.StudentID')
-                ->Field('learninggroup.GroupID,groupcourse.ApplyStatus,learninggroup.GroupName,learninggroup.PrincipalID,groupstu.StudentID,student.StuName,student.Department,student.Class,student.Grade')
+                ->Field('learninggroup.GroupID,learninggroup.GroupName')
                 ->select();
-        }//dump(json_encode($group));
-        
+                 // ->join('groupstu ON groupstu.GroupID=groupcourse.GroupID')
+                // ->join('student ON student.StuID=groupstu.StudentID')
+                // ->Field('learninggroup.GroupID,groupcourse.ApplyStatus,learninggroup.GroupName,learninggroup.PrincipalID,groupstu.StudentID,student.StuName,student.Department,student.Class,student.Grade')
+        }//dump($group);
 
         $this->assign('group',$group);
         $this->display();
     }
+
+    public function ajaxGroup()
+    {
+        $db=M('groupcourse');
+        $group=array();
+        $group_count=0;
+
+        $group[$group_count++]=$db
+            ->where('groupcourse.GroupID='.I('param.group_id'))
+            ->join('learninggroup ON learninggroup.GroupID=groupcourse.GroupID')
+            ->join('groupstu ON groupstu.GroupID=groupcourse.GroupID')
+            ->join('student ON student.StuID=groupstu.StudentID')
+            ->Field('learninggroup.GroupID,groupcourse.ApplyStatus,learninggroup.GroupName,learninggroup.PrincipalID,groupstu.StudentID,student.StuName,student.Department,student.Class,student.Grade')
+            ->select();//dump(($group[0]));
+
+        $this->ajaxreturn($group[0]);
+    }
+
 
 	public function personal_info()
 	{
@@ -151,6 +169,7 @@ class TeacherAction extends VerifyLoginAction
 
 		$config = array(
 				'maxSize'    =>    3145728,
+                'savePath'   =>    './MoocPlatform/Modules/MoocPlatform/Uploads/Teacher/',
 				'saveRule'   =>    'uniqid',
 				'allowExts'  =>    array('jpg', 'png', 'jpeg','doc','docx','xls','xlsx','ppt','pptx','txt'),
 				'autoSub'    =>    true,
@@ -158,16 +177,7 @@ class TeacherAction extends VerifyLoginAction
 				'dateFormat'    =>    'Y-m-d',
 		);
 
-		//若在本地运行
-		if($_SERVER['HTTP_HOST'] == "localhost"){
-			$config['savePath'] = './MoocPlatform/Modules/MoocPlatform/Uploads/Teacher/';
-			$upload = new UploadFile($config);
-		}
-		//服务器端运行
-		else{
-			$config['savePath'] = './public/Uploads';
-			$upload = new UploadFile($config,'sae');
-		}
+		$upload = new UploadFile($config);
 
 		$upload->upload();
 		$info= $upload->getUploadFileInfo();
@@ -237,20 +247,10 @@ class TeacherAction extends VerifyLoginAction
     	else
     	{
     		$res=$db
-			->where('resource.ResID='.$id_array[0])
-			->select();
+    			->where('resource.ResID='.$id_array[0])
+    			->select();
 
-			//若在本地运行
-			if($_SERVER['HTTP_HOST'] == "localhost"){
-				Http::download(($res[0]['ResPath']).($res[0]['ResActualName']),urlencode($res[0]['ResOriginName']));
-			}
-			//服务器端运行
-			else{
-				$stor = new SaeStorage();
-				$url = $stor->getUrl('public', $res[0]['ResPath'] . $res[0]['ResActualName']);
-				Header("HTTP/1.1 303 See Other");
-				Header("Location: $url");
-			}
+			Http::download(($res[0]['ResPath']).($res[0]['ResActualName']),urlencode($res[0]['ResOriginName']));
 		}
     }
 
@@ -264,16 +264,7 @@ class TeacherAction extends VerifyLoginAction
     	{
     		$res=$db->where('resource.ResID='.$id)->select();
 
-			//若在本地运行
-			if($_SERVER['HTTP_HOST'] == "localhost"){
-				//删除服务器上的文件
-				unlink(($res[0]['ResPath']).($res[0]['ResActualName']));
-			}
-			//服务器端运行
-			else{
-				$stor = new SaeStorage();
-				$stor->delete('public', $res[0]['ResPath'] . $res[0]['ResActualName']);
-			}
+			unlink(($res[0]['ResPath']).($res[0]['ResActualName']));
 
     		//删除数据库表项
     		$db->where('resource.ResID='.$id)->delete();

@@ -63,28 +63,32 @@
                 <h2 style="font-family:幼圆;margin:10px;">学生团队管理</h2>
                   <form action="__URL__/" method="post">
                     <div class="col-lg-6 col-md-6 form-group">
-                      <label class="control-label templatemo-block">团队名称</label>
-                      <label class="control-label templatemo-block">负责人:PR</label>
-                      <select class="form-control" onchange="changeCate();">
+                      <label class="control-label templatemo-block" >团队名称</label>
+                      <select class="form-control" onchange="changeCate();" name="groupID" >
                         <option value="0">请选择小组</option>
                         <foreach name="group" item="g">
                           <option value="{$g[0]['GroupID']}">{$g[0]['GroupName']}</option>
                         </foreach>                      
                       </select>
                     </div>
-                    <div class="col-lg-6 col-md-6">
-                      <label class="control-label templatemo-block" style="margin:10px 0 0 0">教师审核结果</label>
-                      <br />
+                    <div class="col-lg-6 col-md-6" id="show">
+                      <label class="control-label templatemo-block">教师审核结果</label>
                       <input type="submit" class="btn btn-success" value="同意">
                       <input type="submit" class="btn btn-warning" value="不同意">
+                     
+                    </div>
+                    <div class="col-lg-6 col-md-6" id="noshow" style="display:none;">
+                      <h1 id="stat1" style="display:none;">已同意</h1>
+                       <h1 id="stat2" style="display:none;">已拒绝</h1>
                     </div>
                     </form>
               <thead>
                 <tr>
                   <td>学号</td>
                   <td>姓名</td>
-                  <td>班级</td>
                   <td>院系</td>
+                  <td>班级</td>
+                  <td>年级</td>
                 </tr>
                 </thead>
                 <tbody id="appendant">
@@ -104,16 +108,15 @@
       aim.val(name);
     });
     var p1 = 0;
-    var category = $('select[name = "category"]');
-
+    var p2 =0;
+    var groupID = $('select[name = "groupID"]');
     function changeCate() {
-
-      var resUrl = '__URL__/ajaxCourse/course_id/}';
+      var resUrl = '__URL__/ajaxGroup/group_id/}';
       $.ajax({
         type: 'POST',
         url: resUrl,
         data: {
-          category: category.val(),
+          group_id: groupID.val()
         },
         success: function(data) {
           load(data);
@@ -124,17 +127,48 @@
     }
     function load(data) {
       $("#appendant").empty();
-        for (var i = 0, l = data.length; i < l; i++) {
-          p1 = 0;
-          for (var key in data[i]) {
-            if (key == "ResOriginName") {
-              p1 = i;
-            }
-          }
-          $("#appendant").append("");
-        }
+      p2=0;
+      alert(data[0]["GroupID"]);
+      for(var i=0,l=data.length;i<l;i++){
+        if(data[i]["StudentID"]==data[i]["PrincipalID"])
+          p2=i;
       }
-    
+         for (var i = 0, l = data.length; i < l; i++) {
+           p1 = 0;
+           if(i==p2)
+           {
+             $("#appendant").append("<tr style='font-weight:bold;'><td>"+data[p2]["StudentID"]+"</td><td>"+data[p2]["StuName"]+"</td><td>"+data[p2]["Department"]+"</td><td>"+data[p2]["Class"]+"</td><td>"+data[p2]["Grade"]+"</td></tr>");
+           }
+           else{
+           for (var key in data[i]) {
+             if (key == "GroupID") {
+             p1 = i;
+             }
+           }
+           $("#appendant").append("<tr><td>"+data[p1]["StudentID"]+"</td><td>"+data[p1]["StuName"]+"</td><td>"+data[p1]["Department"]+"</td><td>"+data[p1]["Class"]+"</td><td>"+data[p1]["Grade"]+"</td></tr>");
+         }
+      }
+      if(data[p2]["ApplyStatus"]==0){
+          $("#show").show();
+          $("#noshow").hide();
+          $("#stat1").hide();
+          $("#stat2").hide();
+      }
+      if(data[p2]["ApplyStatus"]==1){
+          $("#show").hide();
+          $("#noshow").show();
+          $("#stat1").show();
+          $("#stat2").hide();
+      }
+      if(data[p2]["ApplyStatus"]==2){
+          $("#show").hide();
+          $("#noshow").show();
+          $("#stat1").hide();
+          $("#stat2").show();
+      }
+
+
+    }
   </script>
   </body>
 </html>
