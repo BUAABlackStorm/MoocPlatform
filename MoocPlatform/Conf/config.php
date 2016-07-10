@@ -14,11 +14,11 @@ return array(
     'DB_NAME' => 'moocdb',
     'DB_PREFIX' => '',
 
-    // 'DB_HOST' => 'localhost',
-    // 'DB_USER' => 'root',
-    // 'DB_PWD' => '8304',
-    // 'DB_NAME' => 'moocdb',
-    // 'DB_PREFIX' => '',
+    //'DB_HOST' => 'localhost',
+    //'DB_USER' => 'root',
+    //'DB_PWD' => '8304',
+    //'DB_NAME' => 'moocdb',
+    //'DB_PREFIX' => '',
 
 
     //点语法默认解析
