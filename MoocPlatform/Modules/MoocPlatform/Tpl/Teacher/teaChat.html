@@ -201,6 +201,7 @@
                                                     <div>
                                                         <span><span>{:date("Y-m-d H:i:s", $v['Times'])} &nbsp;</span>{$v.student.StuName}</span>
                                                     </div>
+                                                    <br>
                                                     <div>
                                                         <div class="right_triangle"></div>
                                                         <span>{$v.Content}</span>
@@ -214,6 +215,7 @@
                                                     <div>
                                                         <span>{$v.student.StuName}<span>&nbsp;{:date("Y-m-d H:i:s", $v['Times'])}</span></span>
                                                     </div>
+                                                    <br>
                                                     <div>
                                                         <div class="left_triangle">
                                                         </div>
@@ -232,6 +234,7 @@
                                                     <div>
                                                         <span><span>{:date("Y-m-d H:i:s", $v['Times'])} &nbsp;</span>{$v.teacher.TeaName}</span>
                                                     </div>
+                                                    <br>
                                                     <div>
                                                         <div class="right_triangle"></div>
                                                         <span>{$v.Content}</span>
@@ -245,6 +248,7 @@
                                                     <div>
                                                         <span>{$v.teacher.TeaName}<span>&nbsp;{:date("Y-m-d H:i:s", $v['Times'])}</span></span>
                                                     </div>
+                                                    <br>
                                                     <div>
                                                         <div class="teacher_left_triangle">
                                                         </div>
@@ -279,6 +283,7 @@
                                                 <div>
                                                     <span><span>{:date("Y-m-d H:i:s", $v['Times'])} &nbsp;</span>{$v.teacher.TeaName}</span>
                                                 </div>
+                                                <br>
                                                 <div>
                                                     <div class="right_triangle"></div>
                                                     <span>{$v.Content}</span>
@@ -292,6 +297,7 @@
                                                 <div>
                                                     <span>{$v.teacher.TeaName}<span>&nbsp;{:date("Y-m-d H:i:s", $v['Times'])}</span></span>
                                                 </div>
+                                                <br>
                                                 <div>
                                                     <div class="teacher_left_triangle">
                                                     </div>
@@ -343,6 +349,7 @@
 <script type="text/javascript" src="__PUBLIC__/js/templatemo-script.js"></script>      <!-- Templatemo Script -->
 <script type="text/javascript">
 
+
     var div = document.getElementById("main_panel");
     var div2 = document.getElementById("tea_panel");
     var courseID = $('input[name = "courseID"]');
@@ -368,7 +375,7 @@
             data: {
                 id: id,
                 type: type,
-                courseID: courseID.val(),
+                courseID:courseID.val(),
             },
             success: function (data) {
                 loadMsg(data, id);
@@ -384,10 +391,10 @@
 
         var msg = $('input[name = "msg"]');
         var pUrl = "{:U(GROUP_NAME.'/Chat/publish')}";
-        if (msg.val() == "") {
+        if(msg.val() == ""){
             alert("请输入发送消息！");
-        } else {
-            publishMsg(msg.val(), type);
+        }else{
+            publishMsg(msg.val(),type);
             $.ajax({
                 type: 'POST',
                 url: pUrl,
@@ -395,7 +402,7 @@
                     id: id,
                     type: type,
                     msg: msg.val(),
-                    courseID: courseID.val(),
+                    courseID:courseID.val(),
                 },
                 success: function () {
                     //alert("发布成功");
@@ -407,7 +414,7 @@
     }
 
 
-    function loadMsg(data, id) {
+    function loadMsg(data,id) {
 
         for (var v in data) {
             //学生
@@ -420,6 +427,7 @@
                             "<div>" +
                             "<span><span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span>" + data[v]['student']['StuName'] + "</span>" +
                             "</div>" +
+                            "<br>" +
                             "<div>" +
                             "<div class='right_triangle'></div>" +
                             "<span>" + data[v]['Content'] + "</span>" +
@@ -435,6 +443,7 @@
                             "<div>" +
                             "<span>" + data[v]['student']['StuName'] + "<span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span></span>" +
                             "</div>" +
+                            "<br>" +
                             "<div>" +
                             "<div class='left_triangle'></div>" +
                             "<span>" + data[v]['Content'] + "</span>" +
@@ -455,6 +464,7 @@
                             "<div>" +
                             "<span><span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span>" + data[v]['teacher']['TeaName'] + "</span>" +
                             "</div>" +
+                            "<br>" +
                             "<div>" +
                             "<div class='right_triangle'></div>" +
                             "<span>" + data[v]['Content'] + "</span>" +
@@ -466,6 +476,7 @@
                             "<div>" +
                             "<span><span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span>" + data[v]['teacher']['TeaName'] + "</span>" +
                             "</div>" +
+                            "<br>" +
                             "<div>" +
                             "<div class='right_triangle'></div>" +
                             "<span>" + data[v]['Content'] + "</span>" +
@@ -482,6 +493,7 @@
                             "<div>" +
                             "<span>" + data[v]['teacher']['TeaName'] + "<span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span></span>" +
                             "</div>" +
+                            "<br>" +
                             "<div>" +
                             "<div class='teacher_left_triangle'></div>" +
                             "<span>" + data[v]['Content'] + "</span>" +
@@ -493,6 +505,7 @@
                             "<div>" +
                             "<span>" + data[v]['teacher']['TeaName'] + " <span>" + unix_to_datetime(data[v]['Times']) + "&nbsp;</span></span>" +
                             "</div>" +
+                            "<br>" +
                             "<div>" +
                             "<div class='teacher_left_triangle'></div>" +
                             "<span>" + data[v]['Content'] + "</span>" +
@@ -509,17 +522,18 @@
     }
 
 
-    function publishMsg(msg, type) {
+    function publishMsg(msg,type){
 
         var timestamp = new Date().getTime();
 
         //学生
-        if (type == 0) {
+        if(type == 0){
             $('#main_list').append("<li>" +
                     "<div class='receiver'>" +
                     "<div>" +
-                    "<span><span>" + unix_to_datetime(timestamp / 1000) + "&nbsp;</span>" + "{:$student['StuName']}" + "</span>" +
+                    "<span><span>" + unix_to_datetime(timestamp/1000) + "&nbsp;</span>" + "{:$student['StuName']}" + "</span>" +
                     "</div>" +
+                    "<br>" +
                     "<div>" +
                     "<div class='right_triangle'></div>" +
                     "<span>" + msg + "</span>" +
@@ -528,12 +542,13 @@
             div.scrollTop = div.scrollHeight;
         }
         //老师
-        else {
+        else{
             $('#main_list').append("<li>" +
                     "<div class='receiver'>" +
                     "<div>" +
-                    "<span><span>" + unix_to_datetime(timestamp / 1000) + "&nbsp;</span>" + "{:$student['StuName']}" + "</span>" +
+                    "<span><span>" + unix_to_datetime(timestamp/1000) + "&nbsp;</span>" + "{:$student['StuName']}" + "</span>" +
                     "</div>" +
+                    "<br>" +
                     "<div>" +
                     "<div class='right_triangle'></div>" +
                     "<span>" + msg + "</span>" +
@@ -544,8 +559,9 @@
             $('#teacher_list').append("<li>" +
                     "<div class='receiver'>" +
                     "<div>" +
-                    "<span><span>" + unix_to_datetime(timestamp / 1000) + "&nbsp;</span>" + "{:$teacher['TeaName']}" + "</span>" +
+                    "<span><span>" + unix_to_datetime(timestamp/1000) + "&nbsp;</span>" + "{:$teacher['TeaName']}" + "</span>" +
                     "</div>" +
+                    "<br>" +
                     "<div>" +
                     "<div class='right_triangle'></div>" +
                     "<span>" + msg + "</span>" +
@@ -575,6 +591,7 @@
     function add0(m) {
         return m < 10 ? '0' + m : m
     }
+
 
 </script>
 </body>
