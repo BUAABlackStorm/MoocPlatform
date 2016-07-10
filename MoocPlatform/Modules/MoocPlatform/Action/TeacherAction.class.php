@@ -15,10 +15,6 @@ class TeacherAction extends VerifyLoginAction
 						
 		$this->display();
 	}
-    public function test()
-    {
-        $this->display();
-    }
 
     public function group()
     {
