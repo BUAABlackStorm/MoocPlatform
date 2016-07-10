@@ -207,7 +207,6 @@ class TeacherAction extends VerifyLoginAction
 		);
 
 		$upload = new UploadFile($config);
-
 		$upload->upload();
 		$info= $upload->getUploadFileInfo();
 
@@ -240,8 +239,6 @@ class TeacherAction extends VerifyLoginAction
 				);
     			$db1->add($res);
     		}
-
-
     		$this->redirect('/Teacher/course/course_id/'.session('teacher_selected_course')['CourseID']);
 		}
     }
@@ -280,8 +277,6 @@ class TeacherAction extends VerifyLoginAction
     			->select();
 
             ob_clean();
-            //flush();
-
 			Http::download(($res[0]['ResPath']).($res[0]['ResActualName']),$res[0]['ResOriginName']);
 		}
     }
@@ -297,7 +292,6 @@ class TeacherAction extends VerifyLoginAction
     		$res=$db->where('resource.ResID='.$id)->select();
 
 			unlink(($res[0]['ResPath']).($res[0]['ResActualName']));
-
     		//删除数据库表项
     		$db->where('resource.ResID='.$id)->delete();
     	}
@@ -514,7 +508,6 @@ class TeacherAction extends VerifyLoginAction
     	$stuID=I('param.stuID');
     	$db=M('hwstu');
     	$resource;
-
     	if(""==$stuID)
     	{
 			$resource=$db
