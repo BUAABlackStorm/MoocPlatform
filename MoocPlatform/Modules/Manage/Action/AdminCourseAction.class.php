@@ -280,8 +280,23 @@ class AdminCourseAction extends Action{
     }
 
     public function getClassList(){
-        
-        //$this->ajaxReturn($data,'json');
+        $dep_id = $_POST['dep_id'];
+        $grade = $_POST['grade_id'];
+
+        $test = M();
+        $sql = 'SELECT depclass.Class FROM depclass WHERE Deptement = '.$dep_id.' AND Grade='.$grade;
+        $list = $test ->query($sql);
+
+        $this->ajaxReturn($list,'json');
+    }
+
+    public function getDepList(){
+
+        $test = M();
+        $sql = 'SELECT * FROM department';
+        $list = $test ->query($sql);
+
+        $this->ajaxReturn($list,'json');
     }
     
     public function connectStu(){
@@ -321,9 +336,9 @@ class AdminCourseAction extends Action{
     }
 
     public function getStu(){
-        $dep = $_POST['s1'];
-        $grade = $_POST['s2'];
-        $class = $_POST['s3'];
+        $dep = $_POST['dep_name'];
+        $grade = $_POST['grade_name'];
+        $class = $_POST['class_name'];
         $CourseID = $_POST['CourseID'];
 
         $test = M();
