@@ -82,9 +82,7 @@
 
                 <h3>作业要求:</h3>
                 <p>{$homework.Require}</p>
-
                 
-
                 <if condition="$hwstu.Score neq ''">
                     <h3>作业分数:</h3>
                     <p>{$hwstu.Score}</p>
@@ -122,7 +120,7 @@
                     <!--<button type="reset" class="templatemo-white-button">重新选择</button>-->
                 <!--</div> -->
             <!--</form>-->
-            <if condition="$isOutdate eq 1">
+            <if condition="($isOutdate eq 0) AND ($isGroupHomeworkLeader eq 1)">
                 <form accept-charset="utf-8" enctype="multipart/form-data" method="post" class="btn-group-form" action="{:U(GROUP_NAME.'/Student/upload')}">
                     <div id="queue"></div>
 

@@ -97,7 +97,7 @@
                                 <div id="workname"> {$cours.CourseName} </div>
                             </td>
                             <td>
-                                <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/resource\', array(\'CourseID\' => $cours[\'CourseID\']))}'" id="CourseID" class="btn btn-success">
+                                <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/resource\', array(\'CourseID\' => $cours[\'CourseID\'], \'CourseGroupID\' => $cours[\'CourseGroupID\']))}'" id="CourseID" class="btn btn-success">
                                     <!--
                                  <a href="{:U(GROUP_NAME.'/Student/resource', array('CourseID' => $cours['CourseID']))}">
                                 -->
