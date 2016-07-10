@@ -49,8 +49,8 @@
           <ul>
             <li><a href="__URL__/"><i class="fa fa-home fa-fw"></i>课程资源</a></li>
             <li><a href="__URL__/homework_index"><i class="fa fa-home fa-fw"></i>作业管理</a></li>
-            <li><a href="__URL__/group_class" class="active"><i class="fa fa-home fa-fw"></i>团队管理</a></li>
-            <li><a href="#"><i class="fa fa-bar-chart fa-fw"></i>在线聊天</a></li>
+            <li><a href="__URL__/group" class="active"><i class="fa fa-home fa-fw"></i>团队管理</a></li>
+            <li><a href="__URL__/teaChat"><i class="fa fa-bar-chart fa-fw"></i>在线聊天</a></li>
             <li><a href="__URL__/personal_info"><i class="fa fa-bar-chart fa-fw"></i>个人信息</a></li>
             <li><a href="{:U(GROUP_NAME.'/LoginAndRegister/Logout')}"><i class="fa fa-bar-chart fa-fw"></i>登陆注销</a></li>
           </ul>  
@@ -66,8 +66,10 @@
                       <label class="control-label templatemo-block">团队名称</label>
                       <label class="control-label templatemo-block">负责人:PR</label>
                       <select class="form-control" onchange="changeCate();">
-                        <option value="1">金刚不坏神猪</option>
-                        <option value="2">For the Sunshine</option>                      
+                        <option value="0">请选择小组</option>
+                        <foreach name="group" item="g">
+                          <option value="{$g[0]['GroupID']}">{$g[0]['GroupName']}</option>
+                        </foreach>                      
                       </select>
                     </div>
                     <div class="col-lg-6 col-md-6">
@@ -79,10 +81,10 @@
                     </form>
               <thead>
                 <tr>
-                  <td>成员</td>
-                  <td>院系</td>
-                  <td>班级</td>
                   <td>学号</td>
+                  <td>姓名</td>
+                  <td>班级</td>
+                  <td>院系</td>
                 </tr>
                 </thead>
                 <tbody id="appendant">

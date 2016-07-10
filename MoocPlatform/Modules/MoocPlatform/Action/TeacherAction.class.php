@@ -16,6 +16,32 @@ class TeacherAction extends VerifyLoginAction
 		$this->display();
 	}
 
+    public function group()
+    {
+        $course=session('teacher_selected_course');
+        $db=M('groupcourse');
+        $group=array();
+        $group_count=0;
+
+        $group_id=$db
+                ->where('groupcourse.CourseID='.$course['CourseID'])
+                ->select();
+        foreach ($group_id as $id)
+        {
+            $group[$group_count++]=$db
+                ->where('groupcourse.GroupID='.$id['GroupID'])
+                ->join('learninggroup ON learninggroup.GroupID=groupcourse.GroupID')
+                ->join('groupstu ON groupstu.GroupID=groupcourse.GroupID')
+                ->join('student ON student.StuID=groupstu.StudentID')
+                ->Field('learninggroup.GroupID,groupcourse.ApplyStatus,learninggroup.GroupName,learninggroup.PrincipalID,groupstu.StudentID,student.StuName,student.Department,student.Class,student.Grade')
+                ->select();
+        }//dump(json_encode($group));
+        
+
+        $this->assign('group',$group);
+        $this->display();
+    }
+
 	public function personal_info()
 	{
 		$this->display();
