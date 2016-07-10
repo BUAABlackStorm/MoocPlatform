@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>学生用户 - 团队作业</title>
+<title>学生用户 - 加入团队</title>
 <meta name="description" content="">
 <meta name="author" content="templatemo">
 <!-- 
@@ -119,10 +119,10 @@
                                         </foreach>
                                     </td>
                                     <td>
-                                    <if condition="$gs.PrinName neq $_SESSION['student']['StuID']">
+                                    <if condition="$gs.PrinName neq $_SESSION['student']['StuName']">
                                         <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/groupexit\', array(\'GroupID\' => $gs[\'GroupID\']))}' " class="btn btn-success templatemo-edit-button" > 退出 </button>
                                     <else />
-                                        <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/groupdismiss\', array(\'GroupID\' => $gs[\'GroupID\']))}' " class="btn btn-success templatemo-edit-button" > 解散 </button>
+                                        <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/groupdismiss\', array(\'GroupID\' => $gs[\'GroupID\']))}' " class="btn btn-danger templatemo-edit-button" > 解散 </button>
                                     </if>
                                     </td>
                                 </tr>
@@ -167,7 +167,9 @@
                                     </td>
                                     <td> 
                                         <!--{$gs.JoinStatus}-->
-                                        <if condition="$gs.JoinStatus heq null">
+                                        <if condition="$gs['NowPerson'] eq $gs['MaxPerson']">
+                                            <button class="btn btn-warning templatemo-edit-button" disabled="disabled"> 人数已满 </button>
+                                        <elseif condition="$gs.JoinStatus heq null" />
                                             <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/applyjoin\', array(\'GroupID\' => $gs[\'GroupID\']))}' " class="btn btn-success templatemo-edit-button" > 申请加入 </button>
                                         <elseif condition="$gs.JoinStatus eq 2" />
                                             <button class="btn btn-warning templatemo-edit-button" disabled="disabled"> 已被拒绝 </button>

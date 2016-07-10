@@ -290,7 +290,7 @@ class StudentAction extends Action {
             $hasJoinGroups[$key]['PrinName'] = $stuPrin['StuName'];
             
             // 查询该团队 已加入的人数
-            $hasJoinGroups[$key]['NowPerson'] = M('groupstu')->where('GroupID = %d', $value['GroupID'])->count();
+            $hasJoinGroups[$key]['NowPerson'] = M('groupstu')->where('GroupID = %d AND JoinStatus = 1', $value['GroupID'])->count();
             
             // 查询改团队 已加入课程
             $hasJoinCourseIDs = M('groupcourse')->where('GroupID = %d AND ApplyStatus=1', $value['GroupID'])->select();
@@ -319,7 +319,7 @@ class StudentAction extends Action {
             $canJoinGroups[$index]['PrinName'] = $stuPrin['StuName'];
             
             // 查询该团队 已加入的人数
-            $canJoinGroups[$index]['NowPerson'] = M('groupstu')->where('GroupID = %d', $value['GroupID'])->count() + 1;
+            $canJoinGroups[$index]['NowPerson'] = M('groupstu')->where('GroupID = %d AND JoinStatus = 1', $value['GroupID'])->count();
             
             // 查询改团队 已加入课程
             $canJoinCourseIDs = M('groupcourse')->where('GroupID = %d AND ApplyStatus=1', $value['GroupID'])->select();

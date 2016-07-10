@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>学生用户 - 团队作业</title>
+<title>学生用户 - 管理团队</title>
 <meta name="description" content="">
 <meta name="author" content="templatemo">
 <!-- 
@@ -340,6 +340,16 @@
                 "</tr>"
             );
         }
+        
+        // 没有人申请该团队
+        if ( $.isEmptyObject(data) ) {
+            $('#handleapplylist').append(
+                "<tr>" + 
+                    "<td colspan='2'>暂无成员申请</td>" + 
+                "</tr>"
+            );
+        }
+        
         $('#handleapplylist').append(
             "<tr><td colspan='2'>" +
                 "<button onclick='endbuild()' class='btn btn-success templatemo-edit-button'> 结束组建 </button>" +
@@ -419,6 +429,15 @@
                 "<td>" + 
                     "<button onclick='applycourse(" + data[v]['CourseID'] + ")' class='btn btn-success templatemo-edit-button'> 申请加入 </button>" +
                 "</td>" +
+                "</tr>"
+            );
+        }
+        
+        // 没有可申请的课程
+        if ( $.isEmptyObject(data) ) {
+            $('#canjoincourseslist').append(
+                "<tr>" + 
+                    "<td colspan='2'>暂时没有可申请的课程</td>" + 
                 "</tr>"
             );
         }
