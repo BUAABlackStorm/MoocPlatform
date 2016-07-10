@@ -474,7 +474,6 @@ class TeacherAction extends VerifyLoginAction
     	$stuID=I('param.stuID');
     	$db=M('hwstu');
     	$resource;
-
     	if(""==$stuID)
     	{
 			$resource=$db

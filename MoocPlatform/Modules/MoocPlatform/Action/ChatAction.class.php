@@ -22,7 +22,7 @@ Class ChatAction extends VerifyLoginAction
             $id = $tea['TeaID'];
         }
 
-        $courseID = I('CourseID');
+        $courseID = I('courseID');
 
         //$student = D('ChatMsg') -> getStudent(array('type' => 0));
         $teacher = D('ChatMsg')->getTeacher(array('type' => 1, 'CourseID' => $courseID));
@@ -51,21 +51,19 @@ Class ChatAction extends VerifyLoginAction
             M('com_show')->save($data);
         }
 
-        $this->display();
+        if($type == 0){
+            $this->display();
+        }
+        else{
+            $this->display('Teacher/teaChat');
+        }
+
+
     }
 
     public function fresh()
     {
 
-//        if(session("?student")){
-//            $type = 0;
-//            $stu = session('student');
-//            $id = $stu['StuID'];
-//        }else{
-//            $type = 1;
-//            $tea = session('teacher');
-//            $id = $tea['TeaID'];
-//        }
 
         $type = I('type');
         $id = I('id');
