@@ -104,7 +104,7 @@
                                     <td>负责人<span class="caret"></span></a></td>
                                     <td>已加入人数/总人数<span class="caret"></span></a></td>
                                     <td>已加入的课程<span class="caret"></span></a></td>
-                                    <td>操作 <span class="caret"></span></a></td>  
+                                    <td>操作<span class="caret"></span></a></td>  
                                 </tr>
                              </thead>
                             <tbody>
@@ -118,8 +118,12 @@
                                             {$cs.CourseName} &nbsp;&nbsp;
                                         </foreach>
                                     </td>
-                                    <td> 
+                                    <td>
+                                    <if condition="$gs.PrinName neq $_SESSION['student']['StuID']">
                                         <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/groupexit\', array(\'GroupID\' => $gs[\'GroupID\']))}' " class="btn btn-success templatemo-edit-button" > 退出 </button>
+                                    <else />
+                                        <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/groupdismiss\', array(\'GroupID\' => $gs[\'GroupID\']))}' " class="btn btn-success templatemo-edit-button" > 解散 </button>
+                                    </if>
                                     </td>
                                 </tr>
                                 </foreach>

@@ -353,6 +353,17 @@ class StudentAction extends Action {
     }
 
     /**
+     * 解散团队
+     */
+    public function groupdismiss() {
+        M('learninggroup')->where('GroupID = %d', I('GroupID'))->delete();
+        M('groupstu')->where('GroupID = %d', I('GroupID'))->delete();
+        M('groupcourse')->where('GroupID = %d', I('GroupID'))->delete();
+
+        $this->redirect('Student/group', '', 1, '解散成功，正在返回...');
+    }
+
+    /**
      * 申请加入团队
      */
     public function applyjoin() {
@@ -383,8 +394,15 @@ class StudentAction extends Action {
         );
         
         // TODO: 判断是否符合条件
-        M('Learninggroup')->add($group);
-        
+        $groupID = M('Learninggroup')->add($group);
+
+        $groupstu = array(
+            'GroupID' => $groupID,
+            'StudentID' => session('student')['StuID'],
+            'JoinStatus' => 1,
+        );
+        M('groupstu')->add($groupstu);
+
         $this->redirect('Student/groupmanage', '', 1, '申请成功，正在返回...');
     }
 
@@ -406,7 +424,7 @@ class StudentAction extends Action {
         $principalID = M('learninggroup') -> where(array('GroupID' => $GroupID)) -> getField('PrincipalID');
 
         //查找除组长之外的团队成员
-        $groupMemberIDs = M('groupstu')->where(array('GroupID' => $GroupID , 'StudentID' => array('neq',$principalID)))->select();
+        $groupMemberIDs = M('groupstu')->where(array('GroupID' => $GroupID , 'StudentID' => array('neq',$principalID), 'JoinStatus' => 1))->select();
 
         foreach ($groupMemberIDs as $key => $value) {
             $groupMembers[$key] = M('Student')->where('StuID = %d', $value['StudentID'])->field(array('StuID','StuName'))->find();
@@ -446,56 +464,59 @@ class StudentAction extends Action {
         );
         $save = M('learninggroup') -> where(array('GroupID' => $GroupID)) ->save($saveMember);
 
-
-        if( $save){
+        if($save){
             $data['status'] = 'success';
-        }else{
+        } else {
             $data['status'] = 'error';
         }
         $this->ajaxreturn($data);
+    }
 
+    public function hasBuilded() {
+        // 判断团队是否组建完毕
+        $hasBuilded = M('learninggroup')->where('GroupID = %d', I('selectGroupID'))->find()['BuildStatus'];
+        $this->ajaxreturn($hasBuilded);
     }
 
     /**
-     * 处理申请
+     * 
      */
     public function handleapply() {
-        $selectManageGroupID = 1;
-        
+        $selectManageGroupID = I('selectGroupID');
+
         // 获取所有 申请团队ID
         $groupApplyMemberIDs = M('groupstu')->where('GroupID = %d AND JoinStatus = 0', $selectManageGroupID)->select();
         foreach ($groupApplyMemberIDs as $key => $value) {
             $groupApplyMembers[$key] = M('Student')->where('StuID = %d', $value['StudentID'])->find();
         }
-        $this->groupApplyMembers = $groupApplyMembers;
+        
+        $this->ajaxreturn($groupApplyMembers);
         //dump($groupApplyMembers);
-        $this->display('Student/groupmanage');
+        //$this->display('Student/groupmanage');
     }
 
     /**
      * 同意加入 or 拒绝加入团队
      */
-    public function agreerefuse() {
-        $selectManageGroupID = 1;
-        //dump(I('StuID'));
-        //dump(I('flag'));
-        
+    public function agreerefuse() {       
         $data['JoinStatus'] = I('flag');
-        M('groupstu')->where('GroupID = %d AND StudentID = %d', $selectManageGroupID, I('StuID'))->save($data);
-
-        $this->redirect('Student/groupmanage', '', 1, '处理成功，正在返回...');
+        $result = M('groupstu')->where('GroupID = %d AND StudentID = %d', I('selectGroupID'), I('StuID'))->save($data);
+        if (!$result) {
+            $data['status'] = 'error';
+        }
+        $this->ajaxreturn($data);
     }
 
     /**
      * 结束组建团队
      */
     public function endbuild() {
-        $selectManageGroupID = 1;
-
         $data['BuildStatus'] = 1;
-        M('learninggroup')->where('GroupID = %d', $selectManageGroupID)->save($data); 
-
-        $this->redirect('Student/groupmanage', '', 1, '处理成功，正在返回...');
+        $result = M('learninggroup')->where('GroupID = %d', I('selectGroupID'))->save($data); 
+        if (!$result) {
+            $data['status'] = 'error';
+        }
+        $this->ajaxreturn($data);
     }
 
     /**
@@ -503,10 +524,8 @@ class StudentAction extends Action {
      * TODO: 区分正在申请否？
      */
     public function canapplycourse() {
-        $selectManageGroupID = 1;
-
         // 找出所有已申请的CourseID
-        $hasJoinCourseIDs = M('groupcourse')->where('GroupID = %d', $selectManageGroupID)->getField('CourseID', true);
+        $hasJoinCourseIDs = M('groupcourse')->where('GroupID = %d', I('selectGroupID'))->getField('CourseID', true);
         // 找出所有开设的课程
         $allOpenCourses = M('Course')->where('isOpen = 1')->select();
         
@@ -520,14 +539,20 @@ class StudentAction extends Action {
             $canJoinCourses[$index] = $value;
             ++$index;
         }
-        $this->canJoinCourses = $canJoinCourses;
-        dump($canJoinCourses);
-        
-        $this->display('Student/groupmanage');
+        $this->ajaxreturn($canJoinCourses);
     }
 
     public function applycourse() {
-        $selectManageGroupID = 1;
-         
+        $data['GroupID'] = I('selectGroupID');
+        $data['CourseID'] = I('CourseID');
+        $data['ApplyStatus'] = 0;
+        $result = M('groupcourse')->add($data);
+
+        if($result){
+            $data['status'] = 'success';
+        } else {
+            $data['status'] = 'error';
+        }
+        $this->ajaxreturn($data);
     }
 }
