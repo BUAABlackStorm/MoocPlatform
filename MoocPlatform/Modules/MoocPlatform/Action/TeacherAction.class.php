@@ -250,7 +250,10 @@ class TeacherAction extends VerifyLoginAction
     			->where('resource.ResID='.$id_array[0])
     			->select();
 
-			Http::download(($res[0]['ResPath']).($res[0]['ResActualName']),urlencode($res[0]['ResOriginName']));
+            ob_clean();
+            //flush();
+
+			Http::download(($res[0]['ResPath']).($res[0]['ResActualName']),$res[0]['ResOriginName']);
 		}
     }
 
