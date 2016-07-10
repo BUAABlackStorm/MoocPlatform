@@ -61,7 +61,7 @@
           <div class="panel panel-default table-responsive">
               <table class="table table-striped table-bordered templatemo-user-table" >
                 <h2 style="font-family:幼圆;margin:10px;">学生团队管理</h2>
-                  <form action="__URL__/" method="post">
+                  <form action="__URL__/group_agree" method="post">
                     <div class="col-lg-6 col-md-6 form-group">
                       <label class="control-label templatemo-block" >团队名称</label>
                       <select class="form-control" onchange="changeCate();" name="groupID" >
@@ -71,11 +71,10 @@
                         </foreach>                      
                       </select>
                     </div>
-                    <div class="col-lg-6 col-md-6" id="show">
+                    <div class="col-lg-6 col-md-6" id="show" style="display:none;">
                       <label class="control-label templatemo-block">教师审核结果</label>
                       <input type="submit" class="btn btn-success" value="同意">
-                      <input type="submit" class="btn btn-warning" value="不同意">
-                     
+                      <input type="submit" formaction="__URL__/group_disagree" formmethod="post" class="btn btn-danger" value="不同意">                    
                     </div>
                     <div class="col-lg-6 col-md-6" id="noshow" style="display:none;">
                       <h1 id="stat1" style="display:none;">已同意</h1>
@@ -128,7 +127,13 @@
     function load(data) {
       $("#appendant").empty();
       p2=0;
-      alert(data[0]["GroupID"]);
+      if(data==null)
+      {
+          $("#show").hide();
+          $("#noshow").hide();
+          $("#stat1").hide();
+          $("#stat2").hide();
+      }
       for(var i=0,l=data.length;i<l;i++){
         if(data[i]["StudentID"]==data[i]["PrincipalID"])
           p2=i;

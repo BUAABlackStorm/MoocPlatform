@@ -8,17 +8,17 @@ return array(
     'APP_GROUP_PATH' => 'Modules',
 
     //数据库连接参数
-    'DB_HOST' => '120.27.109.132',
-    'DB_USER' => 'wayne',
-    'DB_PWD' => '8304',
-    'DB_NAME' => 'moocdb',
-    'DB_PREFIX' => '',
-
-    // 'DB_HOST' => 'localhost',
-    // 'DB_USER' => 'root',
+    // 'DB_HOST' => '120.27.109.132',
+    // 'DB_USER' => 'wayne',
     // 'DB_PWD' => '8304',
     // 'DB_NAME' => 'moocdb',
     // 'DB_PREFIX' => '',
+
+    'DB_HOST' => 'localhost',
+    'DB_USER' => 'root',
+    'DB_PWD' => '8304',
+    'DB_NAME' => 'moocdb',
+    'DB_PREFIX' => '',
 
 
     //点语法默认解析

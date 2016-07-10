@@ -15,9 +15,18 @@ class TeacherAction extends VerifyLoginAction
 						
 		$this->display();
 	}
+    public function test()
+    {
+        $this->display();
+    }
 
     public function group()
     {
+        if(!session("?teacher_selected_course"))
+        {
+            $this->redirect('/Teacher/');
+        }
+
         $course=session('teacher_selected_course');
         $db=M('groupcourse');
         $group=array();
@@ -40,6 +49,30 @@ class TeacherAction extends VerifyLoginAction
 
         $this->assign('group',$group);
         $this->display();
+    }
+
+    public function group_agree()
+    {
+        $group_id=I('param.groupID');
+        $db=M('groupcourse');
+        $data['ApplyStatus']=1;
+
+        $db->where('groupcourse.GroupID='.$group_id)
+           ->save($data);
+
+        $this->redirect('/Teacher/group/');
+    }
+
+    public function group_disagree()
+    {
+        $group_id=I('param.groupID');
+        $db=M('groupcourse');
+        $data['ApplyStatus']=2;
+
+        $db->where('groupcourse.GroupID='.$group_id)
+           ->save($data);
+
+        $this->redirect('/Teacher/group/');
     }
 
     public function ajaxGroup()
@@ -171,7 +204,7 @@ class TeacherAction extends VerifyLoginAction
 				'maxSize'    =>    3145728,
                 'savePath'   =>    './MoocPlatform/Modules/MoocPlatform/Uploads/Teacher/',
 				'saveRule'   =>    'uniqid',
-				'allowExts'  =>    array('jpg', 'png', 'jpeg','doc','docx','xls','xlsx','ppt','pptx','txt'),
+				'allowExts'  =>    array('jpg', 'png', 'jpeg','doc','docx','xls','xlsx','ppt','pptx','txt','pdf'),
 				'autoSub'    =>    true,
 				'subType'	 =>	   'date',
 				'dateFormat'    =>    'Y-m-d',
@@ -367,10 +400,15 @@ class TeacherAction extends VerifyLoginAction
           }             
         }
 
+        
+
         header('pragma:public');
         header('Content-type:application/vnd.ms-excel;charset=utf-8;name="'.$expName.'.xls"');
-        header('Content-Disposition:attachment;filename="'.$expName.'.xls"');//attachment新窗口打印inline本窗口打印
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  
+        header('Content-Disposition:attachment;filename="'.$expName.'.xls"');
+
+        ob_clean();
+        
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output'); 
         exit; 
     }
@@ -574,7 +612,10 @@ class TeacherAction extends VerifyLoginAction
 
         header('pragma:public');
         header('Content-type:application/vnd.ms-excel;charset=utf-8;name="'.$expName.'.xls"');
-        header('Content-Disposition:attachment;filename="'.$expName.'.xls"');//attachment新窗口打印inline本窗口打印
+        header('Content-Disposition:attachment;filename="'.$expName.'.xls"');
+
+        ob_clean();
+
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  
         $objWriter->save('php://output'); 
         exit; 
