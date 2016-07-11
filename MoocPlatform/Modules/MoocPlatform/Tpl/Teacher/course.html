@@ -91,7 +91,7 @@
               <table class="table table-striped table-bordered templatemo-user-table" >
               <thead>
                 <tr>
-                  <td></td>
+                  <td><input type="checkbox" id="all_check" onclick="checkboxOnclick(this)"></td>
                   <td>资源名称</td>
                   <td>上传时间</td>
                   <td>文件大小</td>
@@ -102,7 +102,7 @@
                   <tr>
                    <td>
                    <input type="checkbox" class="del" name="id_array[]" value="{$r_t['ResID']}"></td>
-                   <td class="name">{$r_t['ResOriginName']}</td>
+                   <td class="name"><a href="__ONLINE_TEAHCER__/{$r_t['ResActualName']}">{$r_t['ResOriginName']}</a></td>
                    <td class="time">{$r_t['ReleaseTime']}</td>
                    <td class="size">{$r_t['FileSize']/1000}KB</td>
                   </tr>
@@ -172,7 +172,7 @@
       if(key=="ResOriginName") {p1=i;}
      }
 
-       $("#appendant").append("<tr><td><input type='checkbox' class='del' name='id_array[]' value='"+data[p1]["ResID"]+"'></td><td>"+data[p1]["ResOriginName"]+"</td><td>"+data[p1]["ReleaseTime"]+"</td><td>"+data[p1]["FileSize"]/1000+"KB</td></tr>");
+       $("#appendant").append("<tr><td><input type='checkbox' class='del' name='id_array[]' value='"+data[p1]["ResID"]+"'></td><td><a href='__ONLINE_TEAHCER__/"+data[p1]["ResActualName"]+"'>"+data[p1]["ResOriginName"]+"</a></td><td>"+data[p1]["ReleaseTime"]+"</td><td>"+data[p1]["FileSize"]/1000+"KB</td></tr>");
     }
   }
 }
@@ -193,6 +193,21 @@
     var name = e.currentTarget.files[0].name;
     aim.val( name );
 });
+    function checkboxOnclick(checkbox){
+      var len=$("input").length;
+      if(checkbox.checked==true)
+      {
+        for(var i=0;i<len;i++)
+          if($("input")[i].type=="checkbox"&&$($("input")[i]).attr('id')!="all_check")
+            $($("input")[i]).attr('checked',true);
+      }
+      else
+      {
+        for(var i=0;i<len;i++)
+          if($("input")[i].type=="checkbox"&&$($("input")[i]).attr('id')!="all_check")
+            $($("input")[i]).attr('checked',false);
+      }
+    }
   </script>
   </body>
 <!-- /MoocPlatform/Modules/MoocPlatform/Uploads/Teacher/2016-07-09/578067b118d7e.doc-->
