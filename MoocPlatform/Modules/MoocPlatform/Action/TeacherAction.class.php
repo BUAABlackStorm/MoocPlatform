@@ -30,7 +30,7 @@ class TeacherAction extends VerifyLoginAction
 
         $group_id=$db
                 ->where('groupcourse.CourseID='.$course['CourseID'])
-                ->select();
+                ->select();//dump($group_id);
         foreach ($group_id as $id)
         {
             $group[$group_count++]=$db
@@ -74,11 +74,11 @@ class TeacherAction extends VerifyLoginAction
     public function ajaxGroup()
     {
         $db=M('groupcourse');
+        $course=session('teacher_selected_course');
         $group=array();
-        $group_count=0;
 
-        $group[$group_count++]=$db
-            ->where('groupcourse.GroupID='.I('param.group_id'))
+        $group[0]=$db
+            ->where('groupcourse.GroupID='.I('param.group_id').' and groupcourse.CourseID='.$course['CourseID'])
             ->join('learninggroup ON learninggroup.GroupID=groupcourse.GroupID')
             ->join('groupstu ON groupstu.GroupID=groupcourse.GroupID')
             ->join('student ON student.StuID=groupstu.StudentID')
