@@ -452,11 +452,14 @@
             url: url,
             data: {
                 selectGroupID: selectGroup.val(),
-                CourseID: CourseID
-             },
+                CourseID: CourseID,
+            },
             success: function(data) {
-                if(data['status'] == 'error'){
+                alert(data['status']);
+                if(data['status'] == 'error') {
                     alert("申请错误，请重试");
+                } else if (data['status'] == 'fail') {
+                    alert("该团队已有人加入该课程");
                 } else {
                     alert("申请成功");
                     changeGroup(); 

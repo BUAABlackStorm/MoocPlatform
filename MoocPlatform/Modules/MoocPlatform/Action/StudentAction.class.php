@@ -588,12 +588,11 @@ class StudentAction extends Action {
             'GroupID' => $data['GroupID'],
             'JoinStatus' => 1,
         );
-
         $members = M('groupstu') -> where($condition) -> field('StudentID') -> select();
         
         foreach($members as $key => $v){
             //查询改组中某名同学加入的所有小组
-            $groups = M('groupstu') ->where( array('StudentID' => $v['StudentID'] ,'JoinStatus' => 1) ) ->field('GroupID')->select();
+            $groups = M('groupstu')->where( array('StudentID' => $v['StudentID'] ,'JoinStatus' => 1) ) ->field('GroupID')->select();
 
             //判断改组是否加入该门课程
             foreach($groups as $key1 => $v1 ){
@@ -608,18 +607,16 @@ class StudentAction extends Action {
             }
         }
         
-        if($flag){
+        if ($flag) {
             $result = M('groupcourse')->add($data);
-
-            if($result){
+            if ($result) {
                 $data['status'] = 'success';
             } else {
                 $data['status'] = 'fail';
             }
-        }else{
+        } else {
             $data['status'] = 'error';
         }
-
         
         $this->ajaxreturn($data);
     }
