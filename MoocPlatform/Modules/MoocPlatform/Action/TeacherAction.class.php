@@ -200,7 +200,7 @@ class TeacherAction extends VerifyLoginAction
 				'maxSize'    =>    3145728,
                 'savePath'   =>    './MoocPlatform/Modules/MoocPlatform/Uploads/Teacher/',
 				'saveRule'   =>    'uniqid',
-				'allowExts'  =>    array('jpg', 'png', 'jpeg','doc','docx','xls','xlsx','ppt','pptx','txt','pdf'),
+				'allowExts'  =>    array('jpg', 'png', 'jpeg','doc','docx','xls','xlsx','ppt','pptx','txt','pdf','mp4'),
 				'autoSub'    =>    true,
 				'subType'	 =>	   'date',
 				'dateFormat'    =>    'Y-m-d',
@@ -367,7 +367,7 @@ class TeacherAction extends VerifyLoginAction
     		);
     	$db->add($homework);
 
-    	$this->redirect('/Teacher/course/course_id/'.session('teacher_selected_course')['CourseID']);
+    	$this->redirect('/Teacher/homework_index/');
     }
 
     private function exportExcel($expName,$expCellName,$expTableData)
