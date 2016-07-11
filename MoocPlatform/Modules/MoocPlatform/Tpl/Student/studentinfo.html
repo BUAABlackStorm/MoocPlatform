@@ -78,19 +78,30 @@
 
         <div class="row form-group">
             <div class="col-lg-12 col-md-12 form-group text-center">
-                <br>
+
+                <if condition="session('?personal_info_mod_msg')">
+                    <if condition="session('personal_info_mod_msg') eq '修改成功!'">
+                        <div class="alert alert-success">
+                            <else />
+                            <div class="alert alert-danger">
+                    </if>
+                    <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h3>{:session('personal_info_mod_msg')}</h3>
+            </div>
+            {:session('personal_info_mod_msg',null)}
+            </if>
 
                 <h2>个人基本信息</h2>
             </div>
         </div>
 
-        <form>
+        <form method="post" action="{:U(GROUP_NAME.'/Student/changePw')}">
             <div class="row form-group">
                 <div class="col-lg-4 col-md-4 form-group text-right">
                     <h3>姓名</h3>
                 </div>
                 <div class="col-lg-5 col-md-5 form-group">
-                    <input type="text" class="form-control" value={$stu.StuName} id="inputname" disabled="disabled">
+                    <input type="text" class="form-control" value={:session('student')['StuName']} id="inputname" disabled="disabled">
                 </div>
             </div>
             <div class="row form-group">
@@ -98,7 +109,7 @@
                     <h3>学号</h3>
                 </div>
                 <div class="col-lg-5 col-md-5 form-group">
-                    <input type="text" class="form-control" id="inputID" value={$stu.StuID} disabled="disabled">
+                    <input type="text" class="form-control" id="inputID" value={:session('student')['StuID']} disabled="disabled">
                 </div>
             </div>
             <div class="row form-group">
@@ -124,7 +135,7 @@
                     <h3>性别</h3>
                 </div>
                 <div class="col-lg-5 col-md-5 form-group">
-                    <input type="text" class="form-control" id="inputsex" value={$stu.Sex} disabled="disabled">
+                    <input type="text" class="form-control" id="inputsex" value={:session('student')['Sex']} disabled="disabled">
                 </div>
             </div>
 
@@ -133,7 +144,7 @@
                     <h3>院系</h3>
                 </div>
                 <div class="col-lg-5 col-md-5 form-group">
-                    <input type="text" class="form-control" id="inputdepartment" value={$stu.Department} disabled="disabled">
+                    <input type="text" class="form-control" id="inputdepartment" value={:session('student')['Department']} disabled="disabled">
                 </div>
             </div>
 
@@ -142,7 +153,7 @@
                     <h3>年级</h3>
                 </div>
                 <div class="col-lg-5 col-md-5 form-group">
-                    <input type="text" class="form-control" id="inputgrade" value={$stu.Grade} disabled="disabled">
+                    <input type="text" class="form-control" id="inputgrade" value={:session('student')['Grade']} disabled="disabled">
                 </div>
             </div>
 
@@ -151,7 +162,7 @@
                     <h3>班级</h3>
                 </div>
                 <div class="col-lg-5 col-md-5 form-group">
-                    <input type="text" class="form-control" id="inputclass" value={$stu.Class} disabled="disabled">
+                    <input type="text" class="form-control" id="inputclass" value={:session('student')['Class']} disabled="disabled">
                 </div>
             </div>
             <div class="row form-group">
@@ -159,7 +170,7 @@
                     <h3>邮箱</h3>
                   </div >
                   <div class="col-lg-4 col-md-4 form-group">
-                    <input type="text" class="form-control" id="inputFirstName" value="{:session('teacher')['Email']}" name="Email">
+                    <input type="text" class="form-control" id="inputFirstName" value="{:session('student')['Email']}" name="Email">
                   </div>
             </div>
             <div class="row form-group text-center">

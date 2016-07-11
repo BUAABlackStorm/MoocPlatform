@@ -601,7 +601,6 @@ class StudentAction extends Action {
             }
         }
 
-
         // 查询团队中成员是否加入过该课程
         foreach($members as $key => $v){
             //查询该组中某名同学加入的所有小组
@@ -610,7 +609,7 @@ class StudentAction extends Action {
             //判断改组是否加入该门课程
             foreach($groups as $key1 => $v1 ){
                 //查询改组加入的所有课程
-                $courseID = M('groupcourse') ->where(array('GroupID' => $v1['GroupID'],'ApplyStatus' => array('neq' , 2) ))->filed('CourseID')->select();
+                $courseID = M('groupcourse') ->where(array('GroupID' => $v1['GroupID'],'ApplyStatus' => array('neq' , 2) ))->field('CourseID')->select();
                 foreach($courseID as $key2 => $v2){
                     //判断加入的课程是否等于申请团队申请的课程
                     if($data['CourseID'] == $v2['CourseID']){
@@ -620,6 +619,7 @@ class StudentAction extends Action {
                 }
             }
         }
+
         
         if ($flag) {
             $result = M('groupcourse')->add($data);
@@ -629,6 +629,70 @@ class StudentAction extends Action {
                 $data['status'] = 'fail';
             }
         }
+
         $this->ajaxreturn($data);
+    }
+
+    public function changePw(){
+        $passwd1=I('param.password1');
+        $passwd2=I('param.password2');
+        $email=I('param.Email');
+        $student=session('student');
+        $isSuccessful=2;
+
+        if((""!=$passwd1)||(""!=$passwd2))
+        {
+            if($passwd1==$passwd2)
+            {
+                $data['Password']=md5($passwd1);
+
+                M('student')->where('student.StuID='.$student['StuID'])
+                    ->save($data);
+                $stu=M('student')->where('student.StuID='.$student['StuID'])
+                    ->select();
+
+                session('student',$stu[0]);
+
+                $isSuccessful=1;
+            }
+            else
+            {
+                $isSuccessful=0;
+            }
+        }
+
+        if(($isSuccessful!=0)&&(""!=$email))
+        {
+            $data['Email']=$email;
+
+            $stu=M('student')->where('student.StuID='.$student['StuID'])
+                ->select();//dump($tea);dump($email);
+            if($stu[0]['Email']!=$email)
+            {
+                M('student')->where('student.StuID='.$student['StuID'])
+                    ->save($data);
+                $stu=M('student')->where('student.StuID='.$student['StuID'])
+                    ->select();
+
+                $isSuccessful=1;
+                session('student',$stu[0]);
+            }
+        }
+
+        if(1==$isSuccessful)
+        {
+            session('personal_info_mod_msg',"修改成功!");
+        }
+        else if(0==$isSuccessful)
+        {
+            session('personal_info_mod_msg',"修改失败!");
+        }
+        else if(2==$isSuccessful)
+        {
+            session('personal_info_mod_msg',null);
+        }
+
+        $this->redirect('/Student/studentinfo/');
+
     }
 }
