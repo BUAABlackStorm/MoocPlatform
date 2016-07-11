@@ -519,11 +519,12 @@ class TeacherAction extends VerifyLoginAction
     			->join('hwres ON hwres.HwStuID=hwstu.ID')
     			->join('resource ON resource.ResID=hwres.ResID')
     			->select();//dump($resource);
+
     	}
     	else
     	{
     		$resource=$db
-    			->where('hwstu.HwID='.$hwID.' and Hwstu.StuID='.$stuID)
+    			->where('hwstu.HwID='.$hwID.' and hwstu.StuID='.$stuID)
     			->join('student ON student.StuID=hwstu.StuID')
     			->join('hwres ON hwres.HwStuID=hwstu.ID')
     			->join('resource ON resource.ResID=hwres.ResID')
