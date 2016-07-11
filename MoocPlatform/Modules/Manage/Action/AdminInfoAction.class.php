@@ -111,7 +111,7 @@ class AdminInfoAction extends Action
     public function teacherInfo()
     {
         $TeaID = $_POST['TeaID'];
-        //dump($TeaID);
+
         $db = M('teacher');
         $teacherInfo_1 = $db->join('department ON teacher.Department = department.DepartmentID')
             ->where('teacher.TeaID=' . $TeaID)
@@ -125,6 +125,8 @@ class AdminInfoAction extends Action
             $teacherInfo['Email'] = $info['Email'];
             $teacherInfo['Department'] = $info['Department'];
         }
+
+
         $this->assign('teacherInfo', $teacherInfo);
         //dump($teacherInfo);
         $this->display('AdminInfo/teacherInfo');
