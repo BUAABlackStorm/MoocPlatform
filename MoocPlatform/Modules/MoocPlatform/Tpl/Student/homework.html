@@ -52,6 +52,7 @@
                 <li><a href="{:U(GROUP_NAME.'/Student/resource')}"><i class="fa fa-database fa-fw"></i>资源</a></li>
                 <li><a href="{:U(GROUP_NAME.'/Student/homework')}" class="active"><i class="fa fa-file fa-fw"></i>作业</a></li>
                 <li><a href="{:U(GROUP_NAME.'/Student/group')}"><i class="fa fa-group fa-fw"></i>团队</a></li>
+                <li><a href="{:U(GROUP_NAME.'/Chat/chat',array('courseID' => session('selectedCourseID')))}"><i class="fa fa-comment fa-fw"></i>讨论区</a></li>
                 <li><a href="{:U(GROUP_NAME.'/LoginAndRegister/Logout')}"><i class="fa fa-sign-out fa-fw"></i>退出</a></li>
             </ul>  
         </nav>
@@ -96,7 +97,9 @@
                             <td> <div id="enddate"> {$hws.EndDate} </div> </td>
                             <td>
                                 <if condition="$hws['isGroupHw'] eq 1">
-                                    <i class="fa fa-check-circle fa-5" aria-hidden="true"></i> 
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                <else/>
+                                    <i class="fa fa-close" aria-hidden="true"></i> 
                                 </if>
                             </td>
                             <td> 
