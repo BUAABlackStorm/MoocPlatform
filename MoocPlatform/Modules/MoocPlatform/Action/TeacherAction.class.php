@@ -268,6 +268,9 @@ class TeacherAction extends VerifyLoginAction
 	        }
 
 	        $scandir=new traverseDir("","");
+
+			ob_clean();
+
 	        $scandir->tozip($download_file,$download_file_name);
     	}
     	else
@@ -540,6 +543,9 @@ class TeacherAction extends VerifyLoginAction
         }
 
         $scandir=new traverseDir("","");
+
+		ob_clean();
+
         $scandir->tozip($download_file,$download_file_name);
     }
 
