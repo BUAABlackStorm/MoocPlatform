@@ -61,7 +61,7 @@
             <if condition="session('?teacher_selected_course')">
               <li><a href="__URL__/homework_index"><i class="fa fa-th-list fa-fw"></i>作业管理</a></li>
               <li><a href="__URL__/group"><i class="fa fa-group fa-fw"></i>团队管理</a></li>
-              <li><a href="__URL__/teaChat"><i class="fa fa-comment fa-fw"></i>讨论区</a></li>
+              <li><a href="{:U(GROUP_NAME.'/Chat/chat',array('courseID' => session('teacher_selected_course')['CourseID'] ))}"><i class="fa fa-comment fa-fw"></i>讨论区</a></li>
             </if>
 
             <li><a href="__URL__/personal_info" class="active"><i class="fa fa-info-circle fa-fw"></i>个人信息</a></li>
