@@ -319,7 +319,7 @@
                                 </div>
                                 <div class="row" style="margin-top: 5px;">
                                     <div class="text-right">
-                                        <button class="btn btn-default" type="button" onclick="publish({$id},{$type})">
+                                        <button class="btn btn-default" type="button" onclick="check_msg()">
                                             发送
                                         </button>
                                     </div>
@@ -586,6 +586,23 @@
     function add0(m) {
         return m < 10 ? '0' + m : m
     }
+
+    function check_msg(){
+        var msg = $("#msg").val();
+
+        msg = msg.replace(/\s+/g,"");
+        msg = msg.replace(/[\r\n]/g,'');
+
+        var length = msg.length;
+
+        if(length == 0 || msg == null || msg == ""){
+            alert('不能发送空消息!');
+        }
+        else {
+            publish({$id},{$type});
+        }
+    }
+
 
 
 </script>
