@@ -121,12 +121,6 @@ Class ChatAction extends VerifyLoginAction
         $id = M('communication')->add($com);
 
 
-//        if($type == 0){
-//            $data = D('ChatMsg') -> getStudent(array('ID' => $id));
-//        }else{
-//            $data = D('ChatMsg') -> getTeacher(array('ID' => $id));
-//        }
-
         //$this->ajaxreturn($data);
     }
 
