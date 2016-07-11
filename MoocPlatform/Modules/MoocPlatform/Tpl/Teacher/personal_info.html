@@ -73,6 +73,7 @@
         <div class="templatemo-content-container">
           <div class="templatemo-flex-row flex-content-row">
             <div class="col-md-12">
+
               <if condition="session('?personal_info_mod_msg')">
                 <if condition="session('personal_info_mod_msg') eq '修改成功!'">
                   <div class="alert alert-success">
@@ -82,10 +83,9 @@
                     <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <h3>{:session('personal_info_mod_msg')}</h3>
                   </div>
-
                 {:session('personal_info_mod_msg',null)}
-
               </if>
+
                 <h2 class="margin-bottom-10 text-center">教师个人详细信息</h2>
                 <h4 class="margin-bottom-10 text-center" style="color:blue;">不想修改的情况下可以不填！</h4>
                 <br>
