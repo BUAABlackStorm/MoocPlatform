@@ -572,13 +572,46 @@ class StudentAction extends Action {
         $data['GroupID'] = I('selectGroupID');
         $data['CourseID'] = I('CourseID');
         $data['ApplyStatus'] = 0;
-        $result = M('groupcourse')->add($data);
 
-        if($result){
-            $data['status'] = 'success';
-        } else {
+        //判断该团队是否有资格加入课程（判断团队中是否有成员已经在其他团队加入该课程）
+        $flag = true;
+        $condition = array(
+            'GroupID' => $data['GroupID'],
+            'JoinStatus' => 1,
+        );
+
+        $members = M('groupstu') -> where($condition) -> field('StudentID') -> select();
+
+        foreach($members as $key => $v){
+            //查询改组中某名同学加入的所有小组
+            $groups = M('groupstu') ->where( array('StudentID' => $v['StudentID'] ,'JoinStatus' => 1) ) ->field('GroupID')->select();
+
+            //判断改组是否加入该门课程
+            foreach($groups as $key1 => $v1 ){
+                //查询改组加入的所有课程
+                $courseID = M('groupcourse') ->where(array('GroupID' => $v1['GroupID'],'ApplyStatus' => array('neq' , 2) ))->filed('CourseID')->select();
+                foreach($courseID as $key2 => $v2){
+                    //判断加入的课程是否等于申请团队申请的课程
+                    if($data['CourseID'] == $v2['CourseID']){
+                        $flag = false;
+                    }
+                }
+            }
+        }
+
+        if($flag){
+            $result = M('groupcourse')->add($data);
+
+            if($result){
+                $data['status'] = 'success';
+            } else {
+                $data['status'] = 'fail';
+            }
+        }else{
             $data['status'] = 'error';
         }
+
+
         $this->ajaxreturn($data);
     }
 }
