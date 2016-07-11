@@ -510,7 +510,7 @@ class TeacherAction extends VerifyLoginAction
     	$hwID=I('param.hwID');
     	$stuID=I('param.stuID');
     	$db=M('hwstu');
-    	$resource;
+    	$resource = array();
     	if(strlen($stuID)==0)
     	{
 			$resource=$db
