@@ -455,11 +455,13 @@
                 CourseID: CourseID,
             },
             success: function(data) {
-                alert(data['status']);
-                if(data['status'] == 'error') {
-                    alert("申请错误，请重试");
-                } else if (data['status'] == 'fail') {
+                //alert(data['status']);
+                if(data['status'] == 'error1') {
+                    alert("该团队有人没申请该课程");
+                } else if (data['status'] == 'error2') {
                     alert("该团队已有人加入该课程");
+                } else if (data['status'] == 'fail') {
+                    alert("申请错误，请重试");
                 } else {
                     alert("申请成功");
                     changeGroup(); 

@@ -74,40 +74,39 @@
                 </nav>
             </div>
         </div>   
-        <div class="templatemo-content-widget white-bg" style="width: 80%">  
-            <form class="form-horizontal">
-                <p>
-                    <b>{$homework.HwName}</b>
-                    {$homework.StartDate} ~ {$homework.EndDate}
-                </p>
-
-                <h3>作业要求:</h3>
-                <p>{$homework.Require}</p>
+        <div class="templatemo-content-widget white-bg" style="width: 80%">       
+            <h4 align="center">
+                <b>{$homework.HwName}</b>
+            </h4>
+            <h4><b>作业时间:</b></h4>
+            <p>{$homework.StartDate} ~ {$homework.EndDate}</p>
+            <h4><b>作业要求:</b></h4>
+            <p>{$homework.Require}</p>
                 
-                <if condition="$hwstu.Score neq ''">
-                    <h3>作业分数:</h3>
-                    <p>{$hwstu.Score}</p>
-                    <h3>作业评论:</h3>
-                    <p>{$hwstu.Comment}</p>
-                </if>
-            </form>  
-            <br/><br/><br/>
+            <if condition="$hwstu.Score neq ''">
+                <h4><b>作业分数:</b></h4>
+                <p>{$hwstu.Score}</p>
+                <h4><b>作业评论:</b></h4>
+                <p>{$hwstu.Comment}</p>
+            </if>
+             
+            <br></br>
             
             <if condition="$hwstu.Content neq ''">
-                <h3>已上传文本作业</h3>
+            <h4><b>已上传文本作业</b></h4>
                 {$hwstu.Content}
             </if>
             <if condition="$attachment neq null">
-                <h3>已上传作业附件</h3>
+                 <h4><b>已上传作业附件</b></h4>
             </if>
             <foreach name="attachment" item="att">
                 <a href="{:U(GROUP_NAME.'/Student/download', array('resID' => $att['ResID']))}">{$att.ResOriginName}</a>         &nbsp;&nbsp;&nbsp;&nbsp;
                 提交时间: {$att.ReleaseTime}     &nbsp;&nbsp;&nbsp;&nbsp;
                 <button type="button" onclick="window.location.href='{:U(GROUP_NAME.\'/Student/delete\', array(\'ResID\' => $att[\'ResID\']))}'" id="delete" class="templatemo-blue-button">删除</button>
-                <br/> <br/>
+                <br> </br>
             </foreach>
             
-            <br/><br/><br/>
+            <br></br>
             <!--<form class="form-horizontal">-->
                 <!--<p><b>文本作业</b></p>-->
                 <!--<textarea id="answer" cols=80 rows=4>-->
@@ -122,7 +121,7 @@
                 <!--</div> -->
             <!--</form>-->
             <if condition="($isOutdate eq 0) AND ($canSubmit eq 1)">
-                <form accept-charset="utf-8" enctype="multipart/form-data" method="post" class="btn-group-form" action="{:U(GROUP_NAME.'/Student/upload')}">
+                <form accept-charset="utf-8" enctype="multipart/form-data" method="post"  action="{:U(GROUP_NAME.'/Student/upload')}">
                     <div id="queue"></div>
 
                     <p><b>文本作业</b></p>
@@ -139,7 +138,6 @@
                 </form>
             </if>
         </div> 
-
     </div>
 </div>
 </body>

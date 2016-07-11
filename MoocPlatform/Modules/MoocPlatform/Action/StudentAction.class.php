@@ -590,9 +590,21 @@ class StudentAction extends Action {
         );
 
         $members = M('groupstu') -> where($condition) -> field('StudentID') -> select();
-        
+
+        // 查询团队中成员是否选过该课程
+        foreach ($members as $v) {
+            $tmpRes = M('coursestudent')->where('StudentID = %d', $v['StudentID'])->find();
+            if ($tmpRes == null) {  // 有人没选课程
+                $flag = false;
+                $data['status'] = 'error1';
+                $this->ajaxreturn($data);
+            }
+        }
+
+
+        // 查询团队中成员是否加入过该课程
         foreach($members as $key => $v){
-            //查询改组中某名同学加入的所有小组
+            //查询该组中某名同学加入的所有小组
             $groups = M('groupstu')->where( array('StudentID' => $v['StudentID'] ,'JoinStatus' => 1) ) ->field('GroupID')->select();
 
             //判断改组是否加入该门课程
@@ -603,6 +615,7 @@ class StudentAction extends Action {
                     //判断加入的课程是否等于申请团队申请的课程
                     if($data['CourseID'] == $v2['CourseID']){
                         $flag = false;
+                        $data['status'] = 'error2';
                     }
                 }
             }
@@ -615,8 +628,6 @@ class StudentAction extends Action {
             } else {
                 $data['status'] = 'fail';
             }
-        } else {
-            $data['status'] = 'error';
         }
         $this->ajaxreturn($data);
     }
