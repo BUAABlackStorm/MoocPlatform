@@ -105,7 +105,7 @@ class download{
             //返回文件的大小
             Header("Accept-Length: ".filesize($this->_filepath));
             //这里对客户端的弹出对话框，对应的文件名
-            Header("Content-Disposition: attachment; filename=".urlencode($this->_filename));
+            Header("Content-Disposition: attachment; filename=".$this->_filename);
             //修改之前，一次性将数据传输给客户端
             echo fread($file, filesize($this->_filepath));
             //修改之后，一次只传输1024个字节的数据给客户端

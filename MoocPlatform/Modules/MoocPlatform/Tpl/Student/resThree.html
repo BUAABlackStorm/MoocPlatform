@@ -90,7 +90,7 @@
                         <tr>
                             <td> <div id="workname"> {$resources.ResOriginName}  </div> </td>
                             <td> <div id="releasetime"> {$resources.ReleaseTime} </div> </td>
-                            <td> <div id="filesize"> {$resources.FileSize} </div> </td>
+                            <td> <div id="filesize"> {$resources['FileSize']/1000}KB </div> </td>
                             <td> 
                                 <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/download\', array(\'resID\' => $resources[\'ResID\']))}'" id="legal" class="btn btn-success"> 
                                     <!--<a href="{:U(GROUP_NAME.'/Student/download', array('resID' => $resources['ResID']))}">-->
