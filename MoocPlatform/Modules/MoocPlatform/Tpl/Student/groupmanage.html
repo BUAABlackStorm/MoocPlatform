@@ -456,9 +456,9 @@
             },
             success: function(data) {
                 if(data['status'] == 'error1') {
-                    alert("该团队有人没申请该课程");
+                    alert("该团队中"+ data['name'] + "没申请该课程");
                 } else if (data['status'] == 'error2') {
-                    alert("该团队已有人加入该课程");
+                    alert("该团队中"+ data['name'] + "已经通过其他团队加入课程");
                 } else if (data['status'] == 'fail') {
                     alert("申请错误，请重试");
                 } else {

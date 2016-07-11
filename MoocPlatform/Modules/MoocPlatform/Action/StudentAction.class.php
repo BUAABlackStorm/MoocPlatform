@@ -597,6 +597,8 @@ class StudentAction extends Action {
             if ($tmpRes == null) {  // 有人没选课程
                 $flag = false;
                 $data['status'] = 'error1';
+                $id = $v['StudentID'];
+                $data['name'] = M('student') -> where(array('StuID' => $id)) ->getField('StuName');
                 $this->ajaxreturn($data);
             }
         }
@@ -614,6 +616,8 @@ class StudentAction extends Action {
                     //判断加入的课程是否等于申请团队申请的课程
                     if($data['CourseID'] == $v2['CourseID']){
                         $flag = false;
+                        $id = $v['StudentID'];
+                        $data['name'] = M('student')->where(array('StuID' => $id))->getField('StuName');
                         $data['status'] = 'error2';
                     }
                 }

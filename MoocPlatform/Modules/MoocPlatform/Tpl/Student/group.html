@@ -173,7 +173,7 @@
                                         <elseif condition="$gs.JoinStatus heq null" />
                                             <button onclick="window.location.href='{:U(GROUP_NAME.\'/Student/applyjoin\', array(\'GroupID\' => $gs[\'GroupID\']))}' " class="btn btn-success templatemo-edit-button" > 申请加入 </button>
                                         <elseif condition="$gs.JoinStatus eq 2" />
-                                            <button class="btn btn-warning templatemo-edit-button" disabled="disabled"> 已被拒绝 </button>
+                                            <button class="btn btn-danger templatemo-edit-button" disabled="disabled"> 已被拒绝 </button>
                                         <else />
                                             <button class="btn btn-info templatemo-edit-button" disabled="disabled"> 等待处理 </button>
                                         </if>

@@ -9,7 +9,8 @@
 return array(
     'TMPL_PARSE_STRING' => array(
         '__PUBLIC__' =>'/MoocPlatform'. __ROOT__. '/'.APP_NAME.'/Modules/'.GROUP_NAME.'/Tpl/Public',
-        '__ONLINE_TEAHCER__' =>'/MoocPlatform'. __ROOT__. '/'.APP_NAME.'/Modules/'.GROUP_NAME.'/Uploads/Teacher/'
+        '__ONLINE_TEAHCER__' =>'/MoocPlatform'. __ROOT__. '/'.APP_NAME.'/Modules/'.GROUP_NAME.'/Uploads/Teacher/',
+
     ),
 
     'URL_HTML_SUFFIX' => '',
