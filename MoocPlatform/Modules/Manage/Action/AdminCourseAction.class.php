@@ -300,7 +300,7 @@ class AdminCourseAction extends Action{
     }
     
     public function connectStu(){
-        $courseID = $_POST['CourseID'];
+        $courseID = I('param.CourseID');
         $db = M('course');
         $courseinfo_1 = $db
             ->join('department ON course.CourseDep = department.DepartmentID')
@@ -502,7 +502,7 @@ class AdminCourseAction extends Action{
             'maxSize'    =>    3145728,
             'savePath'   =>    './MoocPlatform/Modules/Manage/Uploads/',
             'saveRule'   =>    'uniqid',
-            'allowExts'  =>    array('jpg', 'png', 'jpeg','doc','docx','xls','xlsx','ppt','pptx','txt'),
+            'allowExts'  =>    array('xls','xlsx'),
             'autoSub'    =>    true,
             'subType'	 =>	   'date',
             'dateFormat'    =>    'Y-m-d',
@@ -528,19 +528,24 @@ class AdminCourseAction extends Action{
         // $highestColumn = $sheet->getHighestColumn(); // 取得总列数
 
         $coursestudent = M('coursestudent');
+        $student = M('student');
+        $course_id=$objPHPExcel->getActiveSheet()->getCell("A2")->getValue();
+        $coursestudent->where('coursestudent.CourseID='.$course_id)
+                      ->delete();
         for($i=2;$i<=$highestRow;$i++)
         {
             $data['CourseID'] = $objPHPExcel->getActiveSheet()->getCell("A".$i)->getValue();
             $data['StudentID'] = $objPHPExcel->getActiveSheet()->getCell("B".$i)->getValue();
 
-            $flag = $coursestudent ->where('CourseID='.$data['CourseID'].' AND StudentID ='.$data['StudentID'])->select();
-            if($flag == null){
+
+            $flag = $student->where('student.StuID='.$data['StudentID'])->select();
+            if($flag != null){
                 $coursestudent -> add($data);
             }
         }
         unlink($file_name);
         //$this->redirect('/Teacher/someHomework/hwID/'.I('param.hwID'));
-        $this->success('导入成功','courseList');
+        $this->success('导入成功','connectStu/CourseID/'.$course_id);
     }
 }
 ?>
