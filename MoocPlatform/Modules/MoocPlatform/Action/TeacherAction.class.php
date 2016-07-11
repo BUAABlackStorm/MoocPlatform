@@ -185,9 +185,20 @@ class TeacherAction extends VerifyLoginAction
 	{
 		$teacher=session('teacher');
 		$db = M('resource');
-		$resourceList=$db
-					->where('resource.OwnerID='.$teacher['TeaID'].' and resource.CourseID='.session('teacher_selected_course')['CourseID'].' and resource.ResKindID='.I('param.category'))
-					->select();
+        $resourceList=array();
+        if(4==I('param.category'))
+        {
+            $resourceList=$db
+                    ->where('resource.OwnerID='.$teacher['TeaID'].' and resource.CourseID='.session('teacher_selected_course')['CourseID'])
+                    ->select();
+        }
+        else
+        {
+            $resourceList=$db
+                    ->where('resource.OwnerID='.$teacher['TeaID'].' and resource.CourseID='.session('teacher_selected_course')['CourseID'].' and resource.ResKindID='.I('param.category'))
+                    ->select();
+        }
+		
 
 		$this->ajaxreturn($resourceList);
 	}
