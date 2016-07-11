@@ -39,7 +39,7 @@ class AdminInfoAction extends Action
 
     public function studentInfo()
     {
-        $StuID = $_POST['StuID'];
+        $StuID = I('param.StuID');
         //dump($StuID);
         $db = M('student');
         $studentInfo_1 = $db->join('department ON student.Department = department.DepartmentID')
@@ -63,20 +63,20 @@ class AdminInfoAction extends Action
     public function editStudent()
     {
         $StuID = $_POST['StuID'];
-        $data['StudentName'] = $_POST['StudentName'];
-        $data['StudentSex'] = $_POST['StudentSex'];
-        $data['StudentDep'] = $_POST['StudentDep'];
-        $data['StudentClass'] = $_POST['StudentClass'];
-        $data['StudentGrade'] = $_POST['StudentGrade'];
-        $data['StudentEmail'] = $_POST['StudentEmail'];
+        $data['StuName'] = $_POST['StudentName'];
+        $data['Sex'] = $_POST['StudentSex'];
+        $data['Department'] = $_POST['StudentDep'];
+        $data['Class'] = $_POST['StudentClass'];
+        $data['Grade'] = $_POST['StudentGrade'];
+        $data['Email'] = $_POST['StudentEmail'];
         //dump($data);
         //判断
-        if ($data['StudentName'] == null || $data['StudentSex'] == null || $data['StudentDep'] == null || $data['StudentClass'] == null || $data['StudentGrade'] == null || $data['StudentEmail'] == null)
+        if ($data['StuName'] == null || $data['Sex'] == null || $data['Department'] == null || $data['Class'] == null || $data['Grade'] == null || $data['Email'] == null)
             $this->error('信息不能为空', 'beginsearch');
         $stu = M('student');
 
         $stu->where('student.StuID=' . $StuID)->save($data);
-        $this->success('修改成功', 'beginsearch');
+        $this->success('修改成功', 'studentInfo/StuID/'.$StuID);
     }
 
     public function searchTeacher()
@@ -110,7 +110,7 @@ class AdminInfoAction extends Action
 
     public function teacherInfo()
     {
-        $TeaID = $_POST['TeaID'];
+        $TeaID = I('param.TeaID');
 
         $db = M('teacher');
         $teacherInfo_1 = $db->join('department ON teacher.Department = department.DepartmentID')
@@ -119,7 +119,6 @@ class AdminInfoAction extends Action
 
         foreach ($teacherInfo_1 as $info) {
             $teacherInfo['TeaID'] = $info['TeaID'];
-            $teacherInfo['DepartmentName'] = $info['DepartmentName'];
             $teacherInfo['TeaName'] = $info['TeaName'];
             $teacherInfo['Sex'] = $info['Sex'];
             $teacherInfo['Email'] = $info['Email'];
@@ -135,18 +134,18 @@ class AdminInfoAction extends Action
     public function editTeacher()
     {
         $TeaID = $_POST['TeaID'];
-        $data['TeacherName'] = $_POST['TeacherName'];
-        $data['TeacherSex'] = $_POST['TeacherSex'];
-        $data['TeacherDep'] = $_POST['TeacherDep'];
-        $data['TeacherEmail'] = $_POST['TeacherEmail'];
+        $data['TeaName'] = $_POST['TeacherName'];
+        $data['Sex'] = $_POST['TeacherSex'];
+        $data['Department'] = $_POST['TeacherDep'];
+        $data['Email'] = $_POST['TeacherEmail'];
         //dump($data);
         //判断
-        if ($data['TeacherName'] == null || $data['TeacherSex'] == null || $data['TeacherDep'] == null || $data['TeacherEmail'] == null)
+        if ($data['TeaName'] == null || $data['Sex'] == null || $data['Department'] == null || $data['Email'] == null)
             $this->error('信息不能为空', 'searchTeacher');
         $stu = M('teacher');
 
         $stu->where('teacher.TeaID=' . $TeaID)->save($data);
-        $this->success('修改成功', 'searchTeacher');
+        $this->success('修改成功', 'teacherInfo/TeaID/'.$TeaID);
     }
 }
 ?>
