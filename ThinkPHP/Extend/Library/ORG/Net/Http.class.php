@@ -181,7 +181,7 @@ class Http {
         }else {
         	echo($content);
         }
-        exit();
+        //exit();
     }
 
     /**

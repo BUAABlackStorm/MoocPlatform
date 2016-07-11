@@ -57,8 +57,6 @@ class traverseDir{
 
             $dw=new download($zipname,""); //下载文件
 
-            ob_clean();
-
             $dw->getfiles();
             unlink($zipname); //下载完成后要进行删除  
         }
