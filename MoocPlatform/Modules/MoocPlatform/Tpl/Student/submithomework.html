@@ -120,7 +120,7 @@
                     <!--<button type="reset" class="templatemo-white-button">重新选择</button>-->
                 <!--</div> -->
             <!--</form>-->
-            <if condition="($isOutdate eq 0) AND ($isGroupHomeworkLeader eq 1)">
+            <if condition="($isOutdate eq 0) AND ($canSubmit eq 1)">
                 <form accept-charset="utf-8" enctype="multipart/form-data" method="post" class="btn-group-form" action="{:U(GROUP_NAME.'/Student/upload')}">
                     <div id="queue"></div>
 
