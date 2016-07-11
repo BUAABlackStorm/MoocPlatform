@@ -511,7 +511,7 @@ class TeacherAction extends VerifyLoginAction
     	$stuID=I('param.stuID');
     	$db=M('hwstu');
     	$resource;
-    	if(""==$stuID)
+    	if(strlen($stuID)==0)
     	{
 			$resource=$db
     			->where('hwstu.HwID='.$hwID)
