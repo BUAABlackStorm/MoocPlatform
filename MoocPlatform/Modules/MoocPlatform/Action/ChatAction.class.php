@@ -88,6 +88,7 @@ Class ChatAction extends VerifyLoginAction
             'UserID' => array('neq', $id),
             'type' => array('neq', $type),
             'Times' => array('gt', $time['showTime']),
+            'CourseID' => $courseID,
         );
 
 
