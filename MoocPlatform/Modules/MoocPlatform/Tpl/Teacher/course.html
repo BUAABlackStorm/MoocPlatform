@@ -102,7 +102,7 @@
                   <tr>
                    <td>
                    <input type="checkbox" class="del" name="id_array[]" value="{$r_t['ResID']}"></td>
-                   <td class="name">{$r_t['ResOriginName']}</td>
+                   <td class="name"><a href="__ONLINE_TEAHCER__/{$r_t['ResActualName']}">{$r_t['ResOriginName']}</a></td>
                    <td class="time">{$r_t['ReleaseTime']}</td>
                    <td class="size">{$r_t['FileSize']/1000}KB</td>
                   </tr>
@@ -172,7 +172,7 @@
       if(key=="ResOriginName") {p1=i;}
      }
 
-       $("#appendant").append("<tr><td><input type='checkbox' class='del' name='id_array[]' value='"+data[p1]["ResID"]+"'></td><td>"+data[p1]["ResOriginName"]+"</td><td>"+data[p1]["ReleaseTime"]+"</td><td>"+data[p1]["FileSize"]/1000+"KB</td></tr>");
+       $("#appendant").append("<tr><td><input type='checkbox' class='del' name='id_array[]' value='"+data[p1]["ResID"]+"'></td><td><a href='__ONLINE_TEAHCER__/"+data[p1]["ResActualName"]+"'>"+data[p1]["ResOriginName"]+"</a></td><td>"+data[p1]["ReleaseTime"]+"</td><td>"+data[p1]["FileSize"]/1000+"KB</td></tr>");
     }
   }
 }
