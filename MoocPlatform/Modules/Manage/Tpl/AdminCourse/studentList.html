@@ -163,19 +163,30 @@
 
                     <div class="row form-group">
                         <div class="templatemo-flex-row flex-content-row">
-                            <div class="templatemo-content-widget white-bg col-2">
-                                <div class="col-lg-6 col-md-6 text-right">
-                                    <form action="{:U(GROUP_NAME.'/AdminCourse/exportStudentExcel')}" method="post">
+                            <div class="col-2"><!--如果要白色背景 class加上templatemo-content-widget white-bg",再把div套到table上去-->
+                                <div class="col-lg-2 col-md-2" style="float:left;"><!-- text-right-->
+                                    <form action="{:U(GROUP_NAME.'/AdminCourse/exportStudentExcel')}" method="post" ><!--我直接添加了不优雅的做法,可以自己写class把这个style消掉-->
                                          <input type="hidden" name="CourseID" value={$courseinfo['CourseID']}>
                                          <input type="submit" class="templatemo-white-button" name="exportHomeworkExcel" value="下载选课学生列表">
                                     </form>
                                 </div>
-                                <div class="col-lg-6 col-md-6 ">
+                                <div class="col-lg-10 col-md-10" style="float:right;"> 
                                     <form action="{:U(GROUP_NAME.'/AdminCourse/importStudentExcel')}" method="post" enctype="multipart/form-data">
-                                    <input type="file" name="file_excel" value="选择文件">
-                                    <input type="hidden" name="CourseID" value={$courseinfo['CourseID']}>
-                                    <br>
-                                    <input type="submit" class="templatemo-white-button" name="importHomeworkExcel" value="上传学生作业表格">
+                                    <input type="hidden" name="CourseID" value={$courseinfo['CourseID']}> 
+                                    <input type="file" name="file_excel" id="tupLoad" style="display:none" value="选择文件">
+                                    <div class="bootstrap-filestyle input-group" style="float:right;">
+                                        <div style="float:left;">
+                                        <span class="group-span-filestyle">
+                                        <label class="btn templatemo-white-button" id="upLoad" >选择上传文件</label>
+                                        </span> 
+                                        <input type="text" id="textField" class="form-control" style="width:54%;height:40px;float:right;margin:0 5px 0 0;" disabled="disabled"> 
+                                        </div>
+                                        <div style="float:left;">
+                                         <input type="submit" class="templatemo-white-button" name="importHomeworkExcel" value="上传学生作业表格">
+                                         </div>
+                                    </div>
+                                    <br />
+
                                     </form>
                                 </div>
                             </div>
@@ -214,12 +225,8 @@
                         </table>
                     </div>
                 </div>
-            </div>
+            </div>  
 
-            <footer class="text-right">
-                <p>Copyright &copy; 2084 Company Name
-                    | Designed by <a href="http://www.templatemo.com" target="_parent">templatemo</a></p>
-            </footer>
         </div>
     </div>
 </div>
@@ -284,7 +291,15 @@
             }
 
     }
-
+    $("#upLoad").click(function(){
+      $("#tupLoad").click();
+    })
+    var file=$("#tupLoad");
+    var aim=$("#textField");
+    file.on('change', function( e ){
+    var name = e.currentTarget.files[0].name;
+    aim.val( name );
+    });
 </script>
 <script type="text/javascript" src="js/templatemo-script.js"></script>      <!-- Templatemo Script -->
 

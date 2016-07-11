@@ -30,12 +30,11 @@
     <div class="templatemo-flex-row">
       <div class="templatemo-sidebar">
         <header class="templatemo-site-header">
-          <div align="center"><img src="__PUBLIC__/images/person.jpg"  class="img-circle" height="50" width="50">
+         <div align="center"><img src="__PUBLIC__/images/person.jpg"  class="img-circle" height="50" width="50">
           <h2>教师用户</h2>
           </div>
         </header>
-          
-        <div class="profile-name" align="center">
+         <div class="profile-name" align="center">
         <span>{:session('teacher')['TeaName']}</span>
         <br>
         </div>
@@ -45,6 +44,13 @@
         <br>
         </div>
 
+        <!-- Search box 
+        <form class="templatemo-search-form" role="search">
+          <div class="input-group">
+              <button type="submit" class="fa fa-search"></button>
+              <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">           
+          </div>
+        </form>  -->
         <div class="mobile-menu-icon">
             <i class="fa fa-bars"></i>
         </div>
@@ -53,12 +59,12 @@
             <li><a href="__URL__/"><i class="fa fa-home fa-fw"></i>课程管理</a></li>
 
             <if condition="session('?teacher_selected_course')">
-              <li><a href="__URL__/homework_index"><i class="fa fa-bar-chart fa-fw"></i>作业管理</a></li>
-              <li><a href="__URL__/group"><i class="fa fa-bar-chart fa-fw"></i>团队管理</a></li>
-              <li><a href="{:U(GROUP_NAME.'/Chat/chat',array('courseID' => session('teacher_selected_course')['CourseID'] ))}"><i class="fa fa-bar-chart fa-fw"></i>在线聊天</a></li>
+              <li><a href="__URL__/homework_index"><i class="fa fa-home fa-fw"></i>作业管理</a></li>
+              <li><a href="__URL__/group"><i class="fa fa-home fa-fw"></i>团队管理</a></li>
+              <li><a href="__URL__/teaChat"><i class="fa fa-bar-chart fa-fw"></i>讨论区</a></li>
             </if>
 
-            <li><a href="__URL__/personal_info" class="active"><i class="fa fa-home fa-fw"></i>个人信息</a></li>
+            <li><a href="__URL__/personal_info" class="active"><i class="fa fa-bar-chart fa-fw"></i>个人信息</a></li>
             <li><a href="{:U(GROUP_NAME.'/LoginAndRegister/Logout')}"><i class="fa fa-bar-chart fa-fw"></i>注销</a></li>
           </ul>  
         </nav>
@@ -74,7 +80,7 @@
           <div class="templatemo-flex-row flex-content-row">
             <div class="col-md-12">
 
-              <if condition="session('?personal_info_mod_msg')">
+                <if condition="session('?personal_info_mod_msg')">
                 <if condition="session('personal_info_mod_msg') eq '修改成功!'">
                   <div class="alert alert-success">
                 <else />
@@ -83,11 +89,11 @@
                     <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <h3>{:session('personal_info_mod_msg')}</h3>
                   </div>
-                {:session('personal_info_mod_msg',null)}
-              </if>
 
+                {:session('personal_info_mod_msg',null)}
+
+              </if>
                 <h2 class="margin-bottom-10 text-center">教师个人详细信息</h2>
-                <h4 class="margin-bottom-10 text-center" style="color:blue;">不想修改的情况下可以不填！</h4>
                 <br>
                 <form name="input" action="__URL__/personal_info_mod" method="post">
                 <div class="row form-group">
@@ -95,7 +101,7 @@
                     <h3>教师证号</h3>
                   </div >
                   <div class="col-lg-4 col-md-4 form-group">
-                    <input type="text" class="form-control" value="{:session('teacher')['TeaID']}" name="teaID" disabled="disabled">
+                    <input type="text" class="form-control" value="{:session('teacher')['TeaID']}" disabled="disabled">
                   </div>
                 </div>
                 <div class="row form-group">
@@ -103,7 +109,7 @@
                     <h3>姓名</h3>
                   </div >
                   <div class="col-lg-4 col-md-4 form-group">
-                    <input type="text" disabled="disabled" class="form-control" value="{:session('teacher')['TeaName']}" name="teaName">
+                    <input type="text" disabled="disabled" class="form-control" value="{:session('teacher')['TeaName']}">
                   </div>
                 </div>
                 <div class="row form-group">
@@ -111,7 +117,7 @@
                     <h3>密码</h3>
                   </div >
                   <div class="col-lg-4 col-md-4 form-group">
-                    <input type="password" name="password1" class="form-control" ">
+                    <input type="password" name="password1" class="form-control" placeholder="不想修改可以不填写" onblur="return check_password_2();">
                   </div>
                   <label class="control-label col-md-3 " style="text-align:left" id="tea_label_pwd"></label>
                 </div>
@@ -120,7 +126,7 @@
                     <h3>二次确认密码</h3>
                   </div >
                   <div class="col-lg-4 col-md-4 form-group">
-                    <input type="password" name="password2" class="form-control" onblur="return check_confirm_password_2();">
+                    <input type="password" name="password2" class="form-control" onblur="return check_confirm_password_2();" placeholder="不想修改可以不填写">
                   </div>
                   <label class="control-label col-md-3 " style="text-align:left" id="tea_label_chk_pwd"></label>
                 </div>
@@ -129,7 +135,7 @@
                   <h3>性别</h3>                  
                   </div >
                   <div class="col-lg-4 col-md-4 form-group">
-                    <input type="text" disabled="disabled" class="form-control" value="{:session('teacher')['Sex']}" name="StudentSex">
+                    <input type="text" disabled="disabled" class="form-control" value="{:session('teacher')['Sex']}">
                   </div>
                 </div>
                 <div class="row form-group">
@@ -137,12 +143,12 @@
                     <h3>院系</h3>
                   </div >
                   <div class="col-lg-4 col-md-4 form-group">
-                    <input type="text" disabled="disabled" class="form-control" value="{:session('teacher')['Department']}" name="Department">
+                    <input type="text" disabled="disabled" class="form-control" value="{:session('teacher')['Department']}">
                   </div>
                 </div>
                 <div class="row form-group">
                   <div class="col-lg-4 col-md-4 form-group text-right">                  
-                    <h3>联系方式</h3>
+                    <h3>E-mail</h3>
                   </div >
                   <div class="col-lg-4 col-md-4 form-group">
                     <input type="text" class="form-control" id="inputFirstName" value="{:session('teacher')['Email']}" name="Email">
