@@ -593,7 +593,7 @@ class StudentAction extends Action {
 
         // 查询团队中成员是否选过该课程
         foreach ($members as $v) {
-            $tmpRes = M('coursestudent')->where('StudentID = %d', $v['StudentID'])->find();
+            $tmpRes = M('coursestudent')->where('StudentID = %d AND CourseID = %d', $v['StudentID'], $data['CourseID'])->find();
             if ($tmpRes == null) {  // 有人没选课程
                 $flag = false;
                 $data['status'] = 'error1';
@@ -619,7 +619,6 @@ class StudentAction extends Action {
                 }
             }
         }
-
         
         if ($flag) {
             $result = M('groupcourse')->add($data);

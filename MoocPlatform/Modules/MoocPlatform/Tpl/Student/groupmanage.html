@@ -455,7 +455,6 @@
                 CourseID: CourseID,
             },
             success: function(data) {
-                //alert(data['status']);
                 if(data['status'] == 'error1') {
                     alert("该团队有人没申请该课程");
                 } else if (data['status'] == 'error2') {
