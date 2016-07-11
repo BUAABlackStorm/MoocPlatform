@@ -51,7 +51,8 @@
                 <li><a href="{:U(GROUP_NAME.'/Student/courseinfo')}"><i class="fa fa-th-list fa-fw"></i>课程信息</a></li>
                 <li><a href="{:U(GROUP_NAME.'/Student/resource')}"><i class="fa fa-database fa-fw"></i>资源</a></li>
                 <li><a href="{:U(GROUP_NAME.'/Student/homework')}" class="active"><i class="fa fa-file fa-fw"></i>作业</a></li>
-                <li><a href="{:U(GROUP_NAME.'/Student/group')}"><i class="fa fa-group fa-fw"></i>团队</a></li>                
+                <li><a href="{:U(GROUP_NAME.'/Student/group')}"><i class="fa fa-group fa-fw"></i>团队</a></li> 
+                <li><a href="{:U(GROUP_NAME.'/Chat/chat',array('courseID' => session('selectedCourseID')))}"><i class="fa fa-comment fa-fw"></i>讨论区</a></li>               
                 <li><a href="{:U(GROUP_NAME.'/LoginAndRegister/Logout')}"><i class="fa fa-sign-out fa-fw"></i>退出</a></li>
             </ul>
         </nav>
@@ -86,7 +87,7 @@
                 <if condition="$hwstu.Score neq ''">
                     <h3>作业分数:</h3>
                     <p>{$hwstu.Score}</p>
-                    <h3>>作业评论:</h3>
+                    <h3>作业评论:</h3>
                     <p>{$hwstu.Comment}</p>
                 </if>
             </form>  
@@ -120,7 +121,7 @@
                     <!--<button type="reset" class="templatemo-white-button">重新选择</button>-->
                 <!--</div> -->
             <!--</form>-->
-            <if condition="($isOutdate eq 0) AND ($isGroupHomeworkLeader eq 1)">
+            <if condition="($isOutdate eq 0) AND ($canSubmit eq 1)">
                 <form accept-charset="utf-8" enctype="multipart/form-data" method="post" class="btn-group-form" action="{:U(GROUP_NAME.'/Student/upload')}">
                     <div id="queue"></div>
 
