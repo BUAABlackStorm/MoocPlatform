@@ -189,7 +189,7 @@
                         </div>
                         <input type="hidden" name="courseID" value="{:$course}"/>
                         <div class="panel-body" id="main_panel"
-                             style="min-height: 590px; max-height: 590px; overflow-y: scroll;">
+                             style="min-height: 675px; max-height: 675px; overflow-y: scroll;">
                             <ul id="main_list">
                                 <foreach name="all" item="v">
                                     <!--学生发言-->
@@ -271,7 +271,7 @@
                             <h3 class="panel-title">教师回复汇总</h3>
                         </div>
                         <div class="panel-body" id="tea_panel"
-                             style="min-height: 590px; max-height: 590px; overflow-y: scroll;">
+                             style="min-height: 470px; max-height: 470px; overflow-y: scroll;">
                             <ul id="teacher_list">
                                 <foreach name="teacher" item="v">
 
@@ -312,30 +312,31 @@
                             </ul>
                         </div>
                     </div>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-12">
                     <div class="panel panel-default  margin-10">
                         <div class="panel-heading">
                             <h3 class="panel-title">发送消息</h3>
                         </div>
-                        <div class="panel-body">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="msg" name="msg" placeholder="请输入消息"/>
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button" onclick="publish({$id},{$type})">
-                      发送
-                  </button>
-                </span>
+                        <div class="panel-body" style="min-height: 140px; max-height: 140px;">
+                            <div style="margin:0px 10px;">
+                                <div class="row">
+                                    <textarea  class="form-control" rows="3" style="resize: none;" id="msg" name="msg" placeholder="请输入消息"></textarea>
+                                </div>
+                                <div class="row" style="margin-top: 5px;">
+                                    <div class="text-right">
+                                        <button class="btn btn-default" type="button" onclick="publish({$id},{$type})">
+                                            发送
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
 
         </div>
     </div>
@@ -355,8 +356,9 @@
     var courseID = $('input[name = "courseID"]');
 
     $('document').ready(function () {
+        div2.scrollTop = div2.scrollHeight;
         div.scrollTop = div.scrollHeight;
-        div2.scollTop = div2.scrollHeight;
+
         fresh();
     });
 
@@ -389,7 +391,7 @@
     //发布
     function publish(id, type) {
 
-        var msg = $('input[name = "msg"]');
+        var msg = $('#msg');
         var pUrl = "{:U(GROUP_NAME.'/Chat/publish')}";
         if(msg.val() == ""){
             alert("请输入发送消息！");
@@ -483,7 +485,7 @@
                             "</div></div> </li>"
                     );
                     div.scrollTop = div.scrollHeight;
-                    div2.scollTop = div2.scrollHeight;
+                    div2.scrollTop = div2.scrollHeight;
 
                 }
                 //他人发言
@@ -512,7 +514,7 @@
                             "</div></div> </li>"
                     );
                     div.scrollTop = div.scrollHeight;
-                    div2.scollTop = div2.scrollHeight;
+                    div2.scrollTop = div2.scrollHeight;
                 }
             }
             //$('#chat').append("<p>" + data[0]['Content'] + "</p>");

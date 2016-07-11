@@ -51,16 +51,16 @@ class StudentAction extends Action {
         /**
          * 团队加入的课程ID
          */
-        $groupStu = M('groupstu')->where("StudentID = %d AND JoinStatus = 1", $stuID)->select();
-        foreach ($groupStu as $value) {
-            $tmpCourseIDs = M('groupcourse')->where('GroupID = %d', $value['GroupID'])->select();
+        /*$groupStu = M('groupstu')->where("StudentID = %d AND JoinStatus = 1", $stuID)->select();*/
+        //foreach ($groupStu as $value) {
+            //$tmpCourseIDs = M('groupcourse')->where('GroupID = %d', $value['GroupID'])->select();
 
-            foreach ($tmpCourseIDs as $v) {
-                $courses[$index] = M('Course')->where('CourseID = %d', $v['CourseID'])->find();
-                $courses[$index]['CourseGroupID'] = $v['GroupID'];
-                $index++;
-            }
-        }
+            //foreach ($tmpCourseIDs as $v) {
+                //$courses[$index] = M('Course')->where('CourseID = %d', $v['CourseID'])->find();
+                //$courses[$index]['CourseGroupID'] = $v['GroupID'];
+                //$index++;
+            //}
+        /*}*/
         //dump($courses);
         $this->courses = $courses;
 
@@ -96,7 +96,7 @@ class StudentAction extends Action {
         } else {
             $CourseID = I('CourseID');
             session('selectedCourseID', $CourseID);
-            session('CourseGroupID', I('CourseGroupID'));   // 如果是团队课程则记录GroupID
+            //session('CourseGroupID', I('CourseGroupID'));   // 如果是团队课程则记录GroupID
         }
 
         $kejianCount = M('Resource')->where('ResKindID=1 AND CourseID=%d', $CourseID)->count();
@@ -175,11 +175,20 @@ class StudentAction extends Action {
             $this->isOutdate = 1;
         }
 
-        // 判断是否是团队作业组长
-        $this->isGroupHomeworkLeader = 0;
-        $courseGroupPrinID = M('learninggroup')->where('GroupID = %d', session('CourseGroupID'))->find()['PrincipalID'];
-        if ($homework['isGroupHw'] == 1 && $courseGroupPrinID == $stuID) {
-            $this->isGroupHomeworkLeader = 1;
+        // 判断是否可以提交附件
+        $this->canSubmit = 0;
+        if ($homework['isGroupHw'] == 0) {  // 单人作业可以提交
+            $this->canSubmit = 1;
+        } else {                            // 多人作业判断是否是组长
+            // 查询加入该课程的所有GroupID 及 PrinID
+            $allGroupIDs = M('groupcourse')->where('CourseID = %d', session('selectedCourseID'))->select(); 
+            foreach ($allGroupIDs as $value) {
+                $tmpPrinID = M('learninggroup')->where('GroupID = %d', $value['GroupID'])->find()['PrincipalID'];
+                if ($tmpPrinID == $stuID) { // 是组长
+                    $this->canSubmit = 1;
+                    break;
+                }
+            }
         }
         
         $condition['StuID'] = $stuID;
@@ -572,10 +581,40 @@ class StudentAction extends Action {
         $data['GroupID'] = I('selectGroupID');
         $data['CourseID'] = I('CourseID');
         $data['ApplyStatus'] = 0;
-        $result = M('groupcourse')->add($data);
 
-        if($result){
-            $data['status'] = 'success';
+        //判断该团队是否有资格加入课程（判断团队中是否有成员已经在其他团队加入该课程）
+        $flag = true;
+        $condition = array(
+            'GroupID' => $data['GroupID'],
+            'JoinStatus' => 1,
+        );
+
+        $members = M('groupstu') -> where($condition) -> field('StudentID') -> select();
+        
+        foreach($members as $key => $v){
+            //查询改组中某名同学加入的所有小组
+            $groups = M('groupstu')->where( array('StudentID' => $v['StudentID'] ,'JoinStatus' => 1) ) ->field('GroupID')->select();
+
+            //判断改组是否加入该门课程
+            foreach($groups as $key1 => $v1 ){
+                //查询改组加入的所有课程
+                $courseID = M('groupcourse') ->where(array('GroupID' => $v1['GroupID'],'ApplyStatus' => array('neq' , 2) ))->filed('CourseID')->select();
+                foreach($courseID as $key2 => $v2){
+                    //判断加入的课程是否等于申请团队申请的课程
+                    if($data['CourseID'] == $v2['CourseID']){
+                        $flag = false;
+                    }
+                }
+            }
+        }
+        
+        if ($flag) {
+            $result = M('groupcourse')->add($data);
+            if ($result) {
+                $data['status'] = 'success';
+            } else {
+                $data['status'] = 'fail';
+            }
         } else {
             $data['status'] = 'error';
         }
