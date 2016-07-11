@@ -88,7 +88,7 @@
                         </thead>
                         <foreach name="ress" item="resources">
                         <tr>
-                            <td> <div id="workname"> {$resources.ResOriginName}  </div> </td>
+                            <td> <div id="workname"> <a href="__ONLINE_TEAHCER__/{$resources['ResActualName']}">{$resources.ResOriginName}</a>  </div> </td>
                             <td> <div id="releasetime"> {$resources.ReleaseTime} </div> </td>
                             <td> <div id="filesize"> {$resources['FileSize']/1000}KB </div> </td>
                             <td> 
