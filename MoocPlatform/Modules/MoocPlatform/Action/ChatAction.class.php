@@ -38,12 +38,13 @@ Class ChatAction extends VerifyLoginAction
 
         //p($teacher);
 
-        $com_show = M('com_show')->where(array('UserID' => $id, 'type' => $type))->find();
+        $com_show = M('com_show')->where(array('UserID' => $id, 'type' => $type,'CourseID' => $courseID))->find();
         if (empty($com_show)) {
             $data = array(
                 'UserID' => $id,
                 'type' => $type,
                 'showTime' => time(),
+                'CourseID' => $courseID,
             );
             M('com_show')->add($data);
         } else {
@@ -70,7 +71,7 @@ Class ChatAction extends VerifyLoginAction
         $id = I('id');
         $courseID = I('courseID');
 
-        $time = M('com_show')->where(array('UserID' => $id, 'type' => $type))->find();
+        $time = M('com_show')->where(array('UserID' => $id, 'type' => $type,'CourseID'=>$courseID))->find();
 
 //        $condition1 = array(
 //            'UserID' => array('neq', $id),
@@ -96,7 +97,7 @@ Class ChatAction extends VerifyLoginAction
             $data = array(
                 'showTime' => time(),
             );
-            M('com_show')->where(array('UserID' => $id, 'type' => $type))->save($data);
+            M('com_show')->where(array('UserID' => $id, 'type' => $type,'CourseID'=>$courseID))->save($data);
         }
 
         $this->ajaxreturn($msg);
