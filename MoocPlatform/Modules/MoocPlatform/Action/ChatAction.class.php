@@ -91,18 +91,18 @@ Class ChatAction extends VerifyLoginAction
             'CourseID' => $courseID,
         );
 
-
+        $data['status'] = 0;
         $msg = D('ChatMsg')->getAll($condition);
 
         if (!empty($msg)) {
             $data = array(
                 'showTime' => time(),
             );
+            $data['status'] = 1;
             M('com_show')->where(array('UserID' => $id, 'type' => $type,'CourseID'=>$courseID))->save($data);
         }
 
         $this->ajaxreturn($msg);
-
     }
 
     public function publish()
