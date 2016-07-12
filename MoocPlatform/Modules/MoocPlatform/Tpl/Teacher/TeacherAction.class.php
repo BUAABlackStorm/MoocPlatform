@@ -628,84 +628,62 @@ class TeacherAction extends VerifyLoginAction
         exit; 
     }
 
-	public function exportGroupHomeworkExcel()
-	{
-		$xlsCellName=array(
-				array('GroupID','小组编号'),
-				array('GroupName','小组名称'),
-				array('ID','ID'),
-				array('HwID','作业ID'),
-				array('PrincipalID','组长学号'),
-				array('StuID','学号'),
-				array('StuName','姓名'),
-				array('Sex','性别'),
-				array('Department','院系编号'),
-				array('Class','班级'),
-				array('content','作业文本内容'),
-				array('Score','作业分数'),
-				array('Comment','作业评论')
-		);
+    public function exportGroupHomeworkExcel()
+    {
+    	$xlsCellName=array(
+	        array('GroupID','小组编号'),
+	        array('GroupName','小组名称'),
+	        array('ID','ID'),
+	        array('HwID','作业ID'),
+	        array('PrincipalID','组长学号'),
+	        array('StuID','学号'),
+	        array('StuName','姓名'),
+	        array('Sex','性别'),
+	        array('Department','院系编号'),
+	        array('Class','班级'),
+	        array('content','作业文本内容'),
+	        array('Score','作业分数'),
+	        array('Comment','作业评论')
+        );
 
-		$db1=M('hwstu');
-		$db2=M('groupcourse');
-		$db3=M('homework');
-		$hwID=I('param.hwID');
-		$course=session('teacher_selected_course');
-		$group_count=0;
-		$group_member=array();
-		$xlsData1=array();
+        $db1=M('hwstu');
+        $db2=M('learninggroup');
+        $db3=M('homework');
+        $hwID=I('param.hwID');
+        $group_count=0;
+        $group_member=array();
 
-		$tmpdata=$db1
-				->where('hwstu.HwID='.$hwID)
-				->join('learninggroup ON learninggroup.PrincipalID=hwstu.StuID')
-				->join('student ON student.StuID=hwstu.StuID')
-				->Field('hwstu.ID,hwstu.HwID,hwstu.StuID,student.StuName,student.Sex,student.Department,student.Class,hwstu.content,hwstu.Score,hwstu.Comment,learninggroup.GroupID,learninggroup.GroupName,learninggroup.PrincipalID')
-				->select();
-		for($i=0;$i<count($tmpdata);$i++)
-		{
-			$tmp=$db2
-					->where('groupcourse.CourseID='.$course['CourseID'].' and groupcourse.GroupID='.$tmpdata[$i]['GroupID'])
-					->select();
-			if($tmp!=null)
-			{
-				$xlsData1[$group_count++]=$tmpdata[$i];
-			}
-		}//dump($xlsData1);die;
-		$group_count=count($xlsData1);
+        $xlsData1=$db1
+        		->where('hwstu.HwID='.$hwID)
+        		->join('student ON student.StuID=hwstu.StuID')
+        		->join('learninggroup ON learninggroup.PrincipalID=hwstu.StuID')
+        		->Field('hwstu.ID,hwstu.HwID,hwstu.StuID,student.StuName,student.Sex,student.Department,student.Class,hwstu.content,hwstu.Score,hwstu.Comment,learninggroup.GroupID,learninggroup.GroupName,learninggroup.PrincipalID')
+        		->select();//dump($xlsData1);
+        $group_count=count($xlsData1);
 
-		for($i=0;$i<$group_count;$i++)
-		{
-			$tmpdata=$db2
-					->where('groupcourse.CourseID='.$course['CourseID'].' and groupcourse.GroupID='.$xlsData1[$i]['GroupID'])
-					->join('learninggroup ON learninggroup.GroupID=groupcourse.GroupID')
-					->join('groupstu ON groupstu.GroupID=learninggroup.GroupID')
-					->join('student ON student.StuID=groupstu.StudentID')
-					->Field('groupstu.JoinStatus,student.StuID,student.StuName,student.Sex,student.Department,student.Class')
-					->select();
-			$xlsData2=array();
-			$xlsData2_count=0;
-			for($j=0;$j<count($tmpdata);$j++)
-			{
-				if($tmpdata[$j]['JoinStatus']==1)
-				{
-					$xlsData2[$xlsData2_count++]=$tmpdata[$j];
-				}
-			}//dump($xlsData2);die;
-			$group_member[$i]=$xlsData2;
-		}//dump($group_member);die;
+        for($i=0;$i<$group_count;$i++)
+        { 
+        	$xlsData2=$db2
+        			->where('learninggroup.PrincipalID='.$xlsData1[$i]['StuID'])
+        			->join('groupstu ON groupstu.GroupID=learninggroup.GroupID')
+        			->join('student ON student.StuID=groupstu.StudentID')
+        			->Field('student.StuID,student.StuName,student.Sex,student.Department,student.Class')
+        			->select();
+        	$group_member[$i]=$xlsData2;
+        }//dump($group_member[0]);
 
-		$homework=$db3
-				->where('homework.HwID='.$hwID)
-				->select();//dump($homework);
+        $homework=$db3
+        			->where('homework.HwID='.$hwID)
+        			->select();//dump($homework);
 
-		$this->exportGroupExcel($homework[0]['HwName'],$xlsCellName,$xlsData1,$group_member);
-	}
+        $this->exportGroupExcel($homework[0]['HwName'],$xlsCellName,$xlsData1,$group_member);
+    }
 
     public function importGroupHomeworkExcel()
     {
     	if(empty($_FILES))
     	{
-    		$this->redirect('/Teacher/someHomework/hwID/'.I('param.hwID'));
+    		$this->redirect('/Teacher/somehomework/hwID/'.I('param.hwID'));
     	}
 
     	import('ORG.Net.UploadFile');
@@ -728,7 +706,7 @@ class TeacherAction extends VerifyLoginAction
 		if(!$info)
 		{
     		//$this->error($upload->getError());
-    		$this->redirect('/Teacher/someHomework/hwID/'.I('param.hwID'));
+    		$this->redirect('/Teacher/somehomework/hwID/'.I('param.hwID'));
 		}
 
 		vendor("PHPExcel.Classes.PHPExcel");
@@ -754,7 +732,7 @@ class TeacherAction extends VerifyLoginAction
 
         unlink($file_name);
 
-        $this->redirect('/Teacher/someHomework/hwID/'.I('param.hwID'));
+        $this->redirect('/Teacher/somehomework/hwID/'.I('param.hwID'));
     }
 }
 
