@@ -126,5 +126,4 @@ Class ChatAction extends VerifyLoginAction
     }
 
 }
-
 ?>
