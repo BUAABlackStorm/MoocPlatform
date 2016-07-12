@@ -29,6 +29,7 @@ Class ChatAction extends VerifyLoginAction
         $all = D('ChatMsg')->getAll(array('CourseID' => $courseID));
         //p($all);die;
 
+
         $this->type = $type;
         $this->id = $id;
         $this->all = $all;
